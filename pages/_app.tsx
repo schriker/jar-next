@@ -1,22 +1,28 @@
-import { AppProps } from 'next/app';
 import App from 'next/app';
+import { AppProps } from 'next/app';
 import '../styles.css';
 import { Provider } from 'react-redux';
-import store from '../store/store';
+import { useStore, initializeStore } from '../store/store';
+import { toggleHideWatched } from '../store/slices/appDataSlice';
 
-function MyApp ({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
+  const store = useStore(pageProps.initialReduxState);
+
   return (
     <Provider store={store}>
       <Component {...pageProps} />
     </Provider>
   );
-};
+}
 
 MyApp.getInitialProps = async (appContext) => {
-  // calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(appContext);
-  appProps.pageProps.viewer = { id: 'monkey' }
-  return { ...appProps }
-}
+  const reduxStore = initializeStore();
+  const { dispatch } = reduxStore;
+
+  dispatch(toggleHideWatched());
+  appProps.pageProps.initialReduxState = reduxStore.getState();
+  return { ...appProps };
+};
 
 export default MyApp;

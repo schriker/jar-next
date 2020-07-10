@@ -14,9 +14,9 @@ type appData = {
   version: number;
 };
 
-const initialState: appData = {
+export const initialAppDataState: appData = {
   hideWatched: false,
-  streamers: [],
+  streamers: ['wonziu'],
   watched: [],
   bookmarksId: [],
   bookmarks: [],
@@ -25,8 +25,8 @@ const initialState: appData = {
 };
 
 const appDataSlice = createSlice({
-  name: 'localStorage',
-  initialState,
+  name: 'appData',
+  initialState: initialAppDataState,
   reducers: {
     toggleHideWatched(state) {
       state.hideWatched = !state.hideWatched;
