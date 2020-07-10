@@ -11,6 +11,7 @@ type appData = {
       date: string;
     };
   };
+  version: number;
 };
 
 const initialState: appData = {
@@ -20,6 +21,7 @@ const initialState: appData = {
   bookmarksId: [],
   bookmarks: [],
   lastVisited: {},
+  version: 3,
 };
 
 const appDataSlice = createSlice({

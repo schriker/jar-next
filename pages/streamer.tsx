@@ -3,20 +3,20 @@ import { useTypedSelector } from '../store/rootReducer';
 import Layout from '../components/Layout/Layout';
 
 export default function Index() {
-  const appData = useTypedSelector(state => state.appData);
+
   return (
     <Layout
-      title={appData.hideWatched.toString()}
+      title="Streamer"
       ogImage="asd"
       ogDescription="asd"
     >
-      Index
+      Streamer Page
     </Layout>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
-    props: { },
+    props: {},
   };
 };

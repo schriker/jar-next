@@ -8,6 +8,6 @@ const rootReducer = combineReducers({
 
 type RootState = ReturnType<typeof rootReducer>;
 
-export default rootReducer;
-
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export default rootReducer;
