@@ -1,28 +1,27 @@
-import App from 'next/app';
-import { AppProps } from 'next/app';
 import '../styles.css';
-import { Provider } from 'react-redux';
-import { useStore, initializeStore } from '../store/store';
+import React from 'react';
+import { wrapper } from '../store/store';
+import App, { AppInitialProps, AppContext } from 'next/app';
 import { toggleHideWatched } from '../store/slices/appDataSlice';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const store = useStore(pageProps.initialReduxState);
+class MyApp extends App<AppInitialProps> {
+  public static getInitialProps = async ({ Component, ctx }: AppContext) => {
+    ctx.store.dispatch(toggleHideWatched());
 
-  return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
-  );
+    return {
+      pageProps: {
+        ...(Component.getInitialProps
+          ? await Component.getInitialProps(ctx)
+          : {}),
+      },
+    };
+  };
+
+  public render() {
+    const { Component, pageProps } = this.props;
+
+    return <Component {...pageProps} />;
+  }
 }
 
-MyApp.getInitialProps = async (appContext) => {
-  const appProps = await App.getInitialProps(appContext);
-  const reduxStore = initializeStore();
-  const { dispatch } = reduxStore;
-
-  dispatch(toggleHideWatched());
-  appProps.pageProps.initialReduxState = reduxStore.getState();
-  return { ...appProps };
-};
-
-export default MyApp;
+export default wrapper.withRedux(MyApp);

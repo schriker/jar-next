@@ -1,45 +1,25 @@
-import { useMemo } from 'react';
-import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './rootReducer';
-import { initialAppDataState } from './slices/appDataSlice';
+import { configureStore } from '@reduxjs/toolkit';
+import { HYDRATE, createWrapper } from 'next-redux-wrapper';
 
-let store;
+function reducer(state, action) {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state, // use previous state
+      ...action.payload, // apply delta from hydration
+    };
+    if (state.count) nextState.count = state.count; // preserve count value on client side navigation
+    return nextState;
+  } else {
+    return rootReducer(state, action);
+  }
+}
 
-const initialState = {
-  appData: { ...initialAppDataState },
-};
-
-function initStore(preloadedState = initialState) {
+function initStore() {
   return configureStore({
-    reducer: rootReducer,
+    reducer: reducer,
     devTools: true,
-    preloadedState,
   });
 }
 
-export const initializeStore = (preloadedState = initialState) => {
-  let _store = store ?? initStore(preloadedState);
-
-  // After navigating to a page with an initial Redux state, merge that state
-  // with the current state in the store, and create a new store
-  if (preloadedState && store) {
-    _store = initStore({
-      ...store.getState(),
-      ...preloadedState,
-    });
-    // Reset the current store
-    store = undefined;
-  }
-
-  // For SSG and SSR always create a new store
-  if (typeof window === 'undefined') return _store;
-  // Create the store once in the client
-  if (!store) store = _store;
-
-  return _store;
-};
-
-export function useStore(initialState) {
-  const store = useMemo(() => initializeStore(initialState), [initialState]);
-  return store;
-}
+export const wrapper = createWrapper(initStore);

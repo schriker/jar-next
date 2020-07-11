@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next';
-import { useTypedSelector } from '../store/rootReducer';
 import Layout from '../components/Layout/Layout';
 
 export default function Index() {
