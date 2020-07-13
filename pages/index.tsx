@@ -28,7 +28,7 @@ const Index: NextPage = (props) => {
 Index.getInitialProps = async ({ store, pathname, req, res }) => {
   // async get initial props example
   // const json = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-  // console.log(json);
+  // console.log(json.data);
   return {
     props: {},
   };

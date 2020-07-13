@@ -1,12 +1,8 @@
 import React from 'react';
-import { Streamer } from '../../types/streamer';
+import styles from './Sidebar.module.css';
 
-type SidebarProps = {
-  streamers?: Streamer[];
-};
-
-const Sidebar = ({ streamers }: SidebarProps) => {
-  return <div></div>;
+const Sidebar = () => {
+  return <div className={styles.sidebar}></div>;
 };
 
 export default Sidebar;

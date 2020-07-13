@@ -45,9 +45,12 @@ const appDataSlice = createSlice({
     toggleHideWatched({ client }) {
       client.hideWatched = !client.hideWatched;
     },
-    setServerStreamers(state, action: {type: string, payload: Streamer[]}) {
-      state.server.streamersData = action.payload
-    }
+    setServerStreamers(state, action: { type: string; payload: Streamer[] }) {
+      state.server.streamersData = action.payload;
+    },
+    setAppData(state, action) {
+      state.client = action.payload;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -56,6 +59,6 @@ const appDataSlice = createSlice({
   },
 });
 
-export const { toggleHideWatched, setServerStreamers } = appDataSlice.actions;
+export const { toggleHideWatched, setServerStreamers, setAppData } = appDataSlice.actions;
 
 export default appDataSlice.reducer;
