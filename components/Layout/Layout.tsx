@@ -1,27 +1,18 @@
 import React from 'react';
-import LayoutHead from '../LayoutHead/LayoutHead';
+import { LayoutProps } from '../../types/layout';
+import LayoutHead from './LayoutHead';
 
-type LayoutProps = {
-  title: string;
-  ogImage: string;
-  ogDescription: string;
-  children: React.ReactNode;
-};
-
-export default function Layout({
-  title,
-  ogImage,
-  ogDescription,
-  children,
-}: LayoutProps) {
+const Layout = ({ title, ogImage, ogDescription, children }: LayoutProps) => {
   return (
-    <>
+    <div>
       <LayoutHead
         title={title}
         ogImage={ogImage}
         ogDescription={ogDescription}
       />
       {children}
-    </>
+    </div>
   );
-}
+};
+
+export default Layout;

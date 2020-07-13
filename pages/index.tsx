@@ -1,34 +1,37 @@
-import { wrapper } from '../store/store';
+import axios from 'axios';
+import Link from 'next/link';
+import { NextPage } from 'next';
 import { useDispatch } from 'react-redux';
-import { GetServerSideProps } from 'next';
 import Layout from '../components/Layout/Layout';
 import { useTypedSelector } from '../store/rootReducer';
-import { toggleHideWatched } from '../store/slices/appDataSlice';
+import { toggleHideWatched } from '../store/slices/appData';
 
-export default function Index(props) {
+const Index: NextPage = (props) => {
   const appData = useTypedSelector((state) => state.appData);
   const dispatch = useDispatch();
   return (
     <Layout
-      title={appData.hideWatched.toString()}
+      title={appData.client.hideWatched.toString()}
       ogImage="asd"
       ogDescription="asd"
     >
+      <Link href="/streamer">
+        <a>Streamer</a>
+      </Link>
       <button onClick={() => dispatch(toggleHideWatched())}>
         Change title
       </button>
     </Layout>
   );
-}
+};
 
-export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
-  async ({ store }) => {
-    console.log(store.getState());
-    // store.dispatch(toggleHideWatched());
-    return {
-      props: {
-        test: 'test'
-      }
-    }
-  }
-);
+Index.getInitialProps = async ({ store, pathname, req, res }) => {
+  // async get initial props example
+  // const json = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
+  // console.log(json);
+  return {
+    props: {},
+  };
+};
+
+export default Index;
