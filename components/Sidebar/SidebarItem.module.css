@@ -1,0 +1,52 @@
+.wrapper {
+  width: 360px;
+  padding: 8px 0 8px 9px;
+}
+
+.sidebarItem {
+  width: 35px;
+  height: 35px;
+  opacity: 1;
+  border-radius: 50%;
+  position: relative;
+  animation: fade 2s ease infinite;
+  background-color: rgba(20, 20, 20, 1);
+}
+
+.sidebarItem img {
+  border-radius: 50%;
+}
+
+@keyframes fade {
+	0% {
+		background-color: rgba(20, 20, 20, 1);
+	}
+	50% {
+		background-color: rgba(20, 20, 20, .2);
+	}
+	100% {
+		background-color: rgba(20, 20, 20, 1);
+	}
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 0 15px 0 15px;
+  white-space: nowrap;
+}
+
+.gameName {
+  color: #6B6B6B;
+  padding: 3px 0 0 0;
+  font-size: 14px;
+}
+
+.status {
+  font-size: 14px;
+  position: relative;
+  padding: 0 15px 0 0;
+}

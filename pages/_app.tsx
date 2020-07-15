@@ -2,7 +2,11 @@ import '../styles.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchStreamersData } from '../helpers/api';
-import { setServerStreamers, setAppData } from '../store/slices/appData';
+import {
+  setServerStreamers,
+  setAppData,
+  addServerStreamer,
+} from '../store/slices/appData';
 import { RootState } from '../store/rootReducer';
 import { wrapper } from '../store/store';
 import Sidebar from '../components/Sidebar/Sidebar';
@@ -10,13 +14,15 @@ import App, { AppInitialProps, AppContext } from 'next/app';
 
 class MyApp extends App<AppInitialProps> {
   public static getInitialProps = async ({ Component, ctx }: AppContext) => {
-    const isServer = typeof window === 'undefined';
-    if (isServer) {
+    const state: RootState = ctx.store.getState();
+    if (!process.browser) {
+      const serverStreamers = [...state.appData.server.streamers];
+      if (ctx.query.streamer) {
+        ctx.store.dispatch(addServerStreamer(ctx.query.streamer as string));
+        serverStreamers.push(ctx.query.streamer as string);
+      }
       try {
-        const state: RootState = ctx.store.getState();
-        const streamersData = await fetchStreamersData(
-          state.appData.server.streamers
-        );
+        const streamersData = await fetchStreamersData(serverStreamers);
         ctx.store.dispatch(setServerStreamers(streamersData));
       } catch (err) {
         // Handle Error
@@ -33,10 +39,16 @@ class MyApp extends App<AppInitialProps> {
   };
 
   componentDidMount() {
-    const appData = localStorage.getItem('jarchiwumData');
-    if (appData) {
+    const localUserData = localStorage.getItem('jarchiwumData');
+    if (localUserData) {
+      const userData = JSON.parse(localUserData);
       // @ts-expect-error: Need to pass setAppData to this.props type
-      this.props.setAppData(JSON.parse(appData));
+      const { serverStreamers }: { serverStreamers: string[] } = this.props;
+      userData.streamers = userData.streamers.filter(
+        (streamer: string) => !serverStreamers.includes(streamer)
+      );
+      // @ts-expect-error: Need to pass setAppData to this.props type
+      this.props.setAppData(userData);
     }
   }
 
@@ -51,10 +63,18 @@ class MyApp extends App<AppInitialProps> {
   }
 }
 
+const mapStateToProps = (state: RootState) => {
+  return {
+    serverStreamers: state.appData.server.streamers,
+  };
+};
+
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    setAppData: (appData: any) => dispatch(setAppData(appData))
-  }
-}
+    setAppData: (appData: any) => dispatch(setAppData(appData)),
+  };
+};
 
-export default wrapper.withRedux(connect(null, mapDispatchToProps)(MyApp));
+export default wrapper.withRedux(
+  connect(mapStateToProps, mapDispatchToProps)(MyApp)
+);
