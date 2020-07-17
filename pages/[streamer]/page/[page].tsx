@@ -1,23 +1,24 @@
 import { NextPage } from 'next';
 import { Video } from '../../../types/video';
 import Layout from '../../../components/Layout/Layout';
-import { fetchServerVideos } from '../../../helpers/api';
+import { fetchServerVideos, fetchTwitchVideos } from '../../../helpers/api';
 import { RootState } from '../../../store/rootReducer';
 import { Streamer } from '../../../types/streamer';
+import Videos from '../../../components/Videos/Videos';
 
 type PageProps = {
   videos: Video[];
   streamer: Streamer;
 };
 
-const Page: NextPage<PageProps> = (props) => {
+const Page: NextPage<PageProps> = ({ streamer, videos }) => {
   return (
     <Layout
-      title={`Archiwum Strumieni - ${props.streamer.displayName}`}
-      ogImage={props.streamer.profileImage}
+      title={`Archiwum Strumieni - ${streamer.displayName}`}
+      ogImage={streamer.profileImage}
       ogDescription='Oglądaj archiwalne strumyki z czatem jadisco.'
     >
-      Page
+      <Videos videos={videos} />
     </Layout>
   );
 };
@@ -38,7 +39,9 @@ Page.getInitialProps = async ({ store, query }) => {
       query.page ? parseInt(query.page as string) : 1
     );
   } else {
-    // Get Data From Twitch
+    if (streamer) {
+      videos = await fetchTwitchVideos(streamer.id);
+    }
   }
   return {
     videos: videos,
