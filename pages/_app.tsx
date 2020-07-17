@@ -18,8 +18,10 @@ class MyApp extends App<AppInitialProps> {
     if (!process.browser) {
       const serverStreamers = [...state.appData.server.streamers];
       if (ctx.query.streamer) {
-        ctx.store.dispatch(addServerStreamer(ctx.query.streamer as string));
-        serverStreamers.push(ctx.query.streamer as string);
+        if (!state.appData.server.streamers.includes(ctx.query.streamer as string)) {
+          ctx.store.dispatch(addServerStreamer(ctx.query.streamer as string));
+          serverStreamers.push(ctx.query.streamer as string);
+        }
       }
       try {
         const streamersData = await fetchStreamersData(serverStreamers);

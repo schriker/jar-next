@@ -10,6 +10,7 @@ type appData = {
   client: {
     hideWatched: boolean;
     streamers: string[];
+    streamersData: Streamer[];
     watched: string[];
     bookmarksId: string[];
     bookmarks: [];
@@ -30,6 +31,7 @@ export const initialAppDataState: appData = {
   client: {
     hideWatched: false,
     streamers: [],
+    streamersData: [],
     watched: [],
     bookmarksId: [],
     bookmarks: [],
@@ -48,6 +50,9 @@ const appDataSlice = createSlice({
     setServerStreamers(state, action: { type: string; payload: Streamer[] }) {
       state.server.streamersData = action.payload;
     },
+    setClientStreamers(state, action: { type: string; payload: Streamer[] }) {
+      state.client.streamersData = action.payload;
+    },
     addServerStreamer(state, action: { type: string; payload: string }) {
       state.server.streamers.push(action.payload);
     },
@@ -65,6 +70,7 @@ const appDataSlice = createSlice({
 export const {
   toggleHideWatched,
   setServerStreamers,
+  setClientStreamers,
   setAppData,
   addServerStreamer
 } = appDataSlice.actions;

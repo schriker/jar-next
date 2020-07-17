@@ -2,6 +2,7 @@ import { API } from './axios';
 import qs from 'qs';
 import mergeStreamersData from './mergeStreamersData';
 import { Streamer } from '../types/streamer';
+import { Video } from '../types/video';
 import { TwitchGame, TwitchStreamer, TwitchStream } from '../types/twitch';
 
 const fetchStreamers = (streamers: string[]) => {
@@ -71,8 +72,39 @@ export const fetchStreamersData = (streamers: string[]) => {
       );
       resolve(streamersData);
     } catch (err) {
-      console.log('Fetching server streamers error:', err.response)
+      console.log('Fetching server streamers error:', err.response);
       reject();
     }
   });
 };
+
+export const fetchServerVideos = (streamer: string, page: number) => {
+  return new Promise<Video[]>(async (resolve, reject) => {
+    try {
+      const videoPerPage = 20;
+      const videos = await API.get(
+        `/videos_api?streamer=${streamer}&per_page=${videoPerPage}&page=${page}`
+      );
+      resolve(
+        videos.data.map(
+          (video: any): Video => {
+            return {
+              _id: video._id,
+              duration: video.duration,
+              started: video.started,
+              thumbnail: video.thumbnail,
+              title: video.title,
+              views: video.views,
+              screenShots: video.screenShots ? video.screenShots : [],
+            };
+          }
+        )
+      );
+    } catch (err) {
+      console.log('Fetching server videos error:', err.response);
+      reject();
+    }
+  });
+};
+
+export const fetchVideosFromTwitch = (streamer: string) => {};

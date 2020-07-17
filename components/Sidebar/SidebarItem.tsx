@@ -63,7 +63,7 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
   ) : (
     <Link href="/[streamer]" as={`/${streamer.login}`}>
       <ItemAnchor
-        isActive={router.asPath === `/${streamer.login}`}
+        isActive={router.query.streamer === streamer.login}
         className={style.wrapper}
       >
         <div className={style.sidebarItem}>

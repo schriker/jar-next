@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setClientStreamers } from '../../store/slices/appData';
 import styles from './Sidebar.module.css';
 import { useSpring, animated } from 'react-spring';
 import SidebarItem from './SidebarItem';
@@ -8,6 +10,7 @@ import { fetchStreamersData } from '../../helpers/api';
 import { useTypedSelector } from '../../store/rootReducer';
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const slideIn = useSpring({
     width: isOpen ? 360 : 60,
@@ -19,14 +22,15 @@ const Sidebar = () => {
     client,
   } = useTypedSelector((state) => state.appData);
 
-  const [clientStreamers, setClientStreamers] = useState<Streamer[]>([]);
+  const [streamers, setStreamers] = useState<Streamer[]>([]);
   const [isfetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     const fetchClientStreamers = async () => {
       setIsFetching(true);
       const response = await fetchStreamersData(client.streamers);
-      setClientStreamers(response);
+      setStreamers(response);
+      dispatch(setClientStreamers(response));
       setIsFetching(false);
     };
     if (client.streamers.length) {
@@ -53,7 +57,7 @@ const Sidebar = () => {
           );
         })}
         {isfetching && <SidebarItem isOpen={isOpen} />}
-        {clientStreamers.map((streamer) => {
+        {streamers.map((streamer) => {
           return (
             <SidebarItem
               isOpen={isOpen}
