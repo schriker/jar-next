@@ -2,7 +2,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { Streamer } from '../../types/streamer';
 import { createSlice } from '@reduxjs/toolkit';
 
-type appData = {
+type AppDataStateType = {
   server: {
     streamers: string[];
     streamersData: Streamer[];
@@ -23,7 +23,7 @@ type appData = {
   };
 };
 
-export const initialAppDataState: appData = {
+const appDataInitialState: AppDataStateType = {
   server: {
     streamers: ['wonziu'],
     streamersData: [],
@@ -42,7 +42,7 @@ export const initialAppDataState: appData = {
 
 const appDataSlice = createSlice({
   name: 'appData',
-  initialState: initialAppDataState,
+  initialState: appDataInitialState,
   reducers: {
     toggleHideWatched({ client }) {
       client.hideWatched = !client.hideWatched;

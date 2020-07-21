@@ -1,11 +1,8 @@
 import React from 'react';
-import { Video } from '../../types/video';
+import { useTypedSelector } from '../../store/rootReducer';
 
-type VideosProps = {
-  videos: Video[];
-};
-
-const Videos = ({ videos }: VideosProps) => {
+const Videos = () => {
+  const state = useTypedSelector((state) => state.appVideos);
   return <div></div>;
 };
 

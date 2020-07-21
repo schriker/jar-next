@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import { Video } from '../../../types/video';
+import { setVideos } from '../../../store/slices/appVideos';
 import Layout from '../../../components/Layout/Layout';
 import { fetchServerVideos, fetchTwitchVideos } from '../../../helpers/api';
 import { RootState } from '../../../store/rootReducer';
@@ -7,18 +8,17 @@ import { Streamer } from '../../../types/streamer';
 import Videos from '../../../components/Videos/Videos';
 
 type PageProps = {
-  videos: Video[];
   streamer: Streamer;
 };
 
-const Page: NextPage<PageProps> = ({ streamer, videos }) => {
+const Page: NextPage<PageProps> = ({ streamer }) => {
   return (
     <Layout
       title={`Archiwum Strumieni - ${streamer.displayName}`}
       ogImage={streamer.profileImage}
-      ogDescription='Oglądaj archiwalne strumyki z czatem jadisco.'
+      ogDescription="Oglądaj archiwalne strumyki z czatem jadisco."
     >
-      <Videos videos={videos} />
+      <Videos />
     </Layout>
   );
 };
@@ -43,8 +43,8 @@ Page.getInitialProps = async ({ store, query }) => {
       videos = await fetchTwitchVideos(streamer.id);
     }
   }
+  store.dispatch(setVideos(videos));
   return {
-    videos: videos,
     streamer: streamer,
   } as PageProps;
 };
