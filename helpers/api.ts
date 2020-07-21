@@ -4,8 +4,6 @@ import mergeStreamersData from './mergeStreamersData';
 import { Streamer } from '../types/streamer';
 import { Video } from '../types/video';
 import { TwitchGame, TwitchStreamer, TwitchStream } from '../types/twitch';
-import { resolve } from 'path';
-import { rejects } from 'assert';
 
 const fetchStreamers = (streamers: string[]) => {
   return new Promise<TwitchStreamer[]>(async (resolve, reject) => {
@@ -118,17 +116,19 @@ export const fetchTwitchVideos = (streamerId: string) => {
       });
       const videos = await API.get(`/videos_twitch?${queryString}`);
       resolve(
-        videos.data.data.map((video: any): Video => {
-          return {
-            _id: video.id,
-            duration: video.duration,
-            started: video.created_at,
-            thumbnail: video.thumbnail_url,
-            title: video.title,
-            views: video.view_count,
+        videos.data.data.map(
+          (video: any): Video => {
+            return {
+              _id: video.id,
+              duration: video.duration,
+              started: video.created_at,
+              thumbnail: video.thumbnail_url,
+              title: video.title,
+              views: video.view_count,
+            };
           }
-        })
-      )
+        )
+      );
     } catch (err) {
       console.log('Fetching twitch videos error:', err);
       reject();
