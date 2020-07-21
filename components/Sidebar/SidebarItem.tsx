@@ -57,9 +57,12 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
     config: { duration: 100 },
   });
   return !streamer ? (
-    <div className={style.wrapper}>
+    <ItemAnchor
+      isActive={false}
+      className={style.wrapper}
+    >
       <div className={style.sidebarItem}></div>
-    </div>
+    </ItemAnchor>
   ) : (
     <Link href="/[streamer]" as={`/${streamer.login}`}>
       <ItemAnchor

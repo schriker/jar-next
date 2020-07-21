@@ -1,0 +1,6 @@
+.videos {
+  display: grid;
+  column-gap: 25px;
+  row-gap: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+}

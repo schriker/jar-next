@@ -4,5 +4,6 @@
   width: 100vw;
   height: 100vh;
   position: fixed;
+  z-index: 997;
   background-color: #000;
 }

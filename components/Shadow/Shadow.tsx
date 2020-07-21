@@ -13,7 +13,7 @@ const Shadow = ({ isOpen, delay = 0 }: ShadowProps) => {
     //@ts-expect-error
     enter: () => async (next) => {
       await new Promise((resolve) => setTimeout(resolve, delay));
-      await next({ opacity: .3 });
+      await next({ opacity: .7 });
     },
     leave: { opacity: 0 },
   });
