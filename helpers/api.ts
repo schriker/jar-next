@@ -112,15 +112,15 @@ export const fetchServerVideos = (streamer: string, page: number) => {
 };
 
 export const fetchTwitchVideos = (streamerId: string) => {
-  return new Promise<Video[]>(async (resolve, reject) => {
+  return new Promise<{videos: Video[], paginationCursor: string}>(async (resolve, reject) => {
     try {
       const queryString = qs.stringify({
         user_id: streamerId,
         first: 20,
       });
-      const videos = await API.get(`/videos_twitch?${queryString}`);
-      resolve(
-        videos.data.data.map(
+      const response = await API.get(`/videos_twitch?${queryString}`);
+      resolve({
+        videos: response.data.data.map(
           (video: any): Video => {
             return {
               _id: video.id,
@@ -131,7 +131,9 @@ export const fetchTwitchVideos = (streamerId: string) => {
               views: video.view_count,
             };
           }
-        )
+        ),
+        paginationCursor: response.data.pagination.cursor
+      }
       );
     } catch (err) {
       console.log('Fetching twitch videos error:', err);

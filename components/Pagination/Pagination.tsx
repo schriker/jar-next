@@ -36,7 +36,7 @@ const Pagination = ({ count }: PaginationPropsType) => {
   const [goToLast, setGoToLast] = useState<boolean>(false);
   const [firstPage, setFirstPage] = useState(currentPage);
   const totalPages = Math.ceil(count / 20);
-  const pagesToShow = 6;
+  const pagesToShow = 4;
 
   useEffect(() => {
     if (
