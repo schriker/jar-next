@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import VideoImagePlaceholder from './VideoImagePlaceholder';
 import Spinner from '../Spinner/Spinner';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { useSpring, animated } from 'react-spring';
 import Link from 'next/link';
 import moment from 'moment';
 import { Video } from '../../types/video';
@@ -14,16 +14,23 @@ type VideosItemPropsType = {
   video: Video;
 };
 
+type StyledThumbnailPropsType = {
+  isLoaded: boolean;
+}
+
+const StyledThumbnail = styled.img<StyledThumbnailPropsType>`
+  opacity: ${(props) => props.isLoaded ? '1' : '0'};
+`
+
 const VideosItem = ({ video }: VideosItemPropsType) => {
   const isNew = Date.now() - new Date(video.started).getTime() < 86400000;
   const image = useRef<HTMLImageElement>(null!);
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const fadeIn = useSpring({ opacity: loaded ? 1 : 0 });
+  const [ loaded, setLoaded ] = useState<boolean>(false);
   const handleImageLoaded = () => {
     setLoaded(true);
   };
   useEffect(() => {
-    if (image.current.complete) {
+    if (image.current?.complete) {
       handleImageLoaded();
     }
   }, [image]);
@@ -38,13 +45,13 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
         <Link href="/video/[video]" as={`/video/${video._id}`}>
           <a className={styles.link}>
             <div className={styles.wrapper}>
-              <div className={styles.background}></div>
+              {loaded && <div className={styles.background}></div>}
               <div className={styles.thumbnail}>
                 <Spinner />
                 <VideoImagePlaceholder />
-                <animated.img
+                <StyledThumbnail
+                  isLoaded={loaded}
                   className={styles.image}
-                  style={fadeIn}
                   ref={image}
                   src={
                     video.thumbnail.length

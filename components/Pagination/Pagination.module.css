@@ -1,0 +1,27 @@
+.wrapper {
+  border-top: 1px solid #373737;
+  margin: 0 50px;
+  padding: 30px 0 150px 0;
+}
+
+.wrapper ul {
+  display: flex;
+  list-style: none;
+
+}
+
+.wrapper a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  display: block;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 13px;
+}

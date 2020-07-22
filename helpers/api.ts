@@ -80,32 +80,35 @@ export const fetchStreamersData = (streamers: string[]) => {
 };
 
 export const fetchServerVideos = (streamer: string, page: number) => {
-  return new Promise<Video[]>(async (resolve, reject) => {
-    try {
-      const videoPerPage = 20;
-      const videos = await API.get(
-        `/videos_api?streamer=${streamer}&per_page=${videoPerPage}&page=${page}`
-      );
-      resolve(
-        videos.data.map(
-          (video: any): Video => {
-            return {
-              _id: video._id,
-              duration: video.duration,
-              started: video.started,
-              thumbnail: video.thumbnail,
-              title: video.title,
-              views: video.views,
-              screenShots: video.screenShots ? video.screenShots : [],
-            };
-          }
-        )
-      );
-    } catch (err) {
-      console.log('Fetching server videos error:', err.response);
-      reject();
+  return new Promise<{ videos: Video[]; count: number }>(
+    async (resolve, reject) => {
+      try {
+        const videoPerPage = 20;
+        const response = await API.get(
+          `/videos_api?streamer=${streamer}&per_page=${videoPerPage}&page=${page}`
+        );
+        resolve({
+          videos: response.data.videos.map(
+            (video: any): Video => {
+              return {
+                _id: video._id,
+                duration: video.duration,
+                started: video.started,
+                thumbnail: video.thumbnail,
+                title: video.title,
+                views: video.views,
+                screenShots: video.screenShots ? video.screenShots : [],
+              };
+            }
+          ),
+          count: response.data.count,
+        });
+      } catch (err) {
+        console.log('Fetching server videos error:', err.response);
+        reject();
+      }
     }
-  });
+  );
 };
 
 export const fetchTwitchVideos = (streamerId: string) => {
