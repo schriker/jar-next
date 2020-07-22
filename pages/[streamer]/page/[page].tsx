@@ -50,14 +50,17 @@ Page.getInitialProps = async ({ store, query }) => {
   const streamer = allStreamersData.find(
     (streamer) => streamer.login === query.streamer
   );
-  if (query.streamer === 'wonziu' && parseInt(query.page as string) > 0) {
+  if (
+    (query.streamer === 'wonziu' && parseInt(query.page as string) > 0) ||
+    (query.streamer === 'wonziu' && !query.page)
+  ) {
     const response = await fetchServerVideos(
       query.streamer as string,
       query.page ? parseInt(query.page as string) : 1
     );
     videos = response.videos;
     count = response.count;
-  } else if(query.streamer !== 'wonziu') {
+  } else if (query.streamer !== 'wonziu') {
     if (streamer) {
       const response = await fetchTwitchVideos(streamer.id);
       videos = response.videos;
