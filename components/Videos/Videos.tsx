@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import VideosRow from './VideosRow';
 import styles from './Videos.module.css';
-import { useTypedSelector } from '../../store/rootReducer';
+import { Video } from '../../types/video';
 
-const Videos = () => {
-  const state = useTypedSelector((state) => state.appVideos);
-  const last24h = state.videos.filter(
+type VideosPropsType = {
+  videos: Video[];
+};
+
+const Videos = ({ videos }: VideosPropsType) => {
+  const last24h = videos.filter(
     (video) => Date.now() - new Date(video.started).getTime() < 86400000
   );
-  const last48h = state.videos.filter(
+  const last48h = videos.filter(
     (video) =>
       Date.now() - new Date(video.started).getTime() < 172800000 &&
       Date.now() - new Date(video.started).getTime() >= 86400000
   );
-  const older = state.videos.filter(
+  const older = videos.filter(
     (video) => Date.now() - new Date(video.started).getTime() >= 172800000
   );
   return (
     <div className={styles.videos}>
-      <VideosRow title="Ostatnie 24h" videos={last24h}/>
-      <VideosRow title="Ostatnie 48h" videos={last48h}/>
-      <VideosRow title="Starsze" videos={older}/>
+      <VideosRow title="Ostatnie 24h" videos={last24h} />
+      <VideosRow title="Ostatnie 48h" videos={last48h} />
+      <VideosRow title="Starsze" videos={older} />
     </div>
   );
 };

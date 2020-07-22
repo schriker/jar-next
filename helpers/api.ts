@@ -1,5 +1,6 @@
 import { API } from './axios';
 import qs from 'qs';
+import axios, { CancelTokenSource } from 'axios';
 import mergeStreamersData from './mergeStreamersData';
 import { Streamer } from '../types/streamer';
 import { Video } from '../types/video';

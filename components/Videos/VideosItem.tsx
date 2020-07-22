@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import VideoImagePlaceholder from './VideoImagePlaceholder';
+import Spinner from '../Spinner/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useSpring, animated } from 'react-spring';
@@ -24,7 +26,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
     if (image.current.complete) {
       handleImageLoaded();
     }
-  }, []);
+  }, [image]);
   const addToBookark = (event: React.MouseEvent) => {
     event.preventDefault();
   };
@@ -33,14 +35,16 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
   };
   return (
     <div className={styles.container}>
-      {!loaded && <div className={styles.preloading}></div>}
-      <animated.div style={fadeIn}>
         <Link href="/video/[video]" as={`/video/${video._id}`}>
           <a className={styles.link}>
             <div className={styles.wrapper}>
               <div className={styles.background}></div>
               <div className={styles.thumbnail}>
-                <img
+                <Spinner />
+                <VideoImagePlaceholder />
+                <animated.img
+                  className={styles.image}
+                  style={fadeIn}
                   ref={image}
                   src={
                     video.thumbnail.length
@@ -80,7 +84,6 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
             </div>
           </a>
         </Link>
-      </animated.div>
     </div>
   );
 };
