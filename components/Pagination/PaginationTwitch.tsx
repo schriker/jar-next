@@ -26,7 +26,7 @@ const PaginationTwitch = ({ paginationCursor }: PaginationTwitchPropsType) => {
           href={`/[streamer]?after=${paginationCursor}`}
           as={`/${router.query.streamer}`}
         >
-          <a>Nastepne</a>
+          <a>Następne</a>
         </Link>
       </StyledNavi>
     </ul>

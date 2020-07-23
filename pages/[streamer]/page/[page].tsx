@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import { setVideos } from '../../../store/slices/appVideos';
+import { setNotification } from '../../../store/slices/appNotification';
 import { Video } from '../../../types/video';
 import CustomError404 from '../../404';
 import { ServerVideoQuery, TwitchVideoQuery } from '../../../types/api';
@@ -91,6 +92,7 @@ Page.getInitialProps = async ({ store, query }) => {
       paginationCursor: paginationCursor,
     } as PageProps;
   } catch (err) {
+    store.dispatch(setNotification('Dotarłeś do końca!'));
     return {
       videos: state.appVideos.videos,
       count: state.appVideos.count,

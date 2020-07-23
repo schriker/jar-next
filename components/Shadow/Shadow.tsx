@@ -1,29 +1,41 @@
 import React from 'react';
-import { useSpring, animated, useTransition } from 'react-spring';
+import { animated, useTransition } from 'react-spring';
 import style from './Shadow.module.css';
 
 type ShadowProps = {
   isOpen: boolean;
   delay?: number;
+  onClick?: () => void;
 };
 
-const Shadow = ({ isOpen, delay = 0 }: ShadowProps) => {
+const Shadow = ({ isOpen, delay = 0, onClick }: ShadowProps) => {
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
     //@ts-expect-error
     enter: () => async (next) => {
       await new Promise((resolve) => setTimeout(resolve, delay));
-      await next({ opacity: .7 });
+      await next({ opacity: 0.7 });
     },
     leave: { opacity: 0 },
   });
+
+  const onClickHandler = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
 
   return (
     <>
       {transitions.map(
         ({ item, key, props }) =>
           item && (
-            <animated.div className={style.shadow} key={key} style={props} />
+            <animated.div
+              onClick={() => onClickHandler()}
+              className={style.shadow}
+              key={key}
+              style={props}
+            />
           )
       )}
     </>

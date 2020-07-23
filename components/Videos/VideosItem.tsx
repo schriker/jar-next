@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Tooltip from '../Tooltip/Tooltip';
 import VideoImagePlaceholder from './VideoImagePlaceholder';
 import Spinner from '../Spinner/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -33,6 +34,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
   };
   return (
     <div className={styles.container}>
+      <Tooltip />
       <Link href="/video/[video]" as={`/video/${video._id}`}>
         <a className={styles.link}>
           <div className={styles.wrapper}>
@@ -56,6 +58,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               />
               {isNew && <div className={styles.new}>New</div>}
               <div
+                data-tip="Ulubiony"
                 onClick={(event) => addToBookark(event)}
                 className={styles.bookmark}
               >
@@ -74,6 +77,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               {moment(video.started).format('DD-MM-YYYY • HH:mm:ss')}
             </div>
             <div
+              data-tip="Obejrzany"
               onClick={(event) => addToWatched(event)}
               className={styles.check}
             >

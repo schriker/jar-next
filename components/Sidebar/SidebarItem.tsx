@@ -53,6 +53,9 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
   const fadeIn = useSpring({ opacity: loaded ? 1 : isServerSide ? 1 : 0 });
   const slideIn = useSpring({
     opacity: isOpen ? 1 : 0,
+    config: {
+      duration: 200
+    }
   });
   return !streamer ? (
     <ItemAnchor isActive={false} className={style.wrapper}>
