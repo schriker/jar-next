@@ -13,10 +13,6 @@ type VideosItemPropsType = {
   video: Video;
 };
 
-type StyledThumbnailPropsType = {
-  isLoaded: boolean;
-};
-
 const VideosItem = ({ video }: VideosItemPropsType) => {
   const isNew = Date.now() - new Date(video.started).getTime() < 86400000;
   const image = useRef<HTMLImageElement>(null!);

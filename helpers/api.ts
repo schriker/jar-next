@@ -1,9 +1,9 @@
 import { API } from './axios';
 import qs from 'qs';
-import axios, { CancelTokenSource } from 'axios';
 import mergeStreamersData from './mergeStreamersData';
 import { Streamer } from '../types/streamer';
 import { Video } from '../types/video';
+import { ServerVideoQuery, TwitchVideoQuery } from '../types/api';
 import { TwitchGame, TwitchStreamer, TwitchStream } from '../types/twitch';
 
 const fetchStreamers = (streamers: string[]) => {
@@ -79,13 +79,13 @@ export const fetchStreamersData = (streamers: string[]) => {
   });
 };
 
-export const fetchServerVideos = (streamer: string, page: number) => {
+export const fetchServerVideos = (query: ServerVideoQuery) => {
   return new Promise<{ videos: Video[]; count: number }>(
     async (resolve, reject) => {
       try {
-        const videoPerPage = 20;
+        const queryString = qs.stringify(query);
         const response = await API.get(
-          `/videos_api?streamer=${streamer}&per_page=${videoPerPage}&page=${page}`
+          `/videos_api?${queryString}`
         );
         resolve({
           videos: response.data.videos.map(
@@ -111,13 +111,10 @@ export const fetchServerVideos = (streamer: string, page: number) => {
   );
 };
 
-export const fetchTwitchVideos = (streamerId: string) => {
+export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
   return new Promise<{videos: Video[], paginationCursor: string}>(async (resolve, reject) => {
     try {
-      const queryString = qs.stringify({
-        user_id: streamerId,
-        first: 20,
-      });
+      const queryString = qs.stringify(query);
       const response = await API.get(`/videos_twitch?${queryString}`);
       resolve({
         videos: response.data.data.map(

@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 import { Video } from '../../../types/video';
 import Error404 from '../../404';
+import { ServerVideoQuery, TwitchVideoQuery } from '../../../types/api';
 import Pagination from '../../../components/Pagination/Pagination';
 import Layout from '../../../components/Layout/Layout';
 import { fetchServerVideos, fetchTwitchVideos } from '../../../helpers/api';
@@ -50,29 +51,46 @@ Page.getInitialProps = async ({ store, query }) => {
   const streamer = allStreamersData.find(
     (streamer) => streamer.login === query.streamer
   );
-  if (
-    (query.streamer === 'wonziu' && parseInt(query.page as string) > 0) ||
-    (query.streamer === 'wonziu' && !query.page)
-  ) {
-    const response = await fetchServerVideos(
-      query.streamer as string,
-      query.page ? parseInt(query.page as string) : 1
-    );
-    videos = response.videos;
-    count = response.count;
-  } else if (query.streamer !== 'wonziu') {
-    if (streamer) {
-      const response = await fetchTwitchVideos(streamer.id);
+  try {
+    if (
+      (query.streamer === 'wonziu' && parseInt(query.page as string) > 0) ||
+      (query.streamer === 'wonziu' && !query.page)
+    ) {
+      const serverQuery: ServerVideoQuery = {
+        streamer: query.streamer,
+        page: query.page ? parseInt(query.page as string) : 1,
+        per_page: 20,
+      };
+      const response = await fetchServerVideos(serverQuery);
       videos = response.videos;
-      paginationCursor = response.paginationCursor;
+      count = response.count;
+    } else if (query.streamer !== 'wonziu') {
+      if (streamer) {
+        const twitchQuery: TwitchVideoQuery = {
+          user_id: streamer.id,
+          first: 20,
+          ...query,
+        };
+        const response = await fetchTwitchVideos(twitchQuery);
+        console.log(response);
+        videos = response.videos;
+        paginationCursor = response.paginationCursor;
+      }
     }
+    return {
+      videos: videos,
+      count: count,
+      streamer: streamer,
+      paginationCursor: paginationCursor,
+    } as PageProps;
+  } catch (err) {
+    return {
+      videos: [],
+      count: 0,
+      streamer: streamer,
+      paginationCursor: '',
+    } as PageProps;
   }
-  return {
-    videos: videos,
-    count: count,
-    streamer: streamer,
-    paginationCursor: paginationCursor,
-  } as PageProps;
 };
 
 export default Page;
