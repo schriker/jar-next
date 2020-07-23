@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import VideosRow from './VideosRow';
 import styles from './Videos.module.css';
 import { Video } from '../../types/video';

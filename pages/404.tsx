@@ -1,10 +1,7 @@
-const Error404 = () => {
-  return (
-    <div className="error404">
-      <h1>404</h1>
-      <span>This page could not be found.</span>
-    </div>
-  );
+import CustomError from '../components/CustomError/CustomError';
+
+const CustomError404 = () => {
+  return <CustomError code="404" message="This page could not be found." />;
 };
 
-export default Error404;
+export default CustomError404;

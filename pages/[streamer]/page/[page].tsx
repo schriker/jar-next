@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
+import { setVideos } from '../../../store/slices/appVideos';
 import { Video } from '../../../types/video';
-import Error404 from '../../404';
+import CustomError404 from '../../404';
 import { ServerVideoQuery, TwitchVideoQuery } from '../../../types/api';
 import Pagination from '../../../components/Pagination/Pagination';
 import Layout from '../../../components/Layout/Layout';
@@ -23,7 +24,7 @@ const Page: NextPage<PageProps> = ({
   paginationCursor,
 }) => {
   return !videos.length ? (
-    <Error404 />
+    <CustomError404 />
   ) : (
     <Layout
       title={`Archiwum Strumieni - ${streamer.displayName}`}
@@ -72,11 +73,17 @@ Page.getInitialProps = async ({ store, query }) => {
           ...query,
         };
         const response = await fetchTwitchVideos(twitchQuery);
-        console.log(response);
         videos = response.videos;
         paginationCursor = response.paginationCursor;
       }
     }
+    store.dispatch(
+      setVideos({
+        videos,
+        count,
+        paginationCursor,
+      })
+    );
     return {
       videos: videos,
       count: count,
@@ -85,10 +92,10 @@ Page.getInitialProps = async ({ store, query }) => {
     } as PageProps;
   } catch (err) {
     return {
-      videos: [],
-      count: 0,
+      videos: state.appVideos.videos,
+      count: state.appVideos.count,
       streamer: streamer,
-      paginationCursor: '',
+      paginationCursor: state.appVideos.paginationCursor,
     } as PageProps;
   }
 };

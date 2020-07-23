@@ -1,0 +1,19 @@
+.customError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.customError h1 {
+  font-weight: 500;
+  font-size: 28px;
+  border-right: 1px solid #f00;
+  line-height: 40px;
+  padding: 2px 25px 0 0;
+  margin: 0 25px 0 0;
+}
+
+.customError span {
+  color: #BBBBBB;
+}

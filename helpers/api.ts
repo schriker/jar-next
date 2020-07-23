@@ -84,9 +84,7 @@ export const fetchServerVideos = (query: ServerVideoQuery) => {
     async (resolve, reject) => {
       try {
         const queryString = qs.stringify(query);
-        const response = await API.get(
-          `/videos_api?${queryString}`
-        );
+        const response = await API.get(`/videos_api?${queryString}`);
         resolve({
           videos: response.data.videos.map(
             (video: any): Video => {
@@ -112,29 +110,33 @@ export const fetchServerVideos = (query: ServerVideoQuery) => {
 };
 
 export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
-  return new Promise<{videos: Video[], paginationCursor: string}>(async (resolve, reject) => {
-    try {
-      const queryString = qs.stringify(query);
-      const response = await API.get(`/videos_twitch?${queryString}`);
-      resolve({
-        videos: response.data.data.map(
-          (video: any): Video => {
-            return {
-              _id: video.id,
-              duration: video.duration,
-              started: video.created_at,
-              thumbnail: video.thumbnail_url,
-              title: video.title,
-              views: video.view_count,
-            };
-          }
-        ),
-        paginationCursor: response.data.pagination.cursor
+  return new Promise<{ videos: Video[]; paginationCursor: string }>(
+    async (resolve, reject) => {
+      try {
+        const queryString = qs.stringify(query);
+        const response = await API.get(`/videos_twitch?${queryString}`);
+        if (!response.data.data.length) {
+          throw new Error('Videos array is empty.');
+        }
+        resolve({
+          videos: response.data.data.map(
+            (video: any): Video => {
+              return {
+                _id: video.id,
+                duration: video.duration,
+                started: video.created_at,
+                thumbnail: video.thumbnail_url,
+                title: video.title,
+                views: video.view_count,
+              };
+            }
+          ),
+          paginationCursor: response.data.pagination.cursor,
+        });
+      } catch (err) {
+        console.log('Fetching twitch videos error:', err);
+        reject();
       }
-      );
-    } catch (err) {
-      console.log('Fetching twitch videos error:', err);
-      reject();
     }
-  });
+  );
 };

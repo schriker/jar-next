@@ -80,7 +80,7 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
             <div>{streamer.displayName}</div>
             {streamer.game && (
               <div className={style.gameName}>
-                {trimString(streamer.game.name, 30)}
+                {trimString(streamer.game.name, 25)}
               </div>
             )}
           </div>

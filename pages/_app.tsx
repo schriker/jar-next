@@ -16,11 +16,17 @@ import App, { AppInitialProps, AppContext } from 'next/app';
 import NProgress from 'nprogress';
 import Router from 'next/router';
 
+
 Router.events.on('routeChangeStart', () => {
   NProgress.start();
+  NProgress.set(0.25);
 });
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+Router.events.on('routeChangeComplete', () => {
+  NProgress.done();
+});
+Router.events.on('routeChangeError', () => {
+  NProgress.done();
+});
 
 class MyApp extends App<AppInitialProps> {
   public static getInitialProps = async ({ Component, ctx }: AppContext) => {
