@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './CustomError.module.css';
+import styles from 'components/CustomError/CustomError.module.css';
 
 type CustomErrorPropsType = {
   code: string;

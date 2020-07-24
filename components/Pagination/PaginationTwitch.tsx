@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import StyledNavi from './StyledNavi';
+import StyledNavi from 'components/Pagination/StyledNavi';
 import { useRouter } from 'next/router';
-import qs from 'qs';
 
 type PaginationTwitchPropsType = {
   paginationCursor: string;
@@ -10,7 +9,6 @@ type PaginationTwitchPropsType = {
 
 const PaginationTwitch = ({ paginationCursor }: PaginationTwitchPropsType) => {
   const router = useRouter();
-  // console.log(qs.parse(router.asPath));
   return (
     <ul>
       <StyledNavi fixedWidth={false} isActive={false}>

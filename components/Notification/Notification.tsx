@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Shadow from '../Shadow/Shadow';
-import styles from './Notification.module.css';
+import Shadow from 'components/Shadow/Shadow';
+import styles from 'components/Notification/Notification.module.css';
 import { animated, useTransition } from 'react-spring';
-import { clearNotification } from '../../store/slices/appNotification';
-import { useTypedSelector } from '../../store/rootReducer';
+import { clearNotification } from 'store/slices/appNotification';
+import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 
 const Notification = () => {
@@ -20,12 +20,12 @@ const Notification = () => {
     if (notification.isOpen) {
       timeOut = setTimeout(() => {
         dispatch(clearNotification());
-      }, 3500);
+      }, 3000);
     }
     return () => {
       clearTimeout(timeOut);
     };
-  }, [notification.isOpen]);
+  });
 
   return (
     <>

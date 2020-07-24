@@ -1,4 +1,4 @@
-import rootReducer from './rootReducer';
+import rootReducer from 'store/rootReducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 

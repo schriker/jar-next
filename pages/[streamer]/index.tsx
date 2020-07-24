@@ -1,3 +1,3 @@
-import Page from './page/[page]';
+import Page from 'pages/[streamer]/page/[page]';
 
 export default Page;

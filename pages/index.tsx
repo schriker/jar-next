@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { NextPage } from 'next';
-import { RootState } from '../store/rootReducer';
+import { RootState } from 'store/rootReducer';
 
 const Index: NextPage = () => {
   return null;

@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Tooltip from '../Tooltip/Tooltip';
-import VideoImagePlaceholder from './VideoImagePlaceholder';
-import Spinner from '../Spinner/Spinner';
+import Tooltip from 'components/Tooltip/Tooltip';
+import VideoImagePlaceholder from 'components/Videos/VideoImagePlaceholder';
+import Spinner from 'components/Spinner/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faHeart } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import moment from 'moment';
-import { Video } from '../../types/video';
-import styles from './VideosItem.module.css';
-import trimString from '../../helpers/trimString';
+import { Video } from 'types/video';
+import styles from 'components/Videos/VideosItem.module.css';
+import trimString from 'helpers/trimString';
 
 type VideosItemPropsType = {
   video: Video;
@@ -64,7 +64,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               >
                 <FontAwesomeIcon
                   className={styles.bookmarkIcon}
-                  icon={faBookmark}
+                  icon={faHeart}
                 />
               </div>
               <div className={styles.duration}>{video.duration}</div>

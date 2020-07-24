@@ -1,10 +1,10 @@
-import { API } from './axios';
+import { API } from 'helpers/axios';
 import qs from 'qs';
-import mergeStreamersData from './mergeStreamersData';
-import { Streamer } from '../types/streamer';
-import { Video } from '../types/video';
-import { ServerVideoQuery, TwitchVideoQuery } from '../types/api';
-import { TwitchGame, TwitchStreamer, TwitchStream } from '../types/twitch';
+import mergeStreamersData from 'helpers/mergeStreamersData';
+import { Streamer } from 'types/streamer';
+import { Video } from 'types/video';
+import { ServerVideoQuery, TwitchVideoQuery } from 'types/api';
+import { TwitchGame, TwitchStreamer, TwitchStream } from 'types/twitch';
 
 const fetchStreamers = (streamers: string[]) => {
   return new Promise<TwitchStreamer[]>(async (resolve, reject) => {

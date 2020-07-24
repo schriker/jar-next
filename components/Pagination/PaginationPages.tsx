@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import StyledNavi from './StyledNavi';
+import StyledNavi from 'components/Pagination/StyledNavi';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faForward, faBackward } from '@fortawesome/free-solid-svg-icons';
-import styles from './PaginationPages.module.css';
+import styles from 'components/Pagination/PaginationPages.module.css';
 
 type PaginationPagesPropsType = {
   count: number;

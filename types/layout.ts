@@ -1,5 +1,3 @@
-import Layout from "../components/Layout/Layout";
-
 export interface LayoutHeadProps {
   title: string;
   ogImage: string;

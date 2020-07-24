@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import appDataReducer from './slices/appData';
-import appVideosReducer from './slices/appVideos';
-import appNotificationReducer from './slices/appNotification';
+import appDataReducer from 'store/slices/appData';
+import appVideosReducer from 'store/slices/appVideos';
+import appNotificationReducer from 'store/slices/appNotification';
 import { useSelector, TypedUseSelectorHook } from 'react-redux';
 
 const rootReducer = combineReducers({

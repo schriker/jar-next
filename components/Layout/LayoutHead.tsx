@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { LayoutHeadProps } from '../../types/layout';
+import { LayoutHeadProps } from 'types/layout';
 import { useRouter } from 'next/router';
 
 const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {

@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Pagination.module.css';
-import PaginationPages from './PaginationPages';
-import PaginationTwitch from './PaginationTwitch';
+import styles from 'components/Pagination/Pagination.module.css';
+import PaginationPages from 'components/Pagination/PaginationPages';
+import PaginationTwitch from 'components/Pagination/PaginationTwitch';
 
 type PaginationPropsType = {
   count: number;

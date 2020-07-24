@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setClientStreamers } from '../../store/slices/appData';
-import styles from './Sidebar.module.css';
+import { setClientStreamers } from 'store/slices/appData';
+import styles from 'components/Sidebar/Sidebar.module.css';
 import { useSpring, animated } from 'react-spring';
-import SidebarItem from './SidebarItem';
-import Shadow from '../Shadow/Shadow';
-import { Streamer } from '../../types/streamer';
-import { fetchStreamersData } from '../../helpers/api';
-import { useTypedSelector } from '../../store/rootReducer';
+import SidebarItem from 'components/Sidebar/SidebarItem';
+import Shadow from 'components/Shadow/Shadow';
+import { Streamer } from 'types/streamer';
+import { fetchStreamersData } from 'helpers/api';
+import { useTypedSelector } from 'store/rootReducer';
 
 const Sidebar = () => {
   const dispatch = useDispatch();

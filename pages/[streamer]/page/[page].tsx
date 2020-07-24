@@ -1,15 +1,16 @@
 import { NextPage } from 'next';
-import { setVideos } from '../../../store/slices/appVideos';
-import { setNotification } from '../../../store/slices/appNotification';
-import { Video } from '../../../types/video';
-import CustomError404 from '../../404';
-import { ServerVideoQuery, TwitchVideoQuery } from '../../../types/api';
-import Pagination from '../../../components/Pagination/Pagination';
-import Layout from '../../../components/Layout/Layout';
-import { fetchServerVideos, fetchTwitchVideos } from '../../../helpers/api';
-import { RootState } from '../../../store/rootReducer';
-import { Streamer } from '../../../types/streamer';
-import Videos from '../../../components/Videos/Videos';
+import { setVideos } from 'store/slices/appVideos';
+import { setNotification } from 'store/slices/appNotification';
+import { Video } from 'types/video';
+import CustomError404 from 'pages/404';
+import { ServerVideoQuery, TwitchVideoQuery } from 'types/api';
+import Pagination from 'components/Pagination/Pagination';
+import Layout from 'components/Layout/Layout';
+import { fetchServerVideos, fetchTwitchVideos } from 'helpers/api';
+import { RootState } from 'store/rootReducer';
+import { Streamer } from 'types/streamer';
+import Videos from 'components/Videos/Videos';
+import Toolbar from 'components/Toolbar/Toolbar';
 
 type PageProps = {
   streamer: Streamer;
@@ -32,6 +33,7 @@ const Page: NextPage<PageProps> = ({
       ogImage={streamer.profileImage}
       ogDescription="Oglądaj archiwalne strumyki z czatem jadisco."
     >
+      <Toolbar />
       <Videos videos={videos} />
       <Pagination paginationCursor={paginationCursor} count={count} />
     </Layout>

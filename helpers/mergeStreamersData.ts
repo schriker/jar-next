@@ -1,5 +1,5 @@
-import { Streamer } from '../types/streamer';
-import { TwitchStream, TwitchStreamer, TwitchGame } from '../types/twitch';
+import { Streamer } from 'types/streamer';
+import { TwitchStream, TwitchStreamer, TwitchGame } from 'types/twitch';
 
 const mergeStreamersData = (
   streamers: TwitchStreamer[],

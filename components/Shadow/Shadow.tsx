@@ -1,6 +1,6 @@
 import React from 'react';
 import { animated, useTransition } from 'react-spring';
-import style from './Shadow.module.css';
+import style from 'components/Shadow/Shadow.module.css';
 
 type ShadowProps = {
   isOpen: boolean;

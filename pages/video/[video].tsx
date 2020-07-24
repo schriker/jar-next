@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
-import Layout from '../../components/Layout/Layout';
-import { useTypedSelector, RootState } from '../../store/rootReducer';
+import Layout from 'components/Layout/Layout';
+import { useTypedSelector, RootState } from 'store/rootReducer';
 
 const Video: NextPage = () => {
   const appData = useTypedSelector((state) => state.appData);

@@ -1,5 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
-import { Streamer } from '../../types/streamer';
+import { Streamer } from 'types/streamer';
 import { createSlice } from '@reduxjs/toolkit';
 
 type AppDataStateType = {

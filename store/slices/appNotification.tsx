@@ -1,6 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { createSlice } from '@reduxjs/toolkit';
-import { stat } from 'fs';
 
 type AppNotificationStateType = {
   isOpen: boolean;

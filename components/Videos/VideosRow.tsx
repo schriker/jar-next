@@ -1,7 +1,7 @@
 import React from 'react';
-import VideosItem from './VideosItem';
-import { Video } from '../../types/video';
-import styles from './VideosRow.module.css';
+import VideosItem from 'components/Videos/VideosItem';
+import { Video } from 'types/video';
+import styles from 'components/Videos/VideosRow.module.css';
 
 type VideosRowType = {
   videos: Video[];

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import Link from 'next/link';
-import trimString from '../../helpers/trimString';
+import trimString from 'helpers/trimString';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import style from './SidebarItem.module.css';
-import { Streamer } from '../../types/streamer';
+import style from 'components/Sidebar/SidebarItem.module.css';
+import { Streamer } from 'types/streamer';
 
 type SidebarItemProps = {
   isOpen: boolean;

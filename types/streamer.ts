@@ -1,4 +1,4 @@
-import { TwitchGame } from './twitch';
+import { TwitchGame } from 'types/twitch';
 
 export type Streamer = {
   id: string;

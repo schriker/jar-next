@@ -1,16 +1,16 @@
-import '../styles.css';
-import '../nprogress.css';
+import 'styles.css';
+import 'nprogress.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchStreamersData } from '../helpers/api';
+import { fetchStreamersData } from 'helpers/api';
 import {
   setServerStreamers,
   setAppData,
   addServerStreamer,
-} from '../store/slices/appData';
-import { RootState } from '../store/rootReducer';
-import { wrapper } from '../store/store';
-import Sidebar from '../components/Sidebar/Sidebar';
+} from 'store/slices/appData';
+import { RootState } from 'store/rootReducer';
+import { wrapper } from 'store/store';
+import Sidebar from 'components/Sidebar/Sidebar';
 import App, { AppInitialProps, AppContext } from 'next/app';
 
 import NProgress from 'nprogress';

@@ -1,4 +1,4 @@
-import { Video } from '../../types/video';
+import { Video } from 'types/video';
 import { HYDRATE } from 'next-redux-wrapper';
 import { createSlice } from '@reduxjs/toolkit';
 
