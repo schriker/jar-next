@@ -2,6 +2,7 @@ import 'styles.css';
 import 'nprogress.css';
 import 'react-dates/lib/css/_datepicker.css';
 import 'react-dates/initialize';
+import 'react_dates_overrides.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchStreamersData } from 'helpers/api';

@@ -104,7 +104,7 @@
 }
 
 .bookmark {
-  z-index: 996;
+  z-index: 995;
   display: flex;
   right: -3px;
   top: 5px;
@@ -127,7 +127,7 @@
 }
 
 .check {
-  z-index: 996;
+  z-index: 995;
   position: absolute;
   right: 0;
   top: 50%;

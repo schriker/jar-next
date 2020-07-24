@@ -1,0 +1,78 @@
+.CalendarDay__selected_span {
+  background: #82e0aa;
+  color: white;
+  border: 1px solid #f00;
+}
+
+.CalendarDay__selected {
+  background: #000;
+  color: white;
+}
+
+.CalendarDay__selected:hover {
+  background: orange;
+  color: white;
+}
+
+.CalendarDay__hovered_span:hover,
+.CalendarDay__hovered_span {
+  background: brown;
+}
+
+.DayPicker__horizontal,
+.CalendarMonthGrid__horizontal,
+.CalendarMonth {
+  background-color: #232323;
+}
+
+.CalendarDay__default {
+  color: #fff;
+  background-color: #232323;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
+.CalendarDay__default:hover {
+  color: #fff;
+  background-color: #f00;
+  border: 1px solid transparent;
+}
+
+.CalendarMonth_caption {
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  padding-bottom: 50px;
+}
+
+.DayPickerNavigation_button__default {
+  background-color: #373737;
+  border: 1px solid transparent;
+  transition: all ease 0.2s;
+}
+
+.DayPickerNavigation_button__default:hover {
+  background-color: #f00;
+  border: 1px solid transparent;
+}
+
+.DayPickerNavigation_svg__horizontal {
+  fill: #fff;
+}
+
+.CalendarDay__blocked_calendar,
+.CalendarDay__blocked_calendar:active,
+.CalendarDay__blocked_calendar:hover {
+  color: #757575;
+  background-color: transparent;
+}
+
+.CalendarDay__selected,
+.CalendarDay__selected:hover {
+  color: #fff;
+  background-color: #f00;
+}
+
+.DayPicker_transitionContainer__horizontal {
+  transition: none;
+}

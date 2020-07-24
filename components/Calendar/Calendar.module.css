@@ -1,0 +1,10 @@
+.wrapper {
+  position: absolute;
+}
+
+.calendar {
+  left: 0;
+  top: 17px;
+  position: absolute;
+  z-index: 997;
+}

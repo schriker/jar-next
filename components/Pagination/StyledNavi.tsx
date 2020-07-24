@@ -6,7 +6,7 @@ type NaviPropsType = {
 };
 
 const StyledNavi = styled.li<NaviPropsType>`
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
   background-color: ${(props) => (props.isActive ? '#F00' : '#2C2C2C')};
   width: ${(props) => props.fixedWidth ? '30px' : 'auto'};

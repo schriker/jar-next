@@ -14,7 +14,7 @@ const Shadow = ({ isOpen, delay = 0, onClick }: ShadowProps) => {
     //@ts-expect-error
     enter: () => async (next) => {
       await new Promise((resolve) => setTimeout(resolve, delay));
-      await next({ opacity: 0.7 });
+      await next({ opacity: 0.5 });
     },
     leave: { opacity: 0 },
   });
