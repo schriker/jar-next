@@ -1,5 +1,7 @@
 import 'styles.css';
 import 'nprogress.css';
+import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/initialize';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchStreamersData } from 'helpers/api';
@@ -15,7 +17,6 @@ import App, { AppInitialProps, AppContext } from 'next/app';
 
 import NProgress from 'nprogress';
 import Router from 'next/router';
-
 
 Router.events.on('routeChangeStart', () => {
   NProgress.start();
