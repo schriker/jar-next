@@ -1,0 +1,9 @@
+.toolbar {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto 1fr;
+  margin: 0 50px 50px 50px;
+  padding: 17px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #373737;
+}

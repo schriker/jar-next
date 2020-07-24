@@ -136,6 +136,7 @@
 .checkIcon,
 .bookmarkIcon {
   width: 14px;
+  transition: all ease .2s;
 }
 
 .checkIcon:hover,
