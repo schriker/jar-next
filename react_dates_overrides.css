@@ -26,10 +26,16 @@
 }
 
 .CalendarDay__default {
+  position: relative;
   color: #fff;
+  font-size: 15px;
   background-color: #232323;
   border: 1px solid transparent;
   border-radius: 3px;
+}
+
+.CalendarDay__default:hover div span:nth-child(2) {
+  opacity: 1;
 }
 
 .CalendarDay__default:hover {

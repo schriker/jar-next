@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchDates } from 'helpers/api';
 import styles from 'components/Calendar/Calendar.module.css';
 import Shadow from 'components/Shadow/Shadow';
 import { useTransition, animated } from 'react-spring';
@@ -10,8 +11,9 @@ type CalenderPropsType = {
   setCalendarOpen: (isOpen: boolean) => void;
 };
 
+moment.locale('pl');
+
 const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
-  moment.locale('pl');
   const [focused, setFocused] = useState<boolean>(true);
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
@@ -19,8 +21,34 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
     leave: { opacity: 0 },
   });
 
-  const onMonthChange = (month: moment.Moment) => {
-    console.log('Month changed.', month);
+  const [dates, setDates] = useState<{ [key: string]: number }>({});
+  const [datesSet, setDatesSet] = useState<Set<string> | null>(null);
+  useEffect(() => {
+    const fetchStreamsDates = async () => {
+      const response = await fetchDates('wonziu');
+      setDates(response);
+      setDatesSet(new Set(Object.keys(response)));
+    };
+    fetchStreamsDates();
+  }, []);
+
+  const isDayBlockedHandler = (day: any) => {
+    if (datesSet?.size) {
+      const date = moment(day).format('YYYY-MM-DD');
+      return !datesSet.has(date);
+    } else {
+      return false;
+    }
+  };
+
+  const renderCalendarDay = (day: moment.Moment) => {
+    const videos = dates[moment(day).format('YYYY-MM-DD')];
+    return (
+      <div>
+        <span>{moment(day).format('DD')}</span>
+        {videos && <span className={styles.videosCount}>{videos}</span>}
+      </div>
+    );
   };
 
   return (
@@ -35,13 +63,12 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
                 onDateChange={(date) => console.log(date)}
                 focused={focused}
                 transitionDuration={0}
-                isDayBlocked={() => false} // Block all days except one with streams
-                onNextMonthClick={onMonthChange}
-                onPrevMonthClick={onMonthChange}
-                numberOfMonths={2}
+                isDayBlocked={isDayBlockedHandler}
                 onOutsideClick={() => setCalendarOpen(false)}
                 onFocusChange={() => setFocused(true)}
                 hideKeyboardShortcutsPanel={true}
+                daySize={45}
+                renderDayContents={renderCalendarDay}
               />
             </animated.div>
           )
