@@ -48,7 +48,7 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
     const date = moment(day).format('YYYY-MM-DD');
     router.push(
       `/[streamer]?date=${date}`,
-      `/${router.query.streamer}?date=${date}`
+      `/wonziu?date=${date}`
     );
     setDate(moment(day));
     setCalendarOpen(false);
