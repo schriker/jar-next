@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { fetchDates } from 'helpers/api';
 import styles from 'components/Calendar/Calendar.module.css';
 import Shadow from 'components/Shadow/Shadow';
@@ -14,6 +15,7 @@ type CalenderPropsType = {
 moment.locale('pl');
 
 const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
+  const [date, setDate] = useState<moment.Moment>(moment());
   const [focused, setFocused] = useState<boolean>(true);
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
@@ -41,6 +43,23 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
     }
   };
 
+  const router = useRouter();
+  const onDateChange = (day: moment.Moment | null) => {
+    const date = moment(day).format('YYYY-MM-DD');
+    router.push(
+      `/[streamer]?date=${date}`,
+      `/${router.query.streamer}?date=${date}`
+    );
+    setDate(moment(day));
+    setCalendarOpen(false);
+  };
+
+  useEffect(() => {
+    if (!router.query.date) {
+      setDate(moment());
+    }
+  }, [router.query.date]);
+
   const renderCalendarDay = (day: moment.Moment) => {
     const videos = dates[moment(day).format('YYYY-MM-DD')];
     return (
@@ -59,8 +78,8 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
           item && (
             <animated.div className={styles.calendar} key={key} style={props}>
               <DayPickerSingleDateController
-                date={moment()}
-                onDateChange={(date) => console.log(date)}
+                date={date}
+                onDateChange={onDateChange}
                 focused={focused}
                 transitionDuration={0}
                 isDayBlocked={isDayBlockedHandler}

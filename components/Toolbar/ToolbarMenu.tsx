@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import styles from 'components/Toolbar/ToolbarMenu.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Calendar from 'components/Calendar/Calendar';
+const Calendar = dynamic(() => import('components/Calendar/Calendar'));
 import {
   faCalendar,
   faHeart,
@@ -16,11 +17,6 @@ const ToolbarMenu = () => {
       icon: <FontAwesomeIcon icon={faCalendar} />,
       text: 'Kalenarz',
       onClick: () => setCalendarOpen((isCalendarOpen) => !isCalendarOpen),
-    },
-    {
-      icon: <FontAwesomeIcon icon={faFilter} />,
-      text: 'Filtruj',
-      onClick: () => console.log('Test 2'),
     },
     {
       icon: <FontAwesomeIcon icon={faHeart} />,

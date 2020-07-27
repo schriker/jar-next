@@ -19,7 +19,7 @@ const PaginationPages = ({ count }: PaginationPagesPropsType) => {
   const [goToLast, setGoToLast] = useState<boolean>(false);
   const [firstPage, setFirstPage] = useState(currentPage);
   const totalPages = Math.ceil(count / 20);
-  const pagesToShow = 4;
+  const pagesToShow = totalPages < 5 ? totalPages - 1 : 4;
 
   useEffect(() => {
     if (
@@ -37,16 +37,37 @@ const PaginationPages = ({ count }: PaginationPagesPropsType) => {
       setFirstPage(totalPages - pagesToShow);
       setGoToFirst(true);
       setGoToLast(false);
+    } 
+    if (totalPages === 1) {
+      setFirstPage(1);
+      setGoToFirst(false);
+      setGoToLast(false);
     }
-  }, [currentPage]);
+  });
+
+  const createPaginationLink = (
+    pageNumber: number
+  ): { href: string; as: string } => {
+    if (router.query.date) {
+      return {
+        href: `/[streamer]/page/[page]?date=${router.query.date}`,
+        as: `/${router.query.streamer}/page/${pageNumber}?date=${router.query.date}`,
+      };
+    } else {
+      return {
+        href: '/[streamer]/page/[page]',
+        as: `/${router.query.streamer}/page/${pageNumber}`,
+      };
+    }
+  };
 
   return (
     <ul>
       {goToFirst && (
         <StyledNavi fixedWidth isActive={false}>
           <Link
-            href="/[streamer]/page/[page]"
-            as={`/${router.query.streamer}/page/1`}
+            href={createPaginationLink(1).href}
+            as={createPaginationLink(1).as}
           >
             <a>
               <FontAwesomeIcon className={styles.icon} icon={faBackward} />
@@ -55,12 +76,15 @@ const PaginationPages = ({ count }: PaginationPagesPropsType) => {
         </StyledNavi>
       )}
       {[...Array(pagesToShow + 1)].map((_, index) => {
+        const { href, as } = createPaginationLink(index + firstPage);
+
         return (
-          <StyledNavi fixedWidth key={index} isActive={index + firstPage === currentPage}>
-            <Link
-              href="/[streamer]/page/[page]"
-              as={`/${router.query.streamer}/page/${index + firstPage}`}
-            >
+          <StyledNavi
+            fixedWidth
+            key={index}
+            isActive={index + firstPage === currentPage}
+          >
+            <Link href={href} as={as}>
               <a>{index + firstPage}</a>
             </Link>
           </StyledNavi>
@@ -69,8 +93,8 @@ const PaginationPages = ({ count }: PaginationPagesPropsType) => {
       {goToLast && (
         <StyledNavi fixedWidth isActive={false}>
           <Link
-            href="/[streamer]/page/[page]"
-            as={`/${router.query.streamer}/page/${totalPages}`}
+            href={createPaginationLink(totalPages).href}
+            as={createPaginationLink(totalPages).as}
           >
             <a>
               <FontAwesomeIcon className={styles.icon} icon={faForward} />

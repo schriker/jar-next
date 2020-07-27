@@ -11,14 +11,16 @@
 
 .videosCount {
   opacity: 0;
-  background-color: #373737;
-  width: 17px;
+  background-color: #fff;
+  color: #373737;
+  width: 16px;
   text-align: center;
   height: 15px;
   line-height: 15px;
   border-radius: 50%;
   position: absolute;
   font-size: 10px;
-  top: 1px;
-  left: 1px;
+  top: -5px;
+  right: -5px;
+  z-index: 999;
 }

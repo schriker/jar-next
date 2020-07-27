@@ -61,7 +61,7 @@ Page.getInitialProps = async ({ store, query }) => {
       (query.streamer === 'wonziu' && !query.page)
     ) {
       const serverQuery: ServerVideoQuery = {
-        streamer: query.streamer,
+        ...query,
         page: query.page ? parseInt(query.page as string) : 1,
         per_page: 20,
       };
