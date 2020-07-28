@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import useDebouncedSearch from 'hooks/useDebouncedSearch';
 import styles from 'components/Search/Search.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +9,7 @@ const useSearch = () =>
   useDebouncedSearch((searchValue: string) => console.log(searchValue));
 
 const Search = () => {
+  const router = useRouter();
   const { inputText, setInputText, searchResults } = useSearch();
   const onChangeHanlder = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
@@ -16,7 +18,10 @@ const Search = () => {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputText.length) {
-      console.log(inputText.trim());
+      router.push(
+        `/[streamer]?search=${inputText.trim()}`,
+        `/wonziu?search=${inputText.trim()}`
+      );
     }
   };
 

@@ -6,7 +6,6 @@ const Calendar = dynamic(() => import('components/Calendar/Calendar'));
 import {
   faCalendar,
   faHeart,
-  faFilter,
 } from '@fortawesome/free-solid-svg-icons';
 
 const ToolbarMenu = () => {
@@ -15,7 +14,7 @@ const ToolbarMenu = () => {
   const links = [
     {
       icon: <FontAwesomeIcon icon={faCalendar} />,
-      text: 'Kalenarz',
+      text: 'Kalendarz',
       onClick: () => setCalendarOpen((isCalendarOpen) => !isCalendarOpen),
     },
     {

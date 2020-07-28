@@ -142,21 +142,19 @@ export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
 };
 
 export const fetchDates = (streamer: string) => {
-  return new Promise<{ [key: string]: number }>(
-    async (resolve, reject) => {
-      try {
-        const queryString = qs.stringify({
-          streamer: streamer
-        });
-        const response = await API.get(`/dates?${queryString}`);
-        if (!Object.keys(response.data).length) {
-          throw new Error('Dates array is empty.');
-        }
-        resolve(response.data);
-      } catch (err) {
-        console.log('Fetching dates error:', err);
-        reject();
+  return new Promise<{ [key: string]: number }>(async (resolve, reject) => {
+    try {
+      const queryString = qs.stringify({
+        streamer: streamer,
+      });
+      const response = await API.get(`/dates?${queryString}`);
+      if (!Object.keys(response.data).length) {
+        throw new Error('Dates array is empty.');
       }
+      resolve(response.data);
+    } catch (err) {
+      console.log('Fetching dates error:', err);
+      reject();
     }
-  );
+  });
 };
