@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Tooltip from 'components/Tooltip/Tooltip';
+import dynamic from 'next/dynamic';
+const Tooltip = dynamic(() => import('components/Tooltip/Tooltip'));
 import VideoImagePlaceholder from 'components/Videos/VideoImagePlaceholder';
 import Spinner from 'components/Spinner/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
