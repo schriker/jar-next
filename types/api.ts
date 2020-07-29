@@ -8,4 +8,7 @@ export type TwitchVideoQuery = {
 export type ServerVideoQuery = {
   page: number;
   per_page: number;
+  streamer: string;
+  search?: string;
+  date?: string;
 };

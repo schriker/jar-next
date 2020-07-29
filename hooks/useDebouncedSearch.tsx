@@ -11,7 +11,7 @@ const useDebouncedSearch = (searchFunction: any) => {
   );
 
   const searchResults = useAsync(async () => {
-    if (inputText.length === 0) {
+    if (inputText.length < 3) {
       return [];
     } else {
       return debouncedSearchFunction(inputText);

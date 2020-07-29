@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 let Wrapper = styled.div`
+  z-index: 991;
   left: 50%;
   top: 50%;
   position: absolute;
@@ -52,7 +53,7 @@ function Spinner() {
     <Wrapper>
       <Circle />
     </Wrapper>
-  )
+  );
 }
 
 export default Spinner;

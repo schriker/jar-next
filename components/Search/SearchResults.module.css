@@ -1,0 +1,90 @@
+.wrapper {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 994;
+  position: absolute;
+  border-radius: 3px;
+  background-color: #1c1c1c;
+  padding: 35px 0 0 0;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper a {
+  display: block;
+  color: #fff;
+  transition: all ease .2s;
+}
+
+.wrapper a:last-child {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.wrapper a:last-child > div {
+  border-bottom: 0;
+}
+
+.wrapper a:hover {
+  background-color: #232323;
+}
+
+.result {
+  display: flex;
+  height: 100px;
+  padding: 10px;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+.thumbnail {
+  width: 130px;
+  position: relative;
+}
+
+.thumbnail img {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.duration {
+  z-index: 993;
+  left: 3px;
+  bottom: 3px;
+  position: absolute;
+  padding: 3px 10px;
+  background-color: #000;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.details {
+  padding: 0 0 0 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 14px;
+  margin: 0 0 5px 0;
+}
+
+.date {
+  font-size: 12px;
+  color: #bbbbbb;
+}
+
+.more {
+  padding: 15px;
+  color: #bbbbbb !important;
+  text-align: center;
+  width: 100%;
+  display: block;
+  transition: all ease 0.2s;
+}
+
+.more:hover {
+  color: #fff !important;
+}

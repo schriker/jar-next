@@ -4,7 +4,7 @@ export type VideoHighLight = {
   highLightsCount: number;
   totalMessagesCount: number;
   type: string;
-}
+};
 
 export type Video = {
   _id: string;
@@ -18,5 +18,6 @@ export type Video = {
   facebookId?: string;
   twitchId?: string;
   youTubeId?: string;
+  score?: number;
   highLights?: VideoHighLight[];
-}
+};

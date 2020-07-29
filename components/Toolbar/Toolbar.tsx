@@ -1,6 +1,9 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import ToolbarMenu from 'components/Toolbar/ToolbarMenu';
-import Search from 'components/Search/Search';
+const Search = dynamic(() => import('components/Search/Search'), {
+  ssr: false,
+});
 import styles from 'components/Toolbar/Toolbar.module.css';
 
 const Toolbar = () => {
@@ -8,7 +11,7 @@ const Toolbar = () => {
     <div className={styles.toolbar}>
       <ToolbarMenu />
       <Search />
-      <div style={{marginLeft: 'auto'}}>User</div>
+      <div style={{ marginLeft: 'auto' }}>User</div>
     </div>
   );
 };

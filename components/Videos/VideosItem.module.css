@@ -66,6 +66,7 @@
 }
 
 .thumbnail img {
+  z-index: 992;
   display: block;
   width: 100%;
   height: auto;
@@ -73,6 +74,7 @@
 }
 
 .thumbnail > div {
+  z-index: 992;
   position: absolute;
   font-size: 12px;
   padding: 3px 10px;
@@ -104,7 +106,7 @@
 }
 
 .bookmark {
-  z-index: 995;
+  z-index: 993;
   display: flex;
   right: -3px;
   top: 5px;
@@ -127,7 +129,7 @@
 }
 
 .check {
-  z-index: 995;
+  z-index: 993;
   position: absolute;
   right: 0;
   top: 50%;

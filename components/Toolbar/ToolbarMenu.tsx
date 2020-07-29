@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import styles from 'components/Toolbar/ToolbarMenu.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-const Calendar = dynamic(() => import('components/Calendar/Calendar'));
-import {
-  faCalendar,
-  faHeart,
-} from '@fortawesome/free-solid-svg-icons';
+const Calendar = dynamic(() => import('components/Calendar/Calendar'), {
+  ssr: false,
+});
+import { faCalendar, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const ToolbarMenu = () => {
   const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);

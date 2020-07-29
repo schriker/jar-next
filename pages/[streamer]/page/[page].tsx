@@ -26,7 +26,14 @@ const Page: NextPage<PageProps> = ({
   paginationCursor,
 }) => {
   return !videos.length ? (
+    <Layout
+    title={`Archiwum Strumieni - ${streamer.displayName}`}
+    ogImage={streamer.profileImage}
+    ogDescription="Oglądaj archiwalne strumyki z czatem jadisco."
+  >
+    <Toolbar />
     <CustomError404 />
+  </Layout>
   ) : (
     <Layout
       title={`Archiwum Strumieni - ${streamer.displayName}`}
@@ -62,6 +69,7 @@ Page.getInitialProps = async ({ store, query }) => {
     ) {
       const serverQuery: ServerVideoQuery = {
         ...query,
+        streamer: query.streamer,
         page: query.page ? parseInt(query.page as string) : 1,
         per_page: 20,
       };

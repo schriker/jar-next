@@ -1,6 +1,11 @@
+.searchWrapper {
+  position: relative;
+}
+
 .searchForm {
   width: 496px;
   position: relative;
+  z-index: 995;
 }
 
 .searchForm input {
@@ -8,10 +13,10 @@
   border: 0;
   height: 35px;
   font-size: 14px;
-  color: #BBBBBB;
+  color: #bbbbbb;
   padding: 10px 55px 10px 20px;
   border-radius: 3px;
-  background-color: #2C2C2C;
+  background-color: #2c2c2c;
 }
 
 .searchButton {
