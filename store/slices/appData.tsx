@@ -30,7 +30,7 @@ const appDataInitialState: AppDataStateType = {
   },
   client: {
     hideWatched: false,
-    streamers: [],
+    streamers: ['nvidiageforcepl'],
     streamersData: [],
     watched: [],
     bookmarksId: [],

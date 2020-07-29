@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import qs from 'qs';
 import StyledNavi from 'components/Pagination/StyledNavi';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,21 +24,21 @@ const PaginationPages = ({ count }: PaginationPagesPropsType) => {
 
   useEffect(() => {
     if (
-      currentPage > pagesToShow / 2 &&
-      !(totalPages - currentPage < pagesToShow / 2)
+      currentPage > Math.ceil(pagesToShow / 2) &&
+      !(totalPages - currentPage < Math.ceil(pagesToShow / 2))
     ) {
-      setFirstPage(currentPage - pagesToShow / 2);
+      setFirstPage(Math.ceil(currentPage - pagesToShow / 2));
       setGoToFirst(true);
       setGoToLast(true);
-    } else if (currentPage <= pagesToShow / 2) {
+    } else if (currentPage <= Math.ceil(pagesToShow / 2)) {
       setFirstPage(1);
       setGoToFirst(false);
       setGoToLast(true);
-    } else if (totalPages - currentPage < pagesToShow / 2) {
+    } else if (totalPages - currentPage < Math.ceil(pagesToShow / 2)) {
       setFirstPage(totalPages - pagesToShow);
       setGoToFirst(true);
       setGoToLast(false);
-    } 
+    }
     if (totalPages === 1) {
       setFirstPage(1);
       setGoToFirst(false);
@@ -48,10 +49,16 @@ const PaginationPages = ({ count }: PaginationPagesPropsType) => {
   const createPaginationLink = (
     pageNumber: number
   ): { href: string; as: string } => {
-    if (router.query.date) {
+    const query = {
+      ...router.query
+    }
+    delete query.streamer;
+    delete query.page;
+    const queryString = qs.stringify(query);
+    if (Object.keys(query).length) {
       return {
-        href: `/[streamer]/page/[page]?date=${router.query.date}`,
-        as: `/${router.query.streamer}/page/${pageNumber}?date=${router.query.date}`,
+        href: `/[streamer]/page/[page]?${queryString}`,
+        as: `/${router.query.streamer}/page/${pageNumber}?${queryString}`,
       };
     } else {
       return {

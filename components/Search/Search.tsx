@@ -32,6 +32,7 @@ const Search = () => {
         `/[streamer]?search=${inputText.trim()}`,
         `/wonziu?search=${inputText.trim()}`
       );
+      setInputText('');
     }
   };
 
@@ -49,6 +50,7 @@ const Search = () => {
       )}
       <form onSubmit={onSubmitHandler} className={styles.searchForm}>
         <input
+          onClick={() => setShowResults(true)}
           onFocus={() => setShowResults(true)}
           value={inputText}
           onChange={onChangeHanlder}
