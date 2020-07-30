@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import qs from 'qs';
+import parseURLQuery from 'helpers/parseURLQuery';
 import Dropdown from 'components/Dropdown/Dropdown';
 import styles from 'components/Sort/Sort.module.css';
 
@@ -9,13 +11,24 @@ type SortPropsType = {
 };
 
 const Sort = ({ close, isOpen = true }: SortPropsType) => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>('createdAt');
   const router = useRouter();
-  console.log(router.query);
+  useEffect(() => {
+    const query = parseURLQuery(router.asPath, {});
+    if (query.sort) {
+      const [value] = Object.keys(query.sort);
+      setValue(value);
+    } else {
+      setValue('createdAt');
+    }
+  }, [router.asPath]);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Make RouteChange with query
-    console.log('Selected:', e.target.value);
+    const query = parseURLQuery(router.asPath, {
+      sort: { [e.target.value]: -1 },
+    });
+    const queryString = qs.stringify(query);
     setValue(e.target.value);
+    router.push(`/[streamer]?${queryString}`, `/wonziu?${queryString}`);
   };
   return (
     <div className={styles.wrapper}>
@@ -36,27 +49,25 @@ const Sort = ({ close, isOpen = true }: SortPropsType) => {
           <div className={styles.option}>
             <input
               type="radio"
-              id="time"
+              id="duration"
               name="sort"
-              value="time"
+              value="duration"
               onChange={onChange}
-              checked={value === 'time'}
+              checked={value === 'duration'}
             />
-            <label htmlFor="time">Czasu trwania</label>
+            <label htmlFor="duration">Czasu trwania</label>
           </div>
-          {router.query.search && (
-            <div className={styles.option}>
-              <input
-                type="radio"
-                id="date"
-                name="sort"
-                value="date"
-                onChange={onChange}
-                checked={value === 'date'}
-              />
-              <label htmlFor="date">Daty nagrania</label>
-            </div>
-          )}
+          <div className={styles.option}>
+            <input
+              type="radio"
+              id="createdAt"
+              name="sort"
+              value="createdAt"
+              onChange={onChange}
+              checked={value === 'createdAt'}
+            />
+            <label htmlFor="createdAt">Daty nagrania</label>
+          </div>
         </div>
       </Dropdown>
     </div>
