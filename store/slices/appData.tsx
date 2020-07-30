@@ -25,12 +25,12 @@ type AppDataStateType = {
 
 const appDataInitialState: AppDataStateType = {
   server: {
-    streamers: ['wonziu'],
+    streamers: ['wonziu', 'nvidiageforcepl'],
     streamersData: [],
   },
   client: {
     hideWatched: false,
-    streamers: ['nvidiageforcepl'],
+    streamers: [],
     streamersData: [],
     watched: [],
     bookmarksId: [],
@@ -72,7 +72,7 @@ export const {
   setServerStreamers,
   setClientStreamers,
   setAppData,
-  addServerStreamer
+  addServerStreamer,
 } = appDataSlice.actions;
 
 export default appDataSlice.reducer;

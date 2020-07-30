@@ -4,15 +4,19 @@
 }
 
 .toolbarMenu li {
+  position: relative;
+  margin-right: 35px;
+}
+
+.toolbarMenu li a {
+  cursor: pointer;
   display: flex;
   align-items: center;
-  margin-right: 35px;
-  cursor: pointer;
   padding: 10px 0;
   transition: all ease .2s;
 }
 
-.toolbarMenu li:hover {
+.toolbarMenu li a:hover {
   color: #f00;
 }
 

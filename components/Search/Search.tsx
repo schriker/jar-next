@@ -11,7 +11,7 @@ const useSearch = () =>
   useDebouncedSearch((searchValue: string) =>
     fetchServerVideos({
       page: 1,
-      per_page: 3,
+      per_page: 5,
       streamer: 'wonziu',
       search: searchValue,
     })

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Dropdown from 'components/Dropdown/Dropdown';
 import { fetchDates } from 'helpers/api';
 import styles from 'components/Calendar/Calendar.module.css';
-import Shadow from 'components/Shadow/Shadow';
 import { useTransition, animated } from 'react-spring';
 import { DayPickerSingleDateController } from 'react-dates';
 import moment from 'moment';
@@ -17,11 +17,6 @@ moment.locale('pl');
 const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
   const [date, setDate] = useState<moment.Moment>(moment());
   const [focused, setFocused] = useState<boolean>(true);
-  const transitions = useTransition(isOpen, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-  });
 
   const [dates, setDates] = useState<{ [key: string]: number }>({});
   const [datesSet, setDatesSet] = useState<Set<string> | null>(null);
@@ -46,10 +41,7 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
   const router = useRouter();
   const onDateChange = (day: moment.Moment | null) => {
     const date = moment(day).format('YYYY-MM-DD');
-    router.push(
-      `/[streamer]?date=${date}`,
-      `/wonziu?date=${date}`
-    );
+    router.push(`/[streamer]?date=${date}`, `/wonziu?date=${date}`);
     setDate(moment(day));
     setCalendarOpen(false);
   };
@@ -72,26 +64,20 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
 
   return (
     <div className={styles.wrapper}>
-      <Shadow isOpen={isOpen} />
-      {transitions.map(
-        ({ item, key, props }) =>
-          item && (
-            <animated.div className={styles.calendar} key={key} style={props}>
-              <DayPickerSingleDateController
-                date={date}
-                onDateChange={onDateChange}
-                focused={focused}
-                transitionDuration={0}
-                isDayBlocked={isDayBlockedHandler}
-                onOutsideClick={() => setCalendarOpen(false)}
-                onFocusChange={() => setFocused(true)}
-                hideKeyboardShortcutsPanel={true}
-                daySize={45}
-                renderDayContents={renderCalendarDay}
-              />
-            </animated.div>
-          )
-      )}
+      <Dropdown isOpen={isOpen} close={() => setCalendarOpen(false)}>
+        <DayPickerSingleDateController
+          date={date}
+          onDateChange={onDateChange}
+          focused={focused}
+          transitionDuration={0}
+          isDayBlocked={isDayBlockedHandler}
+          onOutsideClick={() => setCalendarOpen(false)}
+          onFocusChange={() => setFocused(true)}
+          hideKeyboardShortcutsPanel={true}
+          daySize={45}
+          renderDayContents={renderCalendarDay}
+        />
+      </Dropdown>
     </div>
   );
 };

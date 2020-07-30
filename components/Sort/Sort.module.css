@@ -1,0 +1,6 @@
+.sort {
+  position: absolute;
+  z-index: 997;
+  border-radius: 3px;
+  background-color: #232323;
+}

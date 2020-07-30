@@ -1,0 +1,5 @@
+.wrapper {
+  position: relative;
+  z-index: 997;
+  top: 18px;
+}

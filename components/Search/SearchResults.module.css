@@ -31,13 +31,13 @@
 
 .result {
   display: flex;
-  height: 100px;
+  height: 80px;
   padding: 10px;
   border-bottom: 1px solid #2c2c2c;
 }
 
 .thumbnail {
-  width: 130px;
+  width: 100px;
   position: relative;
 }
 

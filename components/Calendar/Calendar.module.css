@@ -2,13 +2,6 @@
   position: absolute;
 }
 
-.calendar {
-  left: 0;
-  top: 18px;
-  position: absolute;
-  z-index: 997;
-}
-
 .videosCount {
   opacity: 0;
   background-color: #fff;

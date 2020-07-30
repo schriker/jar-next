@@ -19,7 +19,7 @@ const PaginationPages = ({ count }: PaginationPagesPropsType) => {
   const [goToFirst, setGoToFirst] = useState<boolean>(false);
   const [goToLast, setGoToLast] = useState<boolean>(false);
   const [firstPage, setFirstPage] = useState(currentPage);
-  const totalPages = Math.ceil(count / 20);
+  const totalPages = Math.ceil(count / 24);
   const pagesToShow = totalPages < 5 ? totalPages - 1 : 4;
 
   useEffect(() => {
