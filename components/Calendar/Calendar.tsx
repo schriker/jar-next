@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Dropdown from 'components/Dropdown/Dropdown';
 import { fetchDates } from 'helpers/api';
 import styles from 'components/Calendar/Calendar.module.css';
-import { useTransition, animated } from 'react-spring';
 import { DayPickerSingleDateController } from 'react-dates';
 import moment from 'moment';
 
