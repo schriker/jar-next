@@ -14,7 +14,6 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const slideIn = useSpring({
     width: isOpen ? 360 : 60,
-    delay: 300
   });
 
   const {
@@ -39,7 +38,7 @@ const Sidebar = () => {
   }, [client.streamers]);
   return (
     <>
-      <Shadow delay={300} isOpen={isOpen} />
+      <Shadow isOpen={isOpen} />
       <animated.div
         style={slideIn}
         className={styles.sidebar}

@@ -6,9 +6,9 @@ type AppDataStateType = {
   server: {
     streamers: string[];
     streamersData: Streamer[];
+    hideWatched: boolean;
   };
   client: {
-    hideWatched: boolean;
     streamers: string[];
     streamersData: Streamer[];
     watched: string[];
@@ -27,9 +27,9 @@ const appDataInitialState: AppDataStateType = {
   server: {
     streamers: ['wonziu', 'nvidiageforcepl'],
     streamersData: [],
+    hideWatched: false,
   },
   client: {
-    hideWatched: false,
     streamers: [],
     streamersData: [],
     watched: [],
@@ -44,8 +44,8 @@ const appDataSlice = createSlice({
   name: 'appData',
   initialState: appDataInitialState,
   reducers: {
-    toggleHideWatched({ client }) {
-      client.hideWatched = !client.hideWatched;
+    toggleHideWatched({ server }) {
+      server.hideWatched = !server.hideWatched;
     },
     setServerStreamers(state, action: { type: string; payload: Streamer[] }) {
       state.server.streamersData = action.payload;

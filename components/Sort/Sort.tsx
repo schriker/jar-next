@@ -21,6 +21,7 @@ const Sort = ({ close, isOpen = true }: SortPropsType) => {
     } else {
       setValue('createdAt');
     }
+    close();
   }, [router.asPath]);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = parseURLQuery(router.asPath, {
