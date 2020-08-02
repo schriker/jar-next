@@ -38,7 +38,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
   return (
     <div className={styles.container}>
       <Tooltip />
-      <Link href="/video/[video]" as={`/video/${video._id}`}>
+      <Link href="/video/[video]" as={`/video/${video.id}`}>
         <a className={styles.link}>
           <div className={styles.wrapper}>
             {loaded && <div className={styles.background}></div>}

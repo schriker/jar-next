@@ -69,6 +69,8 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
           onDateChange={onDateChange}
           focused={focused}
           transitionDuration={0}
+          numberOfMonths={2}
+          initialVisibleMonth={() => moment().subtract(1, 'months')}
           isDayBlocked={isDayBlockedHandler}
           onOutsideClick={() => setCalendarOpen(false)}
           onFocusChange={() => setFocused(true)}

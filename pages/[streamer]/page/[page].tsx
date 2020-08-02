@@ -27,13 +27,13 @@ const Page: NextPage<PageProps> = ({
 }) => {
   return !videos.length ? (
     <Layout
-    title={`Archiwum Strumieni - ${streamer.displayName}`}
-    ogImage={streamer.profileImage}
-    ogDescription="Oglądaj archiwalne strumyki z czatem jadisco."
-  >
-    <Toolbar />
-    <CustomError404 />
-  </Layout>
+      title={`Archiwum Strumieni - ${streamer.displayName}`}
+      ogImage={streamer.profileImage}
+      ogDescription="Oglądaj archiwalne strumyki z czatem jadisco."
+    >
+      <Toolbar />
+      <CustomError404 />
+    </Layout>
   ) : (
     <Layout
       title={`Archiwum Strumieni - ${streamer.displayName}`}
@@ -67,13 +67,18 @@ Page.getInitialProps = async ({ store, query }) => {
       (query.streamer === 'wonziu' && parseInt(query.page as string) > 0) ||
       (query.streamer === 'wonziu' && !query.page)
     ) {
+      const watched = state.appData.server.hideWatched
+        ? state.appData.client.watched
+        : [];
       const serverQuery: ServerVideoQuery = {
         ...query,
         streamer: query.streamer,
         page: query.page ? parseInt(query.page as string) : 1,
         per_page: 24,
       };
-      const response = await fetchServerVideos(serverQuery);
+      const response = await fetchServerVideos(serverQuery, {
+        watched: watched,
+      });
       videos = response.videos;
       count = response.count;
     } else if (query.streamer !== 'wonziu') {

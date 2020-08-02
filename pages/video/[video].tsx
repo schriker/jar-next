@@ -6,7 +6,7 @@ const Video: NextPage = () => {
   const appData = useTypedSelector((state) => state.appData);
   return (
     <Layout
-      title={appData.client.hideWatched.toString()}
+      title={appData.server.hideWatched.toString()}
       ogImage="asd"
       ogDescription="asd"
     >

@@ -79,17 +79,22 @@ export const fetchStreamersData = (streamers: string[]) => {
   });
 };
 
-export const fetchServerVideos = (query: ServerVideoQuery) => {
+export const fetchServerVideos = (
+  query: ServerVideoQuery,
+  body?: { watched: string[] }
+) => {
   return new Promise<{ videos: Video[]; count: number }>(
     async (resolve, reject) => {
       try {
         const queryString = qs.stringify(query);
-        const response = await API.get(`/videos_api?${queryString}`);
+        const response = await API.post(`/videos_api?${queryString}`, {
+          watched: body?.watched,
+        });
         resolve({
           videos: response.data.videos.map(
             (video: any): Video => {
               return {
-                _id: video._id,
+                id: video.facebookId,
                 duration: video.duration,
                 started: video.started,
                 thumbnail: video.thumbnail,
@@ -122,7 +127,7 @@ export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
           videos: response.data.data.map(
             (video: any): Video => {
               return {
-                _id: video.id,
+                id: video.id,
                 duration: video.duration,
                 started: video.created_at,
                 thumbnail: video.thumbnail_url,

@@ -35,9 +35,9 @@ const SearchResults = ({
       {results.videos.map((video) => {
         return (
           <Link
-            key={video._id}
+            key={video.id}
             href="/video/[video]"
-            as={`/video/${video._id}`}
+            as={`/video/${video.id}`}
           >
             <a>
               <div className={styles.result}>

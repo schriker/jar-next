@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { fetchServerVideos } from 'helpers/api';
 import { useRouter } from 'next/router';
-import SearchResults from 'components/Search/SearchResults';
+const SearchResults = dynamic(() => import('components/Search/SearchResults'));
 import useDebouncedSearch from 'hooks/useDebouncedSearch';
 import styles from 'components/Search/Search.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const useSearch = () =>
-  useDebouncedSearch((searchValue: string) =>
+const useSearch = () => 
+  useDebouncedSearch((searchValue: string, watched: string[]) =>
     fetchServerVideos({
       page: 1,
       per_page: 5,
       streamer: 'wonziu',
       search: searchValue,
+    }, {
+      watched: watched
     })
   );
 

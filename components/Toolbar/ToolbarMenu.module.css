@@ -3,7 +3,7 @@
   list-style: none;
 }
 
-.toolbarMenu li {
+.toolbarMenu > li {
   position: relative;
   margin-right: 35px;
 }

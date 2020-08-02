@@ -1,3 +1,8 @@
+export type VideoSource = {
+  name: string;
+  id: string
+}
+
 export type VideoHighLight = {
   time: string;
   percent: number;
@@ -7,7 +12,7 @@ export type VideoHighLight = {
 };
 
 export type Video = {
-  _id: string;
+  id: string;
   title: string;
   url?: string;
   views: number;
@@ -15,9 +20,7 @@ export type Video = {
   thumbnail: string;
   started: string;
   screenShots?: string[];
-  facebookId?: string;
-  twitchId?: string;
-  youTubeId?: string;
+  sources?: VideoSource[];
   score?: number;
   highLights?: VideoHighLight[];
 };

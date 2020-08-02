@@ -14,7 +14,7 @@ const VideosRow = ({ videos, title }: VideosRowType) => {
       <h3 className={styles.title}>{title}</h3>
       <div className={styles.videos}>
         {videos.map((video) => (
-          <VideosItem key={video._id} video={video} />
+          <VideosItem key={video.id} video={video} />
         ))}
       </div>
     </div>
