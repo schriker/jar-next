@@ -1,11 +1,11 @@
 .wrapper {
   width: 360px;
-  padding: 8px 0 8px 9px;
+  padding: 8px 0 8px 6px;
 }
 
 .sidebarItem {
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   opacity: 1;
   border-radius: 50%;
   position: relative;
@@ -15,6 +15,7 @@
 
 .sidebarItem img {
   border-radius: 50%;
+  display: block;
 }
 
 @keyframes fade {

@@ -14,13 +14,14 @@ export type VideoHighLight = {
 export type Video = {
   id: string;
   title: string;
-  url?: string;
   views: number;
   duration: string;
   thumbnail: string;
   started: string;
-  screenShots?: string[];
-  sources?: VideoSource[];
+  createdAt?: string;
+  screenshots?: string[];
+  source?: VideoSource[];
   score?: number;
+  keywords?: string;
   highLights?: VideoHighLight[];
 };

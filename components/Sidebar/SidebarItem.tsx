@@ -25,7 +25,8 @@ type ItemAnchorProps = {
 const ItemAnchor = styled.a<ItemAnchorProps>`
   display: flex;
   width: 360px;
-  padding: 8px 0 8px 9px;
+  height: 50px;
+  align-items: center;
   border-left: 3px solid ${(props) => (props.isActive ? '#F00' : 'transparent')};
   background-color: ${(props) => (props.isActive ? '#232323' : 'transparent')};
   transition: all ease 0.2s;
@@ -71,8 +72,8 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
           <animated.div style={fadeIn}>
             <img
               onLoad={() => setLoaded(true)}
-              width="35"
-              height="35"
+              width="32"
+              height="32"
               src={streamer.profileImage}
             />
             <StatusIcon centerVertical={false} isLive={streamer.isLive} />

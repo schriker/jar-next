@@ -79,6 +79,24 @@ export const fetchStreamersData = (streamers: string[]) => {
   });
 };
 
+export const fetchServerVideoById = (query: {
+  streamer: string;
+  id: string;
+}) => {
+  return new Promise<{ video: Video }>(async (resolve, reject) => {
+    try {
+      const queryString = qs.stringify(query);
+      const response = await API.post(`/videos_api?${queryString}`);
+      resolve({
+        video: { ...response.data.videos[0] },
+      });
+    } catch (err) {
+      console.log('Fetching server videos error:', err.response);
+      reject();
+    }
+  });
+};
+
 export const fetchServerVideos = (
   query: ServerVideoQuery,
   body?: { watched: string[] }
@@ -94,13 +112,13 @@ export const fetchServerVideos = (
           videos: response.data.videos.map(
             (video: any): Video => {
               return {
-                id: video.facebookId,
+                id: video.videoId,
                 duration: video.duration,
                 started: video.started,
                 thumbnail: video.thumbnail,
                 title: video.title,
                 views: video.views,
-                screenShots: video.screenShots ? video.screenShots : [],
+                screenshots: video.screenshots ? video.screenshots : [],
               };
             }
           ),

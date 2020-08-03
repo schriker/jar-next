@@ -29,7 +29,7 @@ const Page: NextPage<PageProps> = ({
     <Layout
       title={`Archiwum Strumieni - ${streamer.displayName}`}
       ogImage={streamer.profileImage}
-      ogDescription="Oglądaj archiwalne strumyki z czatem jadisco."
+      ogDescription="Oglądaj powtórki strumieni z czatem."
     >
       <Toolbar />
       <CustomError404 />
@@ -38,7 +38,7 @@ const Page: NextPage<PageProps> = ({
     <Layout
       title={`Archiwum Strumieni - ${streamer.displayName}`}
       ogImage={streamer.profileImage}
-      ogDescription="Oglądaj archiwalne strumyki z czatem jadisco."
+      ogDescription="Oglądaj powtórki strumieni z czatem."
     >
       <Toolbar />
       <Videos videos={videos} />

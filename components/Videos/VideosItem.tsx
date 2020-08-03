@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 const Tooltip = dynamic(() => import('components/Tooltip/Tooltip'), {
   ssr: false,
 });
+import { useRouter } from 'next/router';
 import VideoImagePlaceholder from 'components/Videos/VideoImagePlaceholder';
 import Spinner from 'components/Spinner/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +19,7 @@ type VideosItemPropsType = {
 };
 
 const VideosItem = ({ video }: VideosItemPropsType) => {
+  const router = useRouter();
   const isNew = Date.now() - new Date(video.started).getTime() < 86400000;
   const image = useRef<HTMLImageElement>(null!);
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -38,7 +40,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
   return (
     <div className={styles.container}>
       <Tooltip />
-      <Link href="/video/[video]" as={`/video/${video.id}`}>
+      <Link href="/[streamer]/video/[video]" as={`/${router.query.streamer}/video/${video.id}`}>
         <a className={styles.link}>
           <div className={styles.wrapper}>
             {loaded && <div className={styles.background}></div>}
@@ -60,16 +62,18 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                 alt=""
               />
               {isNew && <div className={styles.new}>New</div>}
-              <div
-                data-tip="Ulubiony"
-                onClick={(event) => addToBookark(event)}
-                className={styles.bookmark}
-              >
-                <FontAwesomeIcon
-                  className={styles.bookmarkIcon}
-                  icon={faHeart}
-                />
-              </div>
+              {router.query.streamer === 'wonziu' && (
+                <div
+                  data-tip="Ulubiony"
+                  onClick={(event) => addToBookark(event)}
+                  className={styles.bookmark}
+                >
+                  <FontAwesomeIcon
+                    className={styles.bookmarkIcon}
+                    icon={faHeart}
+                  />
+                </div>
+              )}
               <div className={styles.duration}>{video.duration}</div>
               <div className={styles.views}>{video.views}</div>
             </div>
@@ -79,13 +83,15 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
             <div className={styles.date}>
               {moment(video.started).format('DD-MM-YYYY • HH:mm:ss')}
             </div>
-            <div
-              data-tip="Obejrzany"
-              onClick={(event) => addToWatched(event)}
-              className={styles.check}
-            >
-              <FontAwesomeIcon className={styles.checkIcon} icon={faCheck} />
-            </div>
+            {router.query.streamer === 'wonziu' && (
+              <div
+                data-tip="Obejrzany"
+                onClick={(event) => addToWatched(event)}
+                className={styles.check}
+              >
+                <FontAwesomeIcon className={styles.checkIcon} icon={faCheck} />
+              </div>
+            )}
           </div>
         </a>
       </Link>

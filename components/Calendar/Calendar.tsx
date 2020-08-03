@@ -46,7 +46,9 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
   };
 
   useEffect(() => {
-    if (!router.query.date) {
+    if (router.query.date) {
+      setDate(moment(router.query.date));
+    } else {
       setDate(moment());
     }
   }, [router.query.date]);
@@ -70,7 +72,7 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
           focused={focused}
           transitionDuration={0}
           numberOfMonths={2}
-          initialVisibleMonth={() => moment().subtract(1, 'months')}
+          initialVisibleMonth={() => moment(date).subtract(1, 'months')}
           isDayBlocked={isDayBlockedHandler}
           onOutsideClick={() => setCalendarOpen(false)}
           onFocusChange={() => setFocused(true)}

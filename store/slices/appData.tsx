@@ -25,7 +25,7 @@ type AppDataStateType = {
 
 const appDataInitialState: AppDataStateType = {
   server: {
-    streamers: ['wonziu', 'nvidiageforcepl'],
+    streamers: ['wonziu', 'nvidiageforcepl', 'bonkol'],
     streamersData: [],
     hideWatched: false,
   },

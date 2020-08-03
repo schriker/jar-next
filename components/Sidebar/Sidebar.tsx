@@ -13,7 +13,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const slideIn = useSpring({
-    width: isOpen ? 360 : 60,
+    width: isOpen ? 360 : 50,
   });
 
   const {

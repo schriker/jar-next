@@ -1,0 +1,117 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+}
+
+.profileImage img {
+  width: 40px;
+  height: 40px;
+  display: block;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  /* margin: 0 0 10px 0; */
+}
+
+.date {
+  font-size: 13px;
+  color: #bbb;
+  margin: 5px 0 0 0;
+}
+
+.keywords {
+  margin: 5px 0 0 0;
+}
+
+.keyword {
+  background-color: #6b6b6b;
+  border-radius: 3px;
+  padding: 3px 6px;
+  color: #fff;
+  font-size: 12px;
+  margin: 0 5px 0 0;
+  transition: all ease 0.2s;
+}
+
+.keyword:hover {
+  background-color: #f00;
+}
+
+.leftPanel {
+  margin-left: auto;
+  align-self: center;
+}
+
+.icon {
+  width: 10px;
+  color: #6b6b6b;
+  margin: 0 5px 0 0;
+}
+
+.info {
+  font-size: 14px;
+  color: #bbb;
+  display: flex;
+  margin-left: auto;
+  padding: 0 10px 0 0;
+}
+
+.infoBlock {
+  display: flex;
+  align-items: center;
+}
+
+.infoBlock::after {
+  content: '•';
+  margin: 0 7px;
+}
+
+.infoBlock:last-child::after {
+  content: '';
+}
+
+.moments {
+  cursor: pointer;
+  padding: 3px 6px;
+  display: flex;
+  color: #fff;
+  border-radius: 3px;
+  transition: all ease .2s;
+  background-color: #f00;
+}
+
+.moments:hover {
+  background-color: rgb(189, 27, 27);
+}
+
+.moments div {
+  padding: 1px 0 0 0;
+  width: 8px;
+  margin: 0 5px 0 0;
+}
+
+.button {
+  cursor: pointer;
+  padding: 3px 5px;
+  display: flex;
+  color: #fff;
+  border-radius: 3px;
+  background-color: #6b6b6b;
+  transition: all ease .2s;
+  margin: 0 0 0 5px;
+}
+
+.button:hover {
+  background-color:#f00;
+}
+
+.button div {
+  /* padding: 1px 0 0 0; */
+  width: 8px;
+  margin: 0 5px;
+}

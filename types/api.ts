@@ -1,8 +1,9 @@
 export type TwitchVideoQuery = {
-  user_id: string;
+  user_id?: string;
+  id?: string;
   before?: string;
   after?: string;
-  first: number;
+  first?: number;
 };
 
 export type ServerVideoQuery = {
