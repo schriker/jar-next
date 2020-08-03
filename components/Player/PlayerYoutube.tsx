@@ -29,7 +29,6 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
   };
 
   useEffect(() => {
-    console.log('mount');
     if (!window.YT) {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';

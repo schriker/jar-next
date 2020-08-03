@@ -30,7 +30,7 @@ const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
           <Player streamer={streamer} video={video} />
         </div>
         <div
-          style={{ width: '400px', backgroundColor: '#1c1c1c', height: '100vh' }}
+          style={{ width: '365px', backgroundColor: '#1c1c1c', height: '100vh' }}
         ></div>
       </div>
     </Layout>

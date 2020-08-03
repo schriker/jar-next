@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {
   let router = useRouter();
-
   return (
     <>
       <Head>
@@ -14,7 +13,7 @@ const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content={`${process.env.HOST}${router.pathname}`}
+          content={`${process.env.HOST}${router.asPath}`}
         />
         <meta property="og:image" content={ogImage} />
         <meta content="1800" property="og:image:width" />
