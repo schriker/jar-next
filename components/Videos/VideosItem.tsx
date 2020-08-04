@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
-const Tooltip = dynamic(() => import('components/Tooltip/Tooltip'), {
-  ssr: false,
-});
+import Tooltip from 'components/Tooltip/Tooltip';
 import { useRouter } from 'next/router';
 import VideoImagePlaceholder from 'components/Videos/VideoImagePlaceholder';
 import Spinner from 'components/Spinner/Spinner';
@@ -40,7 +37,10 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
   return (
     <div className={styles.container}>
       <Tooltip />
-      <Link href="/[streamer]/video/[video]" as={`/${router.query.streamer}/video/${video.id}`}>
+      <Link
+        href="/[streamer]/video/[video]"
+        as={`/${router.query.streamer}/video/${video.id}`}
+      >
         <a className={styles.link}>
           <div className={styles.wrapper}>
             {loaded && <div className={styles.background}></div>}
