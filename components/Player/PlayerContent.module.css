@@ -28,7 +28,7 @@
 }
 
 .keyword {
-  background-color: #6b6b6b;
+  background-color: #383838;
   border-radius: 3px;
   padding: 3px 6px;
   color: #fff;
@@ -100,7 +100,7 @@
   display: flex;
   color: #fff;
   border-radius: 3px;
-  background-color: #6b6b6b;
+  background-color: #383838;
   transition: all ease .2s;
   margin: 0 0 0 5px;
 }

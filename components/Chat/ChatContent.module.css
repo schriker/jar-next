@@ -1,0 +1,27 @@
+.playWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playButton {
+  cursor: pointer;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background-color: #f00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid rgba(0, 0, 0, 0.3);
+  transition: all ease 0.2s;
+}
+
+.playButton:hover {
+  border: 7px solid rgba(0, 0, 0, 0.3);
+}
+
+.playIcon {
+  width: 15px;
+  padding: 2px 0 0 2px;
+}

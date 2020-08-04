@@ -1,5 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  error,
+  playbackRateChange,
+  playbackRate,
+  end,
+  pause,
+  buffer,
+  play,
+  startPlayer,
+  setReady,
+} from 'store/slices/appPlayer';
+import { useTypedSelector } from 'store/rootReducer';
+import { useDispatch } from 'react-redux';
 import { VideoSource } from 'types/video';
+
+type PlayerType = {
+  playVideo: () => void;
+  getPlaybackRate: () => number;
+  seekTo: (seconds: number) => void;
+  pauseVideo: () => void;
+  getCurrentTime: () => number;
+};
+
+enum PlayerState {
+  Unstarted = -1,
+  Ended = 0,
+  Playing = 1,
+  Paused = 2,
+  Buffering = 3,
+  Cued = 5,
+}
 
 declare global {
   interface Window {
@@ -9,9 +39,51 @@ declare global {
 }
 
 const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
+  const [playerRef, setPlayerRef] = useState<PlayerType | null>(null);
+  const dispatch = useDispatch();
+  const state = useTypedSelector((state) => state.appPlayer);
+
+  const onPlayerReady = (event: any) => {
+    dispatch(startPlayer(false));
+    dispatch(setReady(true));
+    setPlayerRef(event.target);
+  };
+
+  const onPlayerPlabackRateChange = () => {
+    if (playerRef) {
+      dispatch(
+        playbackRateChange({
+          playbackRate: playerRef.getPlaybackRate(),
+          playerPosition: playerRef.getCurrentTime(),
+        })
+      );
+    }
+  };
+
+  const onPlayerStateChange = (event: { data: PlayerState }) => {
+    if (playerRef) {
+      dispatch(startPlayer(true));
+      dispatch(playbackRate(playerRef.getPlaybackRate()));
+      switch (event.data) {
+        case PlayerState.Ended:
+          playerRef.seekTo(0);
+          playerRef.pauseVideo();
+          dispatch(end());
+          break;
+        case PlayerState.Paused:
+          dispatch(pause());
+          break;
+        case PlayerState.Buffering:
+          dispatch(buffer());
+          break;
+        case PlayerState.Playing:
+          dispatch(play(playerRef.getCurrentTime()));
+          break;
+      }
+    }
+  };
   const loadVideo = () => {
-    var player;
-    player = new window.YT.Player('player', {
+    new window.YT.Player('player', {
       height: '100%',
       width: '100%',
       playerVars: {
@@ -20,13 +92,19 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
       },
       videoId: source[0].id,
       events: {
-        onReady: () => console.log('ready'),
-        onStateChange: () => console.log('stateChanged'),
-        onPlaybackRateChange: () => console.log('rate change'),
-        onError: () => console.log('error'),
+        onReady: onPlayerReady,
+        onStateChange: onPlayerStateChange,
+        onPlaybackRateChange: onPlayerPlabackRateChange,
+        onError: () => dispatch(error()),
       },
     });
   };
+
+  useEffect(() => {
+    if (state.startPlayer && playerRef) {
+      playerRef.playVideo();
+    }
+  }, [state.startPlayer]);
 
   useEffect(() => {
     if (!window.YT) {
@@ -38,6 +116,13 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
     } else {
       loadVideo();
     }
+  });
+
+  useEffect(() => {
+    return () => {
+      dispatch(startPlayer(false));
+      dispatch(setReady(false));
+    };
   }, []);
   return <div id="player"></div>;
 };

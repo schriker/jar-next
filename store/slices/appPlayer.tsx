@@ -2,7 +2,8 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { createSlice } from '@reduxjs/toolkit';
 
 type AppPlayerStateType = {
-  player: any;
+  isReady: boolean;
+  startPlayer: boolean;
   finished: boolean;
   isPlaying: boolean;
   playerPosition: number;
@@ -11,7 +12,8 @@ type AppPlayerStateType = {
 };
 
 const appPlayerInitialState: AppPlayerStateType = {
-  player: null,
+  isReady: false,
+  startPlayer: false,
   finished: false,
   isPlaying: false,
   playerPosition: 0,
@@ -23,8 +25,11 @@ const appPlayerSlice = createSlice({
   name: 'appNotification',
   initialState: appPlayerInitialState,
   reducers: {
-    setPlayer(state, action: { type: string; payload: any }) {
-      state.player = action.payload;
+    startPlayer(state, action: { type: string; payload: boolean }) {
+      state.startPlayer = action.payload;
+    },
+    setReady(state, action: { type: string; payload: boolean }) {
+      state.isReady = action.payload;
     },
     play(state, action: { type: string; payload: number }) {
       if (!state.isPlaying) {
@@ -34,7 +39,7 @@ const appPlayerSlice = createSlice({
         state.seekTo = 0;
       }
     },
-    pause(state, action: { type: string; payload: number }) {
+    pause(state, action: { type: string; payload?: number }) {
       if (action.payload) {
         state.playerPosition = action.payload;
       }
@@ -50,6 +55,16 @@ const appPlayerSlice = createSlice({
     playbackRate(state, action: { type: string; payload: number }) {
       state.playbackRate = action.payload;
     },
+    playbackRateChange(
+      state,
+      action: {
+        type: string;
+        payload: { playbackRate: number; playerPosition: number };
+      }
+    ) {
+      state.playbackRate = action.payload.playbackRate;
+      state.playerPosition = action.payload.playerPosition;
+    },
     error(state) {
       state.isPlaying = false;
     },
@@ -64,11 +79,13 @@ const appPlayerSlice = createSlice({
 export const {
   play,
   playbackRate,
+  playbackRateChange,
   end,
   buffer,
   pause,
   error,
-  setPlayer,
+  startPlayer,
+  setReady
 } = appPlayerSlice.actions;
 
 export default appPlayerSlice.reducer;

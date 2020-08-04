@@ -7,6 +7,7 @@ import { setNotification } from 'store/slices/appNotification';
 import { fetchServerVideoById, fetchTwitchVideos } from 'helpers/api';
 import Layout from 'components/Layout/Layout';
 import Player from 'components/Player/Player';
+import Chat from 'components/Chat/Chat';
 import { RootState } from 'store/rootReducer';
 import { TwitchVideoQuery } from 'types/api';
 import CustomError404 from 'pages/404';
@@ -26,12 +27,8 @@ const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
       ogDescription="Oglądaj powtórki strumieni z czatem."
     >
       <div className={styles.wrapper}>
-        <div>
-          <Player streamer={streamer} video={video} />
-        </div>
-        <div
-          style={{ width: '365px', backgroundColor: '#1c1c1c', height: '100vh' }}
-        ></div>
+        <Player streamer={streamer} video={video} />
+        <Chat video={video} />
       </div>
     </Layout>
   ) : (
