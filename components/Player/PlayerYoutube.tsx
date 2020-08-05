@@ -19,6 +19,7 @@ type PlayerType = {
   getPlaybackRate: () => number;
   seekTo: (seconds: number) => void;
   pauseVideo: () => void;
+  destroy: () => void;
   getCurrentTime: () => number;
 };
 
@@ -43,6 +44,8 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
   const dispatch = useDispatch();
   const state = useTypedSelector((state) => state.appPlayer);
 
+  var player: PlayerType | null = null;
+
   const onPlayerReady = (event: any) => {
     dispatch(startPlayer(false));
     dispatch(setReady(true));
@@ -50,24 +53,22 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
   };
 
   const onPlayerPlabackRateChange = () => {
-    if (playerRef) {
+    if (player) {
       dispatch(
         playbackRateChange({
-          playbackRate: playerRef.getPlaybackRate(),
-          playerPosition: playerRef.getCurrentTime(),
+          playbackRate: player.getPlaybackRate(),
+          playerPosition: player.getCurrentTime(),
         })
       );
     }
   };
 
   const onPlayerStateChange = (event: { data: PlayerState }) => {
-    if (playerRef) {
+    if (player) {
       dispatch(startPlayer(true));
-      dispatch(playbackRate(playerRef.getPlaybackRate()));
+      dispatch(playbackRate(player.getPlaybackRate()));
       switch (event.data) {
         case PlayerState.Ended:
-          playerRef.seekTo(0);
-          playerRef.pauseVideo();
           dispatch(end());
           break;
         case PlayerState.Paused:
@@ -77,13 +78,13 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
           dispatch(buffer());
           break;
         case PlayerState.Playing:
-          dispatch(play(playerRef.getCurrentTime()));
+          dispatch(play(player.getCurrentTime()));
           break;
       }
     }
   };
   const loadVideo = () => {
-    new window.YT.Player('player', {
+    player = new window.YT.Player('player', {
       height: '100%',
       width: '100%',
       playerVars: {
@@ -116,12 +117,15 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
     } else {
       loadVideo();
     }
-  });
+  }, []);
 
   useEffect(() => {
     return () => {
       dispatch(startPlayer(false));
       dispatch(setReady(false));
+      if (player) {
+        player.destroy();
+      }
     };
   }, []);
   return <div id="player"></div>;

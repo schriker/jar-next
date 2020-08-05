@@ -11,7 +11,7 @@ type ChatPropsType = {
 const Chat = ({ video }: ChatPropsType) => {
   return (
     <div className={styles.wrapper}>
-      <ChatContent />
+      <ChatContent video={video} />
       <ChatInput />
     </div>
   );

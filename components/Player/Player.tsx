@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { updateViews } from 'helpers/api';
 import dynamic from 'next/dynamic';
 import { Video } from 'types/video';
 import { Streamer } from 'types/streamer';
@@ -12,6 +13,10 @@ type PlayerPropsType = {
 };
 
 const Player = ({ video, streamer }: PlayerPropsType) => {
+  useEffect(() => {
+    updateViews(streamer.login, video.id);
+  }, []);
+
   const youtube = video.source?.filter((source) => source.name === 'youtube');
   const twitch = video.source?.filter((source) => source.name === 'twitch');
   return (

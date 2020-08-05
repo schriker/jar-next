@@ -6,7 +6,7 @@ onmessage = ({ data }) => {
     if (data.fetched.length === 0 && data.messages.length !== 0) {
       postMessage({
         type: 'FETCH',
-        startTime: data.startTime
+        // startTime: data.startTime
       })
       clearInterval(messageInterval)
     }

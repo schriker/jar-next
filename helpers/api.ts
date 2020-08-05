@@ -3,6 +3,7 @@ import qs from 'qs';
 import mergeStreamersData from 'helpers/mergeStreamersData';
 import { Streamer } from 'types/streamer';
 import { Video } from 'types/video';
+import { ChatMessage } from 'types/message';
 import { ServerVideoQuery, TwitchVideoQuery } from 'types/api';
 import { TwitchGame, TwitchStreamer, TwitchStream } from 'types/twitch';
 
@@ -88,7 +89,10 @@ export const fetchServerVideoById = (query: {
       const queryString = qs.stringify(query);
       const response = await API.post(`/videos_api?${queryString}`);
       resolve({
-        video: { ...response.data.videos[0] },
+        video: {
+          id: response.data.videos[0].videoId,
+          ...response.data.videos[0],
+        },
       });
     } catch (err) {
       console.log('Fetching server videos error:', err.response);
@@ -177,6 +181,32 @@ export const fetchDates = (streamer: string) => {
       resolve(response.data);
     } catch (err) {
       console.log('Fetching dates error:', err);
+      reject();
+    }
+  });
+};
+
+export const updateViews = (streamer: string, id: string) => {
+  const queryString = qs.stringify({
+    streamer: streamer,
+    id: id,
+  });
+  if (streamer === 'wonziu') {
+    API.get(`/updateviews?${queryString}`);
+  }
+};
+
+export const fetchMessages = (body: {
+  lt: string;
+  gt: string;
+  streamer: string;
+}) => {
+  return new Promise<ChatMessage[]>(async (resolve, reject) => {
+    try {
+      const response = await API.post(`/message`, body);
+      resolve(response.data);
+    } catch (err) {
+      console.log('Fetching messages error:', err);
       reject();
     }
   });
