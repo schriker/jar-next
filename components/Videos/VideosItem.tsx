@@ -68,7 +68,6 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                   onClick={(event) => addToBookark(event)}
                   className={styles.bookmark}
                 >
-                  <Tooltip id={`faved-${video.id}`} />
                   <FontAwesomeIcon
                     className={styles.bookmarkIcon}
                     icon={faHeart}
@@ -78,6 +77,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               <div className={styles.duration}>{video.duration}</div>
               <div className={styles.views}>{video.views}</div>
             </div>
+            <Tooltip id={`faved-${video.id}`} />
           </div>
           <div className={styles.content}>
             <div className={styles.title}>{trimString(video.title, 25)}</div>
@@ -91,10 +91,10 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                 onClick={(event) => addToWatched(event)}
                 className={styles.check}
               >
-                <Tooltip id={`watched-${video.id}`} />
                 <FontAwesomeIcon className={styles.checkIcon} icon={faCheck} />
               </div>
             )}
+            <Tooltip id={`watched-${video.id}`} />
           </div>
         </a>
       </Link>

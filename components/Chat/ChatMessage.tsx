@@ -64,7 +64,7 @@ const ChatMessage = ({
   } | null>(null);
   const [sub, setSub] = useState<{ icon: string; srcset: string } | null>(null);
   const [gifts, setGifts] = useState<string | null>(null);
-  const id = useMemo(() => uuidv4(), []);
+  const id = uuidv4();
   const parsedMessage = useMemo(
     () => messageParser(message.body, emoticons),
     []

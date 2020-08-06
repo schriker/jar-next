@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 // @ts-ignore
 import ircf from 'irc-formatting';
 import Tooltip from 'components/Tooltip/Tooltip';
@@ -11,22 +11,25 @@ type ChatMessageComponentPropsType = {
 };
 
 const ChatMessageComponent = ({ part }: ChatMessageComponentPropsType) => {
-  const id = useMemo(() => uuidv4(), []);
+  const id = uuidv4();
   return (
     <>
-      <Tooltip id={id} />
       {part.type === 'text' ? (
-        <span
-          dangerouslySetInnerHTML={{ __html: ircf.renderHtml(part.body) }}
-        ></span>
+        <>
+          <Tooltip id={id} />
+          <span
+            dangerouslySetInnerHTML={{ __html: ircf.renderHtml(part.body) }}
+          ></span>
+        </>
       ) : (
         <>
-          <span
+          <Tooltip id={id} />
+          <div
             className={styles.emoticon}
             data-tip={part.value}
             data-for={id}
             dangerouslySetInnerHTML={{ __html: part.body }}
-          ></span>
+          ></div>
         </>
       )}
     </>

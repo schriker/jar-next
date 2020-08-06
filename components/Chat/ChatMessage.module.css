@@ -2,6 +2,7 @@
   line-height: 24px;
   margin: 5px 0;
   min-height: 30px;
+  padding: 0 15px 0 0;
 }
 
 .wrapper a {
@@ -14,6 +15,7 @@
 }
 
 .wrapper span {
+  /* display: inline-block; */
   word-wrap: break-word;
   font-size: 14px;
   line-height: 18px;

@@ -4,7 +4,7 @@ const ReactTooltip = dynamic(() => import('react-tooltip'), {
 });
 
 const Tooltip = ({ id }: {id: string}) => {
-  return (
+  return ( 
     <ReactTooltip
       id={id}
       delayShow={200}

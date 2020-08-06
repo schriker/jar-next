@@ -1,0 +1,12 @@
+.scrollDown {
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: #141414;
+  transform: translate(-50%, 0);
+}

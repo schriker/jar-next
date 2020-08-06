@@ -5,10 +5,11 @@
 }
 
 .chatWrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid #373737;
   overflow: auto;
+  margin: 0 -10px 0 0;
 }
 
 .playButton {
