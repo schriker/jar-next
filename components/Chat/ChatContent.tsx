@@ -3,29 +3,44 @@ import { startPlayer } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 import { Video } from 'types/video';
-import { ChatMessageType } from 'types/message';
+import {
+  ChatMessageType,
+  ChatEmoticon,
+  ChatModeBadge,
+  ChatUserWithMode,
+  ChatBadges,
+} from 'types/message';
 import { fetchMessages } from 'helpers/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import style from 'components/Chat/ChatContent.module.css';
-import ChatMessages from 'components/Chat/ChatMessages';
 import SimpleBar from 'simplebar-react';
+import { API } from 'helpers/axios';
+import ChatMessage from './ChatMessage';
 
 const ChatContent = ({ video }: { video: Video }) => {
-  const bottom = useRef(null);
+  const bottom = useRef<HTMLElement | null>(null);
   const dispatch = useDispatch();
   const workerRef = useRef<Worker>();
   const player = useTypedSelector((state) => state.appPlayer);
   const [startTime, setStartTime] = useState<string | null>(null);
   const [chatAdjustment, setChatAdjusment] = useState<number>(0);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const [modes, setModes] = useState<ChatModeBadge[]>([]);
+  const [usersWithMode, setUsersWithMode] = useState<ChatUserWithMode[]>([]);
+  const [badges, setBadges] = useState<ChatBadges | null>(null);
+  const [emoticons, setEmoticons] = useState<ChatEmoticon[]>([]);
 
   useEffect(() => {
     workerRef.current = new Worker('../../helpers/message.worker.js', {
       type: 'module',
     });
     return () => {
-      if (workerRef.current) workerRef.current.terminate();
+      if (workerRef.current) {
+        console.log('Terminate');
+        workerRef.current.terminate();
+      }
     };
   }, []);
 
@@ -58,14 +73,11 @@ const ChatContent = ({ video }: { video: Video }) => {
           workerRef.current.onmessage = ({ data }) => {
             switch (data.type) {
               case 'ADD_MESSAGE':
-                setMessages((messages) => [...messages, data.message]);
+                setMessages((messages) => [...messages.slice(-70), data.message]);
                 break;
               case 'FETCH':
-                setStartTime(messages[messages.length - 1].createdAt);
+                setStartTime(data.message.createdAt);
                 break;
-              case 'SPLICE': {
-                setMessages(data.messages);
-              }
             }
           };
         }
@@ -102,11 +114,55 @@ const ChatContent = ({ video }: { video: Video }) => {
     }
   }, [player.finished]);
 
-  // useEffect(() => {
-    
-  //     bottom.current.scrollIntoView();
-    
-  // }, [messages]);
+  useEffect(() => {
+    const fetchAllIcons = async () => {
+      try {
+        const jadiscoEmoticons = axios.get(
+          'https://poorchat.net/api/emoticons'
+        );
+        const jadiscoEmoticonsPremium = axios.get(
+          'https://poorchat.net/api/channels/2/emoticons'
+        );
+
+        const icons = await Promise.all([
+          jadiscoEmoticons,
+          jadiscoEmoticonsPremium,
+        ]);
+
+        let emoticons: ChatEmoticon[] = [];
+
+        for (let el of icons) {
+          emoticons = [...emoticons, ...el.data];
+        }
+
+        const badgesRequest = axios.get(
+          'https://poorchat.net/api/channels/2/badges'
+        );
+        const modsRequest = axios.get('https://poorchat.net/api/badges');
+        const usersWithModsRequest = API.get('/modes?streamer=wonziu');
+
+        const [badges, mods, usersWithMods] = await Promise.all([
+          badgesRequest,
+          modsRequest,
+          usersWithModsRequest,
+        ]);
+
+        setModes(mods.data);
+        setEmoticons(emoticons);
+        setBadges(badges.data);
+        setUsersWithMode(usersWithMods.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAllIcons();
+  }, []);
+
+  useEffect(() => {
+    if (bottom.current) {
+      bottom.current.scrollTop = bottom.current.scrollHeight;
+    }
+  }, [messages]);
 
   return !player.startPlayer ? (
     <div className={style.playWrapper}>
@@ -121,10 +177,18 @@ const ChatContent = ({ video }: { video: Video }) => {
     </div>
   ) : (
     <div className={style.chatWrapper}>
-      {/* <SimpleBar style={{ maxHeight: '100%' }} forceVisible="y" autoHide={true}> */}
-        <ChatMessages messages={messages} />
-        <div ref={bottom}></div>
-      {/* </SimpleBar> */}
+      <SimpleBar scrollableNodeProps={{ ref: bottom }} style={{ maxHeight: '100%' }}>
+        {messages.map((message) => (
+          <ChatMessage
+            key={`${message.uuid}`}
+            badges={badges}
+            modes={modes}
+            message={message}
+            emoticons={emoticons}
+            usersWithMode={usersWithMode}
+          />
+        ))}
+      </SimpleBar>
     </div>
   );
 };

@@ -70,7 +70,7 @@ const messagePartsParser = (part: string, emoticons: ChatEmoticon[]) => {
         {
           type: 'emoticon',
           value: part,
-          body: `<img width="28px" height="28px" src="https://static.poorchat.net/emoticons/${emoticon.file}/2x" />`,
+          body: `<img width="28px" height="28px" src="https://static.poorchat.net/emoticons/${emoticon.file}/1x" srcset="https://static.poorchat.net/emoticons/${emoticon.file}/1x, https://static.poorchat.net/emoticons/${emoticon.file}/2x 1.25x, https://static.poorchat.net/emoticons/${emoticon.file}/4x 2.25x" />`,
         },
       ];
     }

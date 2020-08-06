@@ -25,9 +25,15 @@ type ChatMessageIconPropsType = {
   id: string;
   tip: string;
   source: string;
+  srcset?: string;
 };
 
-const ChatMessageIcon = ({ id, tip, source }: ChatMessageIconPropsType) => {
+const ChatMessageIcon = ({
+  id,
+  tip,
+  source,
+  srcset = '',
+}: ChatMessageIconPropsType) => {
   return (
     <>
       <img
@@ -37,6 +43,7 @@ const ChatMessageIcon = ({ id, tip, source }: ChatMessageIconPropsType) => {
         data-for={id}
         src={source}
         alt=""
+        srcSet={srcset}
       />
       <Tooltlip id={id} />
     </>
@@ -50,8 +57,12 @@ const ChatMessage = ({
   modes,
   badges,
 }: ChatMessagePropsType) => {
-  const [mode, setMode] = useState<{ icon: string; name: string } | null>(null);
-  const [sub, setSub] = useState<string | null>(null);
+  const [mode, setMode] = useState<{
+    icon: string;
+    srcset: string;
+    name: string;
+  } | null>(null);
+  const [sub, setSub] = useState<{ icon: string; srcset: string } | null>(null);
   const [gifts, setGifts] = useState<string | null>(null);
   const id = useMemo(() => uuidv4(), []);
   const parsedMessage = useMemo(
@@ -74,7 +85,8 @@ const ChatMessage = ({
       const [mode] = authorMode.mode.filter((mode) => !!modesName[mode]);
       if (mode) {
         setMode({
-          icon: `https://static.poorchat.net/badges/${mode}/2x`,
+          icon: `https://static.poorchat.net/badges/${mode}/1x`,
+          srcset: `https://static.poorchat.net/badges/${mode}/1x, https://static.poorchat.net/badges/${mode}/2x 1.25x, https://static.poorchat.net/badges/${mode}/4x 2.25x`,
           name: modesName[mode],
         });
       }
@@ -83,9 +95,18 @@ const ChatMessage = ({
       const badge = badges.subscriber.filter(
         (badge) => badge.months <= message.subscription
       );
-      setSub(
-        `https://static.poorchat.net/badges/${badge[badge.length - 1].file}/2x`
-      );
+      setSub({
+        icon: `https://static.poorchat.net/badges/${
+          badge[badge.length - 1].file
+        }/1x`,
+        srcset: `https://static.poorchat.net/badges/${
+          badge[badge.length - 1].file
+        }/1x, https://static.poorchat.net/badges/${
+          badge[badge.length - 1].file
+        }/2x 1.25x, https://static.poorchat.net/badges/${
+          badge[badge.length - 1].file
+        }/4x 2.25x`,
+      });
     }
     if (message.subscriptiongifter > 0) {
       const [giftBadges] = modes.filter((mode) => mode.mode === 'g');
@@ -100,7 +121,6 @@ const ChatMessage = ({
         );
       }
     }
-    console.log('Render');
   }, []);
   return (
     <div className={styles.wrapper}>
@@ -113,13 +133,15 @@ const ChatMessage = ({
             tip={mode.name}
             id={`mode-${id}`}
             source={mode.icon}
+            srcset={mode.srcset}
           />
         )}
         {sub && (
           <ChatMessageIcon
             tip={`Subskrybuje: ${message.subscription}`}
             id={`sub-${id}`}
-            source={sub}
+            source={sub.icon}
+            srcset={sub.srcset}
           />
         )}
         {gifts && (
@@ -141,7 +163,7 @@ const ChatMessage = ({
       <span className={styles.message}>
         :{' '}
         {parsedMessage.map((part, index) => (
-          <ChatMessageComponent key={`${message._id}-${index}`} part={part} />
+          <ChatMessageComponent key={`${message.uuid}-${index}`} part={part} />
         ))}
       </span>
     </div>

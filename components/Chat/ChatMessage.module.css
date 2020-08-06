@@ -1,15 +1,16 @@
 .wrapper {
+  line-height: 24px;
   margin: 5px 0;
-  padding: 0 8px 0 0;
+  min-height: 30px;
 }
 
 .wrapper a {
-  color: #0a84FF;
-  transition: all ease .2s;
+  color: #f00;
+  transition: all ease 0.2s;
 }
 
 .wrapper a:hover {
-  color: #80bfff;
+  color: rgb(189, 27, 27);
 }
 
 .wrapper span {
@@ -37,5 +38,5 @@
 .time {
   font-size: 12px;
   margin: 0 5px 0 0;
-  color: #6B6B6B !important;
+  color: #6b6b6b !important;
 }

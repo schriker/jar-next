@@ -6,6 +6,7 @@ import { Video } from 'types/video';
 import { ChatMessageType } from 'types/message';
 import { ServerVideoQuery, TwitchVideoQuery } from 'types/api';
 import { TwitchGame, TwitchStreamer, TwitchStream } from 'types/twitch';
+import { v4 as uuidv4 } from 'uuid';
 
 const fetchStreamers = (streamers: string[]) => {
   return new Promise<TwitchStreamer[]>(async (resolve, reject) => {
@@ -204,7 +205,12 @@ export const fetchMessages = (body: {
   return new Promise<ChatMessageType[]>(async (resolve, reject) => {
     try {
       const response = await API.post(`/message`, body);
-      resolve(response.data);
+      resolve(
+        response.data.map((message: ChatMessageType) => ({
+          ...message,
+          uuid: uuidv4(),
+        }))
+      );
     } catch (err) {
       console.log('Fetching messages error:', err);
       reject();

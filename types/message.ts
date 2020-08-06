@@ -1,4 +1,5 @@
 export type ChatMessageType = {
+  uuid: string;
   _id: string;
   type: string;
   author: string;
