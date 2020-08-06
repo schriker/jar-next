@@ -6,7 +6,6 @@ onmessage = ({ data }) => {
     if (data.fetched.length === 0 && data.messages.length !== 0) {
       postMessage({
         type: 'FETCH',
-        // startTime: data.startTime
       })
       clearInterval(messageInterval)
     }
@@ -27,7 +26,7 @@ onmessage = ({ data }) => {
       })
     }
 
-    if (data.messages.length > 100) {
+    if (data.messages.length > 70) {
       data.messages.splice(0, 1)
       postMessage({
         type: 'SPLICE',

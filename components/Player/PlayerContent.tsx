@@ -47,31 +47,56 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
         )}
       </div>
       <div className={styles.leftPanel}>
-        <Tooltip />
         <div className={styles.info}>
-          <div data-tip="Czas trwania" className={styles.infoBlock}>
+          <Tooltip id="duration" />
+          <div
+            data-tip="Czas trwania"
+            data-for="duration"
+            className={styles.infoBlock}
+          >
             {video.duration}
           </div>
-          <div data-tip="Wyświetleń" className={styles.infoBlock}>
+          <Tooltip id="views" />
+          <div
+            data-tip="Wyświetleń"
+            data-for="views"
+            className={styles.infoBlock}
+          >
             {video.views}
           </div>
-          <div data-tip="Najciekawsze momenty" className={styles.moments}>
+          <Tooltip id="moments" />
+          <div
+            data-tip="Najciekawsze momenty"
+            data-for="moments"
+            className={styles.moments}
+          >
             <div>
               <FontAwesomeIcon icon={faFire} />
             </div>
             Momenty
           </div>
-          <div data-tip="Obejrzany" className={styles.button}>
+          <Tooltip id="watched" />
+          <div
+            data-tip="Obejrzany"
+            data-for="watched"
+            className={styles.button}
+          >
             <div>
               <FontAwesomeIcon icon={faCheck} />
             </div>
           </div>
-          <div data-tip="Ulubiony" className={styles.button}>
+          <Tooltip id="faved" />
+          <div data-tip="Ulubiony" data-for="faved" className={styles.button}>
             <div>
               <FontAwesomeIcon icon={faHeart} />
             </div>
           </div>
-          <div data-tip="Tryb kinowy" className={styles.button}>
+          <Tooltip id="theatre" />
+          <div
+            data-tip="Tryb kinowy"
+            data-for="theatre"
+            className={styles.button}
+          >
             <div>
               <FontAwesomeIcon icon={faExpand} />
             </div>

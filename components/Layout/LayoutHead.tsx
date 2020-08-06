@@ -19,11 +19,15 @@ const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {
         <meta content="1800" property="og:image:width" />
         <meta content="950" property="og:image:height" />
         <meta property="og:description" content={ogDescription} />
-        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        ></meta>
         <link
           href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap"
           rel="stylesheet"
         />
+        <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
       </Head>
     </>
   );

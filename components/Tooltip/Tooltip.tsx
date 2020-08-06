@@ -3,10 +3,10 @@ const ReactTooltip = dynamic(() => import('react-tooltip'), {
   ssr: false,
 });
 
-const Tooltip = () => {
+const Tooltip = ({ id }: {id: string}) => {
   return (
     <ReactTooltip
-      uuid="mytt"
+      id={id}
       delayShow={200}
       effect="solid"
       backgroundColor="#2C2C2C"

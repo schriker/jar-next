@@ -16,3 +16,8 @@ body {
   background-color: #141414;
   font-family: 'Ubuntu', sans-serif;
 }
+
+.simplebar-scrollbar::before {
+  background: #373737 !important;
+  border-radius: 3px;
+}

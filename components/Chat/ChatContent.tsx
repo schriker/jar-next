@@ -3,19 +3,22 @@ import { startPlayer } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 import { Video } from 'types/video';
-import { ChatMessage } from 'types/message';
+import { ChatMessageType } from 'types/message';
 import { fetchMessages } from 'helpers/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import style from 'components/Chat/ChatContent.module.css';
+import ChatMessages from 'components/Chat/ChatMessages';
+import SimpleBar from 'simplebar-react';
 
 const ChatContent = ({ video }: { video: Video }) => {
+  const bottom = useRef(null);
   const dispatch = useDispatch();
   const workerRef = useRef<Worker>();
   const player = useTypedSelector((state) => state.appPlayer);
   const [startTime, setStartTime] = useState<string | null>(null);
   const [chatAdjustment, setChatAdjusment] = useState<number>(0);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = useState<ChatMessageType[]>([]);
 
   useEffect(() => {
     workerRef.current = new Worker('../../helpers/message.worker.js', {
@@ -97,9 +100,13 @@ const ChatContent = ({ video }: { video: Video }) => {
         type: 'STOP',
       });
     }
-  }, [player.finished])
+  }, [player.finished]);
 
-  console.log(messages);
+  // useEffect(() => {
+    
+  //     bottom.current.scrollIntoView();
+    
+  // }, [messages]);
 
   return !player.startPlayer ? (
     <div className={style.playWrapper}>
@@ -113,7 +120,12 @@ const ChatContent = ({ video }: { video: Video }) => {
       </div>
     </div>
   ) : (
-    <div></div>
+    <div className={style.chatWrapper}>
+      {/* <SimpleBar style={{ maxHeight: '100%' }} forceVisible="y" autoHide={true}> */}
+        <ChatMessages messages={messages} />
+        <div ref={bottom}></div>
+      {/* </SimpleBar> */}
+    </div>
   );
 };
 

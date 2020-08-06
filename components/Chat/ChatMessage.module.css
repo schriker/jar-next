@@ -1,0 +1,41 @@
+.wrapper {
+  margin: 5px 0;
+  padding: 0 8px 0 0;
+}
+
+.wrapper a {
+  color: #0a84FF;
+  transition: all ease .2s;
+}
+
+.wrapper a:hover {
+  color: #80bfff;
+}
+
+.wrapper span {
+  word-wrap: break-word;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+.message {
+  color: rgb(219, 219, 219);
+}
+
+.icons {
+  display: inline-block;
+}
+
+.icons img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  margin: 0 4px 0 0;
+}
+
+.time {
+  font-size: 12px;
+  margin: 0 5px 0 0;
+  color: #6B6B6B !important;
+}

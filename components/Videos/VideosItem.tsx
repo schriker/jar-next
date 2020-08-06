@@ -36,7 +36,6 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
   };
   return (
     <div className={styles.container}>
-      <Tooltip />
       <Link
         href="/[streamer]/video/[video]"
         as={`/${router.query.streamer}/video/${video.id}`}
@@ -65,9 +64,11 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               {router.query.streamer === 'wonziu' && (
                 <div
                   data-tip="Ulubiony"
+                  data-for={`faved-${video.id}`}
                   onClick={(event) => addToBookark(event)}
                   className={styles.bookmark}
                 >
+                  <Tooltip id={`faved-${video.id}`} />
                   <FontAwesomeIcon
                     className={styles.bookmarkIcon}
                     icon={faHeart}
@@ -86,9 +87,11 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
             {router.query.streamer === 'wonziu' && (
               <div
                 data-tip="Obejrzany"
+                data-for={`watched-${video.id}`}
                 onClick={(event) => addToWatched(event)}
                 className={styles.check}
               >
+                <Tooltip id={`watched-${video.id}`} />
                 <FontAwesomeIcon className={styles.checkIcon} icon={faCheck} />
               </div>
             )}

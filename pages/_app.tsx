@@ -1,5 +1,7 @@
+import 'simplebar/dist/simplebar.min.css';
 import 'styles.css';
 import 'nprogress.css';
+import 'ircstyles.css';
 import 'react-dates/lib/css/_datepicker.css';
 import 'react-dates/initialize';
 import 'react_dates_overrides.css';

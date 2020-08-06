@@ -4,6 +4,13 @@
   align-items: center;
 }
 
+.chatWrapper {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #373737;
+  overflow-y: scroll;
+}
+
 .playButton {
   cursor: pointer;
   width: 65px;

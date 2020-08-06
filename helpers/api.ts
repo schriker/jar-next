@@ -3,7 +3,7 @@ import qs from 'qs';
 import mergeStreamersData from 'helpers/mergeStreamersData';
 import { Streamer } from 'types/streamer';
 import { Video } from 'types/video';
-import { ChatMessage } from 'types/message';
+import { ChatMessageType } from 'types/message';
 import { ServerVideoQuery, TwitchVideoQuery } from 'types/api';
 import { TwitchGame, TwitchStreamer, TwitchStream } from 'types/twitch';
 
@@ -201,7 +201,7 @@ export const fetchMessages = (body: {
   gt: string;
   streamer: string;
 }) => {
-  return new Promise<ChatMessage[]>(async (resolve, reject) => {
+  return new Promise<ChatMessageType[]>(async (resolve, reject) => {
     try {
       const response = await API.post(`/message`, body);
       resolve(response.data);
