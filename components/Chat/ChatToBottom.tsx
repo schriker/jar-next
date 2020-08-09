@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import throttle from 'lodash.throttle';
 import styles from 'components/Chat/ChatToBottom.module.css';
+import { ChatMessageType } from 'types/message';
 
 type ChatToBottomPropsType = {
   refElement: HTMLDivElement | null;
-  scrollingTop: boolean;
-  setScrollingTop: (value: boolean) => void;
+  messages: ChatMessageType[];
 };
 
-const ChatToBottom = ({
-  refElement,
-  scrollingTop,
-  setScrollingTop,
-}: ChatToBottomPropsType) => {
+const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
+  const [scrollingTop, setScrollingTop] = useState<boolean>(false);
+
   const scrollToBottom = (element: HTMLDivElement | null) => {
     if (element) {
       element.scrollTop = element.scrollHeight;
@@ -20,18 +18,24 @@ const ChatToBottom = ({
   };
 
   useEffect(() => {
+    if (refElement && !scrollingTop) {
+      refElement.scrollTop = refElement.scrollHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {
     const handleScroll = throttle(() => {
       if (refElement) {
         const isScrolledToBottom =
           refElement.scrollHeight - refElement.clientHeight <=
-          refElement.scrollTop + 100;
+          refElement.scrollTop + 70;
         if (isScrolledToBottom) {
           setScrollingTop(false);
         } else {
           setScrollingTop(true);
         }
       }
-    }, 300);
+    }, 50);
 
     if (refElement) {
       refElement.addEventListener('scroll', handleScroll);

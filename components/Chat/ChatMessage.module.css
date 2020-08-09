@@ -6,16 +6,15 @@
 }
 
 .wrapper a {
-  color: #f00;
+  color: #41ff56;
   transition: all ease 0.2s;
 }
 
 .wrapper a:hover {
-  color: rgb(189, 27, 27);
+  color: #9cffa7;
 }
 
 .wrapper span {
-  /* display: inline-block; */
   word-wrap: break-word;
   font-size: 14px;
   line-height: 18px;

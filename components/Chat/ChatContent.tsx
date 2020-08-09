@@ -21,7 +21,6 @@ const ChatContent = ({ video }: { video: Video }) => {
   const [startTime, setStartTime] = useState<string | null>(null);
   const [chatAdjustment, setChatAdjusment] = useState<number>(0);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
-  const [scrollingTop, setScrollingTop] = useState<boolean>(false);
   const { modes, usersWithMode, badges, emoticons } = useChatIconsData();
 
   useEffect(() => {
@@ -109,12 +108,6 @@ const ChatContent = ({ video }: { video: Video }) => {
     }
   }, [player.finished]);
 
-  useEffect(() => {
-    if (bottom.current && !scrollingTop) {
-      bottom.current.scrollTop = bottom.current.scrollHeight;
-    }
-  }, [messages]);
-
   return !player.startPlayer ? (
     <div className={style.playWrapper}>
       <div
@@ -144,11 +137,7 @@ const ChatContent = ({ video }: { video: Video }) => {
           />
         ))}
       </SimpleBar>
-      <ChatToBottom
-        refElement={bottom.current}
-        scrollingTop={scrollingTop}
-        setScrollingTop={setScrollingTop}
-      />
+      <ChatToBottom refElement={bottom.current} messages={messages} />
     </div>
   );
 };

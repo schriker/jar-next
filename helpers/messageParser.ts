@@ -42,7 +42,7 @@ const messagePartsParser = (part: string, emoticons: ChatEmoticon[]) => {
     const shortCodes = part.split(':');
     for (let shortCode of shortCodes) {
       if (shortCode.length > 0) {
-        const emoji = emojisArray.filter((el) =>
+        const emoji = emojisArray.filter((el: any) =>
           el.shortcodes.includes(shortCode)
         );
         if (emoji.length === 0) {
