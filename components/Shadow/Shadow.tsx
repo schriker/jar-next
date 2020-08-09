@@ -1,6 +1,6 @@
 import React from 'react';
 import { animated, useTransition } from 'react-spring';
-import style from 'components/Shadow/Shadow.module.css';
+import styles from 'components/Shadow/Shadow.module.css';
 
 type ShadowProps = {
   isOpen: boolean;
@@ -32,7 +32,7 @@ const Shadow = ({ isOpen, delay = 0, onClick }: ShadowProps) => {
           item && (
             <animated.div
               onClick={() => onClickHandler()}
-              className={style.shadow}
+              className={styles.shadow}
               key={key}
               style={props}
             />

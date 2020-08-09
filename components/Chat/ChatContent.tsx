@@ -7,9 +7,10 @@ import { ChatMessageType } from 'types/message';
 import { fetchMessages } from 'helpers/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import style from 'components/Chat/ChatContent.module.css';
+import styles from 'components/Chat/ChatContent.module.css';
 import SimpleBar from 'simplebar-react';
-import ChatMessage from './ChatMessage';
+import ChatMessage from 'components/Chat/ChatMessage';
+import ChatCard from 'components/Chat/ChatCard';
 import useChatIconsData from 'hooks/useChatIconsData';
 import ChatToBottom from 'components/Chat/ChatToBottom';
 
@@ -109,33 +110,37 @@ const ChatContent = ({ video }: { video: Video }) => {
   }, [player.finished]);
 
   return !player.startPlayer ? (
-    <div className={style.playWrapper}>
+    <div className={styles.playWrapper}>
       <div
         onClick={() => (player.isReady ? dispatch(startPlayer(true)) : null)}
-        className={style.playButton}
+        className={styles.playButton}
       >
-        <div className={style.playIcon}>
+        <div className={styles.playIcon}>
           <FontAwesomeIcon icon={faPlay} />
         </div>
       </div>
     </div>
   ) : (
-    <div className={style.chatWrapper}>
+    <div className={styles.chatWrapper}>
       <SimpleBar
         scrollableNodeProps={{ ref: bottom }}
         style={{ maxHeight: '100%' }}
         autoHide={true}
       >
-        {messages.map((message) => (
-          <ChatMessage
-            key={`${message.uuid}`}
-            badges={badges}
-            modes={modes}
-            message={message}
-            emoticons={emoticons}
-            usersWithMode={usersWithMode}
-          />
-        ))}
+        {messages.map((message) =>
+          message.author === 'irc.poorchat.net' ? (
+            <ChatCard key={message.uuid} message={message} />
+          ) : (
+            <ChatMessage
+              key={message.uuid}
+              badges={badges}
+              modes={modes}
+              message={message}
+              emoticons={emoticons}
+              usersWithMode={usersWithMode}
+            />
+          )
+        )}
       </SimpleBar>
       <ChatToBottom refElement={bottom.current} messages={messages} />
     </div>

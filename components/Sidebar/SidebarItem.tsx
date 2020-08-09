@@ -4,7 +4,7 @@ import Link from 'next/link';
 import trimString from 'helpers/trimString';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import style from 'components/Sidebar/SidebarItem.module.css';
+import styles from 'components/Sidebar/SidebarItem.module.css';
 import { Streamer } from 'types/streamer';
 
 type SidebarItemProps = {
@@ -59,16 +59,16 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
     }
   });
   return !streamer ? (
-    <ItemAnchor isActive={false} className={style.wrapper}>
-      <div className={style.sidebarItem}></div>
+    <ItemAnchor isActive={false} className={styles.wrapper}>
+      <div className={styles.sidebarItem}></div>
     </ItemAnchor>
   ) : (
     <Link href="/[streamer]" as={`/${streamer.login}`}>
       <ItemAnchor
         isActive={router.query.streamer === streamer.login}
-        className={style.wrapper}
+        className={styles.wrapper}
       >
-        <div className={style.sidebarItem}>
+        <div className={styles.sidebarItem}>
           <animated.div style={fadeIn}>
             <img
               onLoad={() => setLoaded(true)}
@@ -79,16 +79,16 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
             <StatusIcon centerVertical={false} isLive={streamer.isLive} />
           </animated.div>
         </div>
-        <animated.div style={slideIn} className={style.content}>
+        <animated.div style={slideIn} className={styles.content}>
           <div>
             <div>{streamer.displayName}</div>
             {streamer.game && (
-              <div className={style.gameName}>
+              <div className={styles.gameName}>
                 {trimString(streamer.game.name, 25)}
               </div>
             )}
           </div>
-          <div className={style.status}>
+          <div className={styles.status}>
             <StatusIcon centerVertical={true} isLive={streamer.isLive} />{' '}
             {streamer.isLive ? streamer.viewers : 'offline'}
           </div>
