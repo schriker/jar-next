@@ -19,7 +19,9 @@ const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
 
   useEffect(() => {
     if (refElement && !scrollingTop) {
-      refElement.scrollTop = refElement.scrollHeight;
+      setTimeout(() => {
+        refElement.scrollTop = refElement.scrollHeight;
+      }, 0);
     }
   }, [messages]);
 
@@ -28,7 +30,7 @@ const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
       if (refElement) {
         const isScrolledToBottom =
           refElement.scrollHeight - refElement.clientHeight <=
-          refElement.scrollTop + 70;
+          refElement.scrollTop + 200;
         if (isScrolledToBottom) {
           setScrollingTop(false);
         } else {
@@ -53,6 +55,7 @@ const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
       className={styles.scrollDown}
       onClick={() => scrollToBottom(refElement)}
     >
+      {/* <span onClick={() => scrollToBottom(refElement)}>Wróć do najnowszych</span> */}
       Wróć do najnowszych
     </div>
   );

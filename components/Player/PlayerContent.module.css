@@ -60,57 +60,16 @@
   padding: 0 10px 0 0;
 }
 
-.infoBlock {
+.infoBlock, .spacer {
   display: flex;
   align-items: center;
 }
 
-.infoBlock::after {
+.spacer::after {
   content: '•';
   margin: 0 7px;
 }
 
 .infoBlock:last-child::after {
   content: '';
-}
-
-.moments {
-  cursor: pointer;
-  padding: 3px 6px;
-  display: flex;
-  color: #fff;
-  border-radius: 3px;
-  transition: all ease .2s;
-  background-color: #f00;
-}
-
-.moments:hover {
-  background-color: rgb(189, 27, 27);
-}
-
-.moments div {
-  padding: 1px 0 0 0;
-  width: 8px;
-  margin: 0 5px 0 0;
-}
-
-.button {
-  cursor: pointer;
-  padding: 3px 5px;
-  display: flex;
-  color: #fff;
-  border-radius: 3px;
-  background-color: #383838;
-  transition: all ease .2s;
-  margin: 0 0 0 5px;
-}
-
-.button:hover {
-  background-color:#f00;
-}
-
-.button div {
-  /* padding: 1px 0 0 0; */
-  width: 8px;
-  margin: 0 5px;
 }

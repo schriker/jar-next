@@ -6,6 +6,7 @@ import { Streamer } from 'types/streamer';
 import styles from 'components/Player/PlayerContent.module.css';
 import moment from 'moment';
 import Tooltip from 'components/Tooltip/Tooltip';
+import ControllButton from 'components/ControllButton/ControllButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFire,
@@ -17,6 +18,30 @@ import {
 type PlayerContentPropsType = {
   video: Video;
   streamer: Streamer;
+};
+
+type InfoBlockPropsType = {
+  id: string;
+  tooltip: string;
+  content: string;
+  withSpacer?: boolean;
+};
+
+const InfoBlock = ({
+  id,
+  tooltip,
+  content,
+  withSpacer,
+}: InfoBlockPropsType) => {
+  return (
+    <>
+      <Tooltip id={id} />
+      <div data-tip={tooltip} data-for={id} className={styles.infoBlock}>
+        {content}
+      </div>
+      {withSpacer && <div className={styles.spacer}></div>}
+    </>
+  );
 };
 
 const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
@@ -48,59 +73,41 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
       </div>
       <div className={styles.leftPanel}>
         <div className={styles.info}>
-          <Tooltip id="duration" />
-          <div
-            data-tip="Czas trwania"
-            data-for="duration"
-            className={styles.infoBlock}
-          >
-            {video.duration}
-          </div>
-          <Tooltip id="views" />
-          <div
-            data-tip="Wyświetleń"
-            data-for="views"
-            className={styles.infoBlock}
-          >
-            {video.views}
-          </div>
-          <Tooltip id="moments" />
-          <div
-            data-tip="Najciekawsze momenty"
-            data-for="moments"
-            className={styles.moments}
-          >
+          <InfoBlock
+            id="duration"
+            content={video.duration}
+            tooltip="Czas trwania"
+            withSpacer
+          />
+          <InfoBlock
+            id="views"
+            content={video.views.toString()}
+            tooltip="Wyświetleń"
+            withSpacer
+          />
+          <ControllButton tooltip="Najciekawsze momenty" id="moments">
             <div>
               <FontAwesomeIcon icon={faFire} />
             </div>
-            Momenty
-          </div>
-          <Tooltip id="watched" />
-          <div
-            data-tip="Obejrzany"
-            data-for="watched"
-            className={styles.button}
-          >
+            <span>
+              Momenty
+            </span>
+          </ControllButton>
+          <ControllButton tooltip="Obejrzany" id="watched">
             <div>
               <FontAwesomeIcon icon={faCheck} />
             </div>
-          </div>
-          <Tooltip id="faved" />
-          <div data-tip="Ulubiony" data-for="faved" className={styles.button}>
+          </ControllButton>
+          <ControllButton tooltip="Ulubiony" id="faved">
             <div>
               <FontAwesomeIcon icon={faHeart} />
             </div>
-          </div>
-          <Tooltip id="theatre" />
-          <div
-            data-tip="Tryb kinowy"
-            data-for="theatre"
-            className={styles.button}
-          >
+          </ControllButton>
+          <ControllButton tooltip="Tryb kinowy" id="theatre">
             <div>
               <FontAwesomeIcon icon={faExpand} />
             </div>
-          </div>
+          </ControllButton>
         </div>
       </div>
     </div>

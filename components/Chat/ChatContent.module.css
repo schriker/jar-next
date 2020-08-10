@@ -6,10 +6,13 @@
 
 .chatWrapper {
   position: relative;
+  overflow: auto;
+  margin: 0 -15px 0 0;
+}
+
+.chatContent {
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  margin: 0 -10px 0 0;
 }
 
 .playButton {
@@ -32,4 +35,29 @@
 .playIcon {
   width: 15px;
   padding: 2px 0 0 2px;
+}
+
+.adjustment {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #373737;
+}
+
+.adjustment span {
+  margin: 0 5px;
+}
+
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 15px);
+  height: 20px;
+  z-index: 995;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(239, 1, 124, 0) 100%
+  );
 }

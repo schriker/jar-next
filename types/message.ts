@@ -7,7 +7,7 @@ export type ChatMessageType = {
   color: string;
   subscription: number;
   subscriptiongifter: number;
-  week_position: number | null;
+  week_position?: number | null;
   createdAt: string;
 };
 

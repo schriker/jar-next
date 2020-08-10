@@ -1,18 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { startPlayer } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
+import debounce from 'lodash.debounce';
 import { Video } from 'types/video';
 import { ChatMessageType } from 'types/message';
 import { fetchMessages } from 'helpers/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import styles from 'components/Chat/ChatContent.module.css';
 import SimpleBar from 'simplebar-react';
 import ChatMessage from 'components/Chat/ChatMessage';
 import ChatCard from 'components/Chat/ChatCard';
 import useChatIconsData from 'hooks/useChatIconsData';
 import ChatToBottom from 'components/Chat/ChatToBottom';
+import ControllButton from 'components/ControllButton/ControllButton';
 
 const ChatContent = ({ video }: { video: Video }) => {
   const bottom = useRef<HTMLDivElement | null>(null);
@@ -109,41 +111,98 @@ const ChatContent = ({ video }: { video: Video }) => {
     }
   }, [player.finished]);
 
-  return !player.startPlayer ? (
-    <div className={styles.playWrapper}>
-      <div
-        onClick={() => (player.isReady ? dispatch(startPlayer(true)) : null)}
-        className={styles.playButton}
-      >
-        <div className={styles.playIcon}>
-          <FontAwesomeIcon icon={faPlay} />
-        </div>
+  const debounceCallback = useCallback(
+    debounce((value: string) => {
+      console.log(value);
+      setStartTime(value);
+    }, 500),
+    []
+  );
+
+  const chatAdjustmentHandler = (add: boolean) => {
+    if (player.startPlayer) {
+      setChatAdjusment((value) => {
+        const timeAdjustment = add ? (value += 5) : (value -= 5);
+        const newStartTime = new Date(
+          new Date(video.started).getTime() +
+            player.playerPosition * 1000 +
+            timeAdjustment * 1000
+        ).toISOString();
+        debounceCallback(newStartTime);
+        return timeAdjustment;
+      });
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.adjustment}>
+        <ControllButton
+          onClick={() => chatAdjustmentHandler(false)}
+          tooltip="Cofnij"
+          id="minus"
+        >
+          <div>
+            <FontAwesomeIcon icon={faMinus} />
+          </div>
+        </ControllButton>
+        <span>{chatAdjustment}s</span>
+        <ControllButton
+          onClick={() => chatAdjustmentHandler(true)}
+          tooltip="Do przodu"
+          id="plus"
+        >
+          <div>
+            <FontAwesomeIcon icon={faPlus} />
+          </div>
+        </ControllButton>
       </div>
-    </div>
-  ) : (
-    <div className={styles.chatWrapper}>
-      <SimpleBar
-        scrollableNodeProps={{ ref: bottom }}
-        style={{ maxHeight: '100%' }}
-        autoHide={true}
-      >
-        {messages.map((message) =>
-          message.author === 'irc.poorchat.net' ? (
-            <ChatCard key={message.uuid} message={message} />
-          ) : (
-            <ChatMessage
-              key={message.uuid}
-              badges={badges}
-              modes={modes}
-              message={message}
-              emoticons={emoticons}
-              usersWithMode={usersWithMode}
-            />
-          )
-        )}
-      </SimpleBar>
-      <ChatToBottom refElement={bottom.current} messages={messages} />
-    </div>
+      {!player.startPlayer ? (
+        <div className={styles.playWrapper}>
+          <div
+            onClick={() =>
+              player.isReady ? dispatch(startPlayer(true)) : null
+            }
+            className={styles.playButton}
+          >
+            <div className={styles.playIcon}>
+              <FontAwesomeIcon icon={faPlay} />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className={styles.chatWrapper}>
+          <div className={styles.shadow}></div>
+          <SimpleBar
+            scrollableNodeProps={{ ref: bottom, children: 'asd' }}
+            style={{ height: '100%', overflowX: 'hidden' }}
+            autoHide={true}
+          >
+            <div className={styles.chatContent}>
+              {messages.map((message) =>
+                message.author === 'irc.poorchat.net' ? (
+                  <ChatCard
+                    refElement={bottom.current}
+                    key={message.uuid}
+                    message={message}
+                  />
+                ) : (
+                  <ChatMessage
+                    key={message.uuid}
+                    badges={badges}
+                    modes={modes}
+                    message={message}
+                    emoticons={emoticons}
+                    usersWithMode={usersWithMode}
+                  />
+                )
+              )}
+            </div>
+          </SimpleBar>
+          <ChatToBottom refElement={bottom.current} messages={messages} />
+        </div>
+      )}
+    </>
   );
 };
 

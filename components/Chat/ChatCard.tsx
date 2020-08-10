@@ -23,9 +23,10 @@ type ChatCardType = {
 
 type ChatCardPropsType = {
   message: ChatMessageType;
+  refElement: HTMLDivElement | null;
 };
 
-const ChatCard = ({ message }: ChatCardPropsType) => {
+const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
   let content = null;
   let card: ChatCardType | null = null;
   if (message.type === 'EMBED') {
@@ -35,6 +36,12 @@ const ChatCard = ({ message }: ChatCardPropsType) => {
       card = null;
     }
   }
+
+  const scrollToBottom = () => {
+    if (refElement) {
+      refElement.scrollTop = refElement.scrollHeight;
+    }
+  };
 
   if (card) {
     if (card.image || card.type === 'gifv' || card.type === 'video') {
@@ -50,13 +57,26 @@ const ChatCard = ({ message }: ChatCardPropsType) => {
                 </div>
               </div>
               {card.type === 'gifv' && (
-                <video muted autoPlay loop src={card.video[0].url}></video>
+                <video
+                  onLoad={scrollToBottom}
+                  muted
+                  autoPlay
+                  loop
+                  src={ card.video[0].url}
+                ></video>
               )}
               {card.type === 'video' && (
-                <video muted autoPlay loop src={card.url}></video>
+                <video
+                  onLoad={scrollToBottom}
+                  muted
+                  autoPlay
+                  loop
+                  src={card.url}
+                ></video>
               )}
               {card.image && (
                 <img
+                  onLoad={scrollToBottom}
                   src={card.image[card.image.length - 1].url}
                   alt={card.title}
                 />

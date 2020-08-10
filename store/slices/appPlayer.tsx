@@ -85,7 +85,7 @@ export const {
   pause,
   error,
   startPlayer,
-  setReady
+  setReady,
 } = appPlayerSlice.actions;
 
 export default appPlayerSlice.reducer;

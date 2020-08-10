@@ -63,7 +63,9 @@ const ChatMessage = ({
     name: string;
   } | null>(null);
   const [sub, setSub] = useState<{ icon: string; srcset: string } | null>(null);
-  const [gifts, setGifts] = useState<string | null>(null);
+  const [gifts, setGifts] = useState<{ icon: string; srcset: string } | null>(
+    null
+  );
   const id = uuidv4();
   const parsedMessage = useMemo(
     () => messageParser(message.body, emoticons),
@@ -114,11 +116,25 @@ const ChatMessage = ({
         const badge = giftBadges.badges.filter(
           (badge) => badge.gifts <= message.subscriptiongifter
         );
-        setGifts(
-          `https://static.poorchat.net/badges/${
-            badge[badge.length - 1].file
-          }/2x`
-        );
+        if (message.week_position && message.week_position <= 3) {
+          setGifts({
+            icon: `https://static.poorchat.net/badges/top_gift_${message.week_position}/1x`,
+            srcset: `https://static.poorchat.net/badges/top_gift_${message.week_position}/1x, https://static.poorchat.net/badges/top_gift_${message.week_position}/2x 1.25x, https://static.poorchat.net/badges/top_gift_${message.week_position}/4x 2.25x`,
+          });
+        } else {
+          setGifts({
+            icon: `https://static.poorchat.net/badges/${
+              badge[badge.length - 1].file
+            }/1x`,
+            srcset: `https://static.poorchat.net/badges/${
+              badge[badge.length - 1].file
+            }/1x, https://static.poorchat.net/badges/${
+              badge[badge.length - 1].file
+            }/2x 1.25x, https://static.poorchat.net/badges/${
+              badge[badge.length - 1].file
+            }/4x 2.25x`,
+          });
+        }
       }
     }
   }, []);
@@ -148,7 +164,8 @@ const ChatMessage = ({
           <ChatMessageIcon
             tip={`Podarował: ${message.subscriptiongifter}`}
             id={`gift-${id}`}
-            source={gifts}
+            source={gifts.icon}
+            srcset={gifts.srcset}
           />
         )}
       </div>

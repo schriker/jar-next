@@ -3,6 +3,6 @@
   background-color: #1c1c1c;
   height: 100vh;
   display: grid;
-  grid-template-rows: 1fr 125px;
-  padding: 15px;
+  grid-template-rows: 35px 1fr 125px;
+  padding: 5px 15px;
 }

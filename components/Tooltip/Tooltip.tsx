@@ -7,7 +7,6 @@ const Tooltip = ({ id }: {id: string}) => {
   return ( 
     <ReactTooltip
       id={id}
-      delayShow={200}
       effect="solid"
       backgroundColor="#2C2C2C"
     />
