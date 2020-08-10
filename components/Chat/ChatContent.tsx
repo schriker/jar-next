@@ -111,27 +111,16 @@ const ChatContent = ({ video }: { video: Video }) => {
     }
   }, [player.finished]);
 
-  const debounceCallback = useCallback(
-    debounce((value: string) => {
-      console.log(value);
-      setStartTime(value);
+  const debounceChatRestart = useCallback(
+    debounce(() => {
+      dispatch(startPlayer(false));
     }, 500),
     []
   );
 
   const chatAdjustmentHandler = (add: boolean) => {
-    if (player.startPlayer) {
-      setChatAdjusment((value) => {
-        const timeAdjustment = add ? (value += 5) : (value -= 5);
-        const newStartTime = new Date(
-          new Date(video.started).getTime() +
-            player.playerPosition * 1000 +
-            timeAdjustment * 1000
-        ).toISOString();
-        debounceCallback(newStartTime);
-        return timeAdjustment;
-      });
-    }
+    setChatAdjusment((value) => (add ? (value += 5) : (value -= 5)));
+    debounceChatRestart();
   };
 
   return (
@@ -157,7 +146,7 @@ const ChatContent = ({ video }: { video: Video }) => {
           </div>
         </ControllButton>
       </div>
-      {!player.startPlayer ? (
+      {!player.isPlaying && !player.startPlayer && messages.length === 0 ? (
         <div className={styles.playWrapper}>
           <div
             onClick={() =>

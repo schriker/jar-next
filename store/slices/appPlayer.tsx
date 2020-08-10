@@ -22,7 +22,7 @@ const appPlayerInitialState: AppPlayerStateType = {
 };
 
 const appPlayerSlice = createSlice({
-  name: 'appNotification',
+  name: 'appPlayer',
   initialState: appPlayerInitialState,
   reducers: {
     startPlayer(state, action: { type: string; payload: boolean }) {

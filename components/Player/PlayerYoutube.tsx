@@ -102,8 +102,12 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
   };
 
   useEffect(() => {
-    if (state.startPlayer && playerRef) {
-      playerRef.playVideo();
+    if (playerRef) {
+      if (state.startPlayer) {
+        playerRef.playVideo();
+      } else {
+        playerRef.pauseVideo();
+      }
     }
   }, [state.startPlayer]);
 
