@@ -4,7 +4,12 @@ import dynamic from 'next/dynamic';
 import { Video } from 'types/video';
 import { Streamer } from 'types/streamer';
 import styles from 'components/Player/Player.module.css';
-const PlayerYoutube = dynamic(() => import('components/Player/PlayerYoutube'));
+const PlayerYoutube = dynamic(() => import('components/Player/PlayerYoutube'), {
+  ssr: false,
+});
+const PlayerTwitch = dynamic(() => import('components/Player/PlayerTwitch'), {
+  ssr: false,
+});
 import PlayerContent from 'components/Player/PlayerContent';
 
 type PlayerPropsType = {
@@ -17,14 +22,15 @@ const Player = ({ video, streamer }: PlayerPropsType) => {
     updateViews(streamer.login, video.id);
   }, []);
 
-  const youtube = video.source?.filter((source) => source.name === 'youtube');
+  // const youtube = video.source?.filter((source) => source.name === 'youtube');
+  const youtube: any = [];
   const twitch = video.source?.filter((source) => source.name === 'twitch');
   return (
     <div className={styles.wrapper}>
       {youtube?.length ? (
         <PlayerYoutube source={youtube} />
       ) : twitch?.length ? (
-        <p>asd</p>
+        <PlayerTwitch source={twitch} />
       ) : null}
       <PlayerContent streamer={streamer} video={video} />
     </div>

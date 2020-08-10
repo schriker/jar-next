@@ -112,15 +112,26 @@ const ChatContent = ({ video }: { video: Video }) => {
   }, [player.finished]);
 
   const debounceChatRestart = useCallback(
-    debounce(() => {
-      dispatch(startPlayer(false));
+    debounce((value: number, playerPosition: number) => {
+      setStartTime(
+        new Date(
+          new Date(video.started).getTime() +
+            playerPosition * 1000 +
+            value * 1000
+        ).toISOString()
+      );
     }, 500),
     []
   );
 
   const chatAdjustmentHandler = (add: boolean) => {
-    setChatAdjusment((value) => (add ? (value += 5) : (value -= 5)));
-    debounceChatRestart();
+    setChatAdjusment((value) => {
+      const timeAdjustment = add ? (value += 5) : (value -= 5);
+      if (player.isPlaying) {
+        debounceChatRestart(timeAdjustment, player.playerPosition);
+      }
+      return timeAdjustment;
+    });
   };
 
   return (

@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
-  error,
-  playbackRateChange,
-  playbackRate,
   end,
   pause,
-  buffer,
   play,
   startPlayer,
   setReady,
@@ -16,12 +12,13 @@ import { useDispatch } from 'react-redux';
 import { VideoSource } from 'types/video';
 
 type PlayerType = {
-  playVideo: () => void;
-  getPlaybackRate: () => number;
-  seekTo: (seconds: number) => void;
-  pauseVideo: () => void;
-  destroy: () => void;
+  play: () => void;
+  seek: (seconds: number) => void;
+  pause: () => void;
   getCurrentTime: () => number;
+  getQualities: () => { name: string }[];
+  setQuality: (name: string) => void;
+  addEventListener: (event: string, cb: () => void) => void;
 };
 
 enum PlayerState {
@@ -35,48 +32,32 @@ enum PlayerState {
 
 declare global {
   interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
+    Twitch: any;
   }
 }
 
-const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
+const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
   const [playerRef, setPlayerRef] = useState<PlayerType | null>(null);
   const dispatch = useDispatch();
   const state = useTypedSelector((state) => state.appPlayer);
 
   var player: PlayerType | null = null;
 
-  const onPlayerReady = (event: any) => {
+  const onPlayerReady = () => {
     dispatch(startPlayer(false));
     dispatch(setReady(true));
-    setPlayerRef(event.target);
-  };
-
-  const onPlayerPlabackRateChange = () => {
-    if (player) {
-      dispatch(
-        playbackRateChange({
-          playbackRate: player.getPlaybackRate(),
-          playerPosition: player.getCurrentTime(),
-        })
-      );
-    }
+    setPlayerRef(player);
   };
 
   const onPlayerStateChange = (event: { data: PlayerState }) => {
     if (player) {
       dispatch(startPlayer(true));
-      dispatch(playbackRate(player.getPlaybackRate()));
       switch (event.data) {
         case PlayerState.Ended:
           dispatch(end());
           break;
         case PlayerState.Paused:
           dispatch(pause());
-          break;
-        case PlayerState.Buffering:
-          dispatch(buffer());
           break;
         case PlayerState.Playing:
           dispatch(play(player.getCurrentTime()));
@@ -85,27 +66,38 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
     }
   };
   const loadVideo = () => {
-    player = new window.YT.Player('player', {
+    player = new window.Twitch.Player('player', {
+      video: source[0].id,
+      parent: ['jarchiwum.pl'],
       height: '100%',
       width: '100%',
-      playerVars: {
-        enablejsapi: 1,
-        origin: 'https://jarchiwum.pl',
-      },
-      videoId: source[0].id,
-      events: {
-        onReady: onPlayerReady,
-        onStateChange: onPlayerStateChange,
-        onPlaybackRateChange: onPlayerPlabackRateChange,
-        onError: () => dispatch(error()),
-      },
+      autoplay: false,
     });
+    if (player) {
+      player.addEventListener(window.Twitch.Player.READY, onPlayerReady);
+      player.addEventListener(window.Twitch.Player.PLAYING, () => {
+        setTimeout(() => {
+          onPlayerStateChange({ data: PlayerState.Playing });
+        }, 1000);
+      });
+      player.addEventListener(window.Twitch.Player.PLAY, () => {
+        setTimeout(() => {
+          onPlayerStateChange({ data: PlayerState.Playing });
+        }, 1000);
+      });
+      player.addEventListener(window.Twitch.Player.PAUSE, () =>
+        onPlayerStateChange({ data: PlayerState.Paused })
+      );
+      player.addEventListener(window.Twitch.Player.ENDED, () =>
+        onPlayerStateChange({ data: PlayerState.Ended })
+      );
+    }
   };
 
   useEffect(() => {
     if (playerRef) {
       if (state.startPlayer) {
-        playerRef.playVideo();
+        playerRef.play();
       }
     }
   }, [state.startPlayer]);
@@ -113,8 +105,8 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
   useEffect(() => {
     if (!window.YT) {
       const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      window.onYouTubeIframeAPIReady = loadVideo;
+      tag.src = 'https://player.twitch.tv/js/embed/v1.js';
+      tag.addEventListener('load', loadVideo);
       const firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
     } else {
@@ -123,9 +115,6 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
     return () => {
       dispatch(startPlayer(false));
       dispatch(setReady(false));
-      if (player) {
-        player.destroy();
-      }
     };
   }, []);
 
@@ -139,8 +128,8 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
       clearInterval(interval);
     };
   }, [state.isPlaying]);
-  
+
   return <div id="player"></div>;
 };
 
-export default PlayerYoutube;
+export default PlayerTwitch;

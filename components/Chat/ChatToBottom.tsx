@@ -55,7 +55,6 @@ const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
       className={styles.scrollDown}
       onClick={() => scrollToBottom(refElement)}
     >
-      {/* <span onClick={() => scrollToBottom(refElement)}>Wróć do najnowszych</span> */}
       Wróć do najnowszych
     </div>
   );

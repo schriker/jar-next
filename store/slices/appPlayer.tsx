@@ -65,6 +65,9 @@ const appPlayerSlice = createSlice({
       state.playbackRate = action.payload.playbackRate;
       state.playerPosition = action.payload.playerPosition;
     },
+    setPlayerPosition(state, action: { type: string, payload: number }) {
+      state.playerPosition = action.payload;
+    },
     error(state) {
       state.isPlaying = false;
     },
@@ -86,6 +89,7 @@ export const {
   error,
   startPlayer,
   setReady,
+  setPlayerPosition
 } = appPlayerSlice.actions;
 
 export default appPlayerSlice.reducer;
