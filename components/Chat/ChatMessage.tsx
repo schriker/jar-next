@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSelectedAuthor } from 'store/slices/appChat';
+import { useTypedSelector } from 'store/rootReducer';
 import moment from 'moment';
-import Tooltlip from 'components/Tooltip/Tooltip';
+import Tooltip from '@material-ui/core/Tooltip';
 import {
   ChatMessageType,
   ChatBadges,
@@ -11,7 +14,6 @@ import {
 import styles from 'components/Chat/ChatMessage.module.css';
 import { messageParser } from 'helpers/messageParser';
 import ChatMessageComponent from 'components/Chat/ChatMessageComponent';
-import { v4 as uuidv4 } from 'uuid';
 
 type ChatMessagePropsType = {
   message: ChatMessageType;
@@ -19,36 +21,23 @@ type ChatMessagePropsType = {
   usersWithMode: ChatUserWithMode[];
   badges: ChatBadges | null;
   modes: ChatModeBadge[];
-  selectedAuthor: string;
-  selectAuthor: (name: string) => void;
 };
 
 type ChatMessageIconPropsType = {
-  id: string;
   tip: string;
   source: string;
   srcset?: string;
 };
 
 const ChatMessageIcon = ({
-  id,
   tip,
   source,
   srcset = '',
 }: ChatMessageIconPropsType) => {
   return (
-    <>
-      <img
-        width="18px"
-        height="18px"
-        data-tip={tip}
-        data-for={id}
-        src={source}
-        alt=""
-        srcSet={srcset}
-      />
-      <Tooltlip id={id} />
-    </>
+    <Tooltip title={tip} placement="top" arrow>
+      <img width="18px" height="18px" src={source} alt="" srcSet={srcset} />
+    </Tooltip>
   );
 };
 
@@ -58,11 +47,12 @@ const ChatMessage = ({
   usersWithMode,
   modes,
   badges,
-  selectAuthor,
-  selectedAuthor,
 }: ChatMessagePropsType) => {
+  const dispatch = useDispatch();
+  const chat = useTypedSelector((state) => state.appChat);
+
   let isAuhorSelected = true;
-  if (selectedAuthor.length && selectedAuthor !== message.author) {
+  if (chat.selectedAuthor.length && chat.selectedAuthor !== message.author) {
     isAuhorSelected = false;
   }
   const [mode, setMode] = useState<{
@@ -74,7 +64,6 @@ const ChatMessage = ({
   const [gifts, setGifts] = useState<{ icon: string; srcset: string } | null>(
     null
   );
-  const id = uuidv4();
   const parsedMessage = useMemo(
     () => messageParser(message.body, emoticons),
     []
@@ -149,10 +138,10 @@ const ChatMessage = ({
 
   const handleAuthorClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (selectedAuthor === message.author) {
-      selectAuthor('');
+    if (chat.selectedAuthor === message.author) {
+      dispatch(setSelectedAuthor(''));
     } else {
-      selectAuthor(message.author);
+      dispatch(setSelectedAuthor(message.author));
     }
   };
 
@@ -168,7 +157,6 @@ const ChatMessage = ({
         {mode && (
           <ChatMessageIcon
             tip={mode.name}
-            id={`mode-${id}`}
             source={mode.icon}
             srcset={mode.srcset}
           />
@@ -176,7 +164,6 @@ const ChatMessage = ({
         {sub && (
           <ChatMessageIcon
             tip={`Subskrybuje: ${message.subscription}`}
-            id={`sub-${id}`}
             source={sub.icon}
             srcset={sub.srcset}
           />
@@ -184,7 +171,6 @@ const ChatMessage = ({
         {gifts && (
           <ChatMessageIcon
             tip={`Podarował: ${message.subscriptiongifter}`}
-            id={`gift-${id}`}
             source={gifts.icon}
             srcset={gifts.srcset}
           />

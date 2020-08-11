@@ -5,7 +5,7 @@ import trimString from 'helpers/trimString';
 import { Streamer } from 'types/streamer';
 import styles from 'components/Player/PlayerContent.module.css';
 import moment from 'moment';
-import Tooltip from 'components/Tooltip/Tooltip';
+import Tooltip from '@material-ui/core/Tooltip';
 import ControllButton from 'components/ControllButton/ControllButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -21,24 +21,17 @@ type PlayerContentPropsType = {
 };
 
 type InfoBlockPropsType = {
-  id: string;
   tooltip: string;
   content: string;
   withSpacer?: boolean;
 };
 
-const InfoBlock = ({
-  id,
-  tooltip,
-  content,
-  withSpacer,
-}: InfoBlockPropsType) => {
+const InfoBlock = ({ tooltip, content, withSpacer }: InfoBlockPropsType) => {
   return (
     <>
-      <Tooltip id={id} />
-      <div data-tip={tooltip} data-for={id} className={styles.infoBlock}>
-        {content}
-      </div>
+      <Tooltip title={tooltip} placement="top" arrow>
+        <div className={styles.infoBlock}>{content}</div>
+      </Tooltip>
       {withSpacer && <div className={styles.spacer}></div>}
     </>
   );
@@ -74,36 +67,44 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
       <div className={styles.leftPanel}>
         <div className={styles.info}>
           <InfoBlock
-            id="duration"
             content={video.duration}
             tooltip="Czas trwania"
             withSpacer
           />
           <InfoBlock
-            id="views"
             content={video.views.toString()}
             tooltip="Wyświetleń"
             withSpacer
           />
-          <ControllButton onClick={() => console.log('Click')} tooltip="Najciekawsze momenty" id="moments">
+          <ControllButton
+            onClick={() => console.log('Click')}
+            tooltip="Najciekawsze momenty"
+          >
             <div>
               <FontAwesomeIcon icon={faFire} />
             </div>
-            <span>
-              Momenty
-            </span>
+            <span>Momenty</span>
           </ControllButton>
-          <ControllButton onClick={() => console.log('Click')} tooltip="Obejrzany" id="watched">
+          <ControllButton
+            onClick={() => console.log('Click')}
+            tooltip="Obejrzany"
+          >
             <div>
               <FontAwesomeIcon icon={faCheck} />
             </div>
           </ControllButton>
-          <ControllButton onClick={() => console.log('Click')} tooltip="Ulubiony" id="faved">
+          <ControllButton
+            onClick={() => console.log('Click')}
+            tooltip="Ulubiony"
+          >
             <div>
               <FontAwesomeIcon icon={faHeart} />
             </div>
           </ControllButton>
-          <ControllButton onClick={() => console.log('Click')} tooltip="Tryb kinowy" id="theatre">
+          <ControllButton
+            onClick={() => console.log('Click')}
+            tooltip="Tryb kinowy"
+          >
             <div>
               <FontAwesomeIcon icon={faExpand} />
             </div>

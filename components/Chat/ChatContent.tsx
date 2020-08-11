@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { startPlayer } from 'store/slices/appPlayer';
+import { setSelectedAuthor } from 'store/slices/appChat';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 import debounce from 'lodash.debounce';
@@ -17,14 +18,13 @@ import ChatToBottom from 'components/Chat/ChatToBottom';
 import ControllButton from 'components/ControllButton/ControllButton';
 
 const ChatContent = ({ video }: { video: Video }) => {
-  const bottom = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
   const workerRef = useRef<Worker>();
+  const bottom = useRef<HTMLDivElement | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
   const [startTime, setStartTime] = useState<string | null>(null);
   const [chatAdjustment, setChatAdjusment] = useState<number>(0);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
-  const [selectedAuthor, setSelectedAuthor] = useState<string>('');
   const { modes, usersWithMode, badges, emoticons } = useChatIconsData();
 
   useEffect(() => {
@@ -141,7 +141,6 @@ const ChatContent = ({ video }: { video: Video }) => {
         <ControllButton
           onClick={() => chatAdjustmentHandler(false)}
           tooltip="Cofnij"
-          id="minus"
         >
           <div>
             <FontAwesomeIcon icon={faMinus} />
@@ -151,7 +150,6 @@ const ChatContent = ({ video }: { video: Video }) => {
         <ControllButton
           onClick={() => chatAdjustmentHandler(true)}
           tooltip="Do przodu"
-          id="plus"
         >
           <div>
             <FontAwesomeIcon icon={faPlus} />
@@ -172,7 +170,10 @@ const ChatContent = ({ video }: { video: Video }) => {
           </div>
         </div>
       ) : (
-        <div onClick={() => setSelectedAuthor('')} className={styles.chatWrapper}>
+        <div
+          onClick={() => dispatch(setSelectedAuthor(''))}
+          className={styles.chatWrapper}
+        >
           <SimpleBar
             scrollableNodeProps={{ ref: bottom }}
             style={{ height: '100%', overflowX: 'hidden' }}
@@ -193,8 +194,6 @@ const ChatContent = ({ video }: { video: Video }) => {
                     modes={modes}
                     message={message}
                     emoticons={emoticons}
-                    selectedAuthor={selectedAuthor}
-                    selectAuthor={setSelectedAuthor}
                     usersWithMode={usersWithMode}
                   />
                 )

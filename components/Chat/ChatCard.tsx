@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTypedSelector } from 'store/rootReducer';
 import styles from 'components/Chat/ChatCard.module.css';
 import { ChatMessageType } from 'types/message';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,6 +28,7 @@ type ChatCardPropsType = {
 };
 
 const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
+  const chat = useTypedSelector((state) => state.appChat);
   let content = null;
   let card: ChatCardType | null = null;
   if (message.type === 'EMBED') {
@@ -39,7 +41,13 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
 
   const scrollToBottom = () => {
     if (refElement) {
-      refElement.scrollTop = refElement.scrollHeight;
+      const isScrolledToBottom =
+        refElement.scrollHeight - refElement.clientHeight <=
+        refElement.scrollTop + 400;
+
+      if (isScrolledToBottom) {
+        refElement.scrollTop = refElement.scrollHeight;
+      }
     }
   };
 
@@ -62,7 +70,7 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
                   muted
                   autoPlay
                   loop
-                  src={ card.video[0].url}
+                  src={card.video[0].url}
                 ></video>
               )}
               {card.type === 'video' && (
@@ -105,7 +113,10 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
 
   return (
     <div
-      style={{ borderColor: card ? card.color : '' }}
+      style={{
+        borderColor: card ? card.color : '',
+        opacity: chat.selectedAuthor.length ? 0.25 : 1,
+      }}
       className={styles.wrapper}
     >
       {message.type === 'NOTICE'

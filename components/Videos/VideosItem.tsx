@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Tooltip from 'components/Tooltip/Tooltip';
+import Tooltip from '@material-ui/core/Tooltip';
 import { useRouter } from 'next/router';
 import VideoImagePlaceholder from 'components/Videos/VideoImagePlaceholder';
 import Spinner from 'components/Spinner/Spinner';
@@ -62,22 +62,21 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               />
               {isNew && <div className={styles.new}>New</div>}
               {router.query.streamer === 'wonziu' && (
-                <div
-                  data-tip="Ulubiony"
-                  data-for={`faved-${video.id}`}
-                  onClick={(event) => addToBookark(event)}
-                  className={styles.bookmark}
-                >
-                  <FontAwesomeIcon
-                    className={styles.bookmarkIcon}
-                    icon={faHeart}
-                  />
-                </div>
+                <Tooltip title="ulubiony" placement="top" arrow>
+                  <div
+                    onClick={(event) => addToBookark(event)}
+                    className={styles.bookmark}
+                  >
+                    <FontAwesomeIcon
+                      className={styles.bookmarkIcon}
+                      icon={faHeart}
+                    />
+                  </div>
+                </Tooltip>
               )}
               <div className={styles.duration}>{video.duration}</div>
               <div className={styles.views}>{video.views}</div>
             </div>
-            <Tooltip id={`faved-${video.id}`} />
           </div>
           <div className={styles.content}>
             <div className={styles.title}>{trimString(video.title, 25)}</div>
@@ -85,16 +84,18 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               {moment(video.started).format('DD-MM-YYYY • HH:mm:ss')}
             </div>
             {router.query.streamer === 'wonziu' && (
-              <div
-                data-tip="Obejrzany"
-                data-for={`watched-${video.id}`}
-                onClick={(event) => addToWatched(event)}
-                className={styles.check}
-              >
-                <FontAwesomeIcon className={styles.checkIcon} icon={faCheck} />
-              </div>
+              <Tooltip title="Obejrzany" placement="top" arrow>
+                <div
+                  onClick={(event) => addToWatched(event)}
+                  className={styles.check}
+                >
+                  <FontAwesomeIcon
+                    className={styles.checkIcon}
+                    icon={faCheck}
+                  />
+                </div>
+              </Tooltip>
             )}
-            <Tooltip id={`watched-${video.id}`} />
           </div>
         </a>
       </Link>

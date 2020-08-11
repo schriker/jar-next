@@ -64,6 +64,7 @@ class MyApp extends App<AppInitialProps> {
 
   componentDidMount() {
     const localUserData = localStorage.getItem('jarchiwumData');
+    const localChatOptions = localStorage.getItem('chatOptions');
     if (localUserData) {
       const userData = JSON.parse(localUserData);
       // @ts-expect-error: Need to pass setAppData to this.props type
@@ -73,6 +74,10 @@ class MyApp extends App<AppInitialProps> {
       );
       // @ts-expect-error: Need to pass setAppData to this.props type
       this.props.setAppData(userData);
+    }
+    if (localChatOptions) {
+      const chatOptions = JSON.parse(localChatOptions);
+      
     }
   }
 
