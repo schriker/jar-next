@@ -24,6 +24,7 @@ const ChatContent = ({ video }: { video: Video }) => {
   const [startTime, setStartTime] = useState<string | null>(null);
   const [chatAdjustment, setChatAdjusment] = useState<number>(0);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const [selectedAuthor, setSelectedAuthor] = useState<string>('');
   const { modes, usersWithMode, badges, emoticons } = useChatIconsData();
 
   useEffect(() => {
@@ -68,7 +69,7 @@ const ChatContent = ({ video }: { video: Video }) => {
             switch (data.type) {
               case 'ADD_MESSAGE':
                 setMessages((messages) => [
-                  ...messages.slice(-49),
+                  ...messages.slice(-69),
                   data.message,
                 ]);
                 break;
@@ -171,10 +172,9 @@ const ChatContent = ({ video }: { video: Video }) => {
           </div>
         </div>
       ) : (
-        <div className={styles.chatWrapper}>
-          <div className={styles.shadow}></div>
+        <div onClick={() => setSelectedAuthor('')} className={styles.chatWrapper}>
           <SimpleBar
-            scrollableNodeProps={{ ref: bottom, children: 'asd' }}
+            scrollableNodeProps={{ ref: bottom }}
             style={{ height: '100%', overflowX: 'hidden' }}
             autoHide={true}
           >
@@ -193,6 +193,8 @@ const ChatContent = ({ video }: { video: Video }) => {
                     modes={modes}
                     message={message}
                     emoticons={emoticons}
+                    selectedAuthor={selectedAuthor}
+                    selectAuthor={setSelectedAuthor}
                     usersWithMode={usersWithMode}
                   />
                 )

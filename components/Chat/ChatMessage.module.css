@@ -21,6 +21,15 @@
   font-weight: 400;
 }
 
+.author {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.author:hover {
+  text-decoration: underline;
+}
+
 .message {
   color: rgb(219, 219, 219);
 }

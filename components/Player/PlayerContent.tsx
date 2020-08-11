@@ -85,7 +85,7 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
             tooltip="Wyświetleń"
             withSpacer
           />
-          <ControllButton tooltip="Najciekawsze momenty" id="moments">
+          <ControllButton onClick={() => console.log('Click')} tooltip="Najciekawsze momenty" id="moments">
             <div>
               <FontAwesomeIcon icon={faFire} />
             </div>
@@ -93,17 +93,17 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
               Momenty
             </span>
           </ControllButton>
-          <ControllButton tooltip="Obejrzany" id="watched">
+          <ControllButton onClick={() => console.log('Click')} tooltip="Obejrzany" id="watched">
             <div>
               <FontAwesomeIcon icon={faCheck} />
             </div>
           </ControllButton>
-          <ControllButton tooltip="Ulubiony" id="faved">
+          <ControllButton onClick={() => console.log('Click')} tooltip="Ulubiony" id="faved">
             <div>
               <FontAwesomeIcon icon={faHeart} />
             </div>
           </ControllButton>
-          <ControllButton tooltip="Tryb kinowy" id="theatre">
+          <ControllButton onClick={() => console.log('Click')} tooltip="Tryb kinowy" id="theatre">
             <div>
               <FontAwesomeIcon icon={faExpand} />
             </div>

@@ -22,8 +22,7 @@ const Player = ({ video, streamer }: PlayerPropsType) => {
     updateViews(streamer.login, video.id);
   }, []);
 
-  // const youtube = video.source?.filter((source) => source.name === 'youtube');
-  const youtube: any = [];
+  const youtube = video.source?.filter((source) => source.name === 'youtube');
   const twitch = video.source?.filter((source) => source.name === 'twitch');
   return (
     <div className={styles.wrapper}>

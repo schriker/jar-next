@@ -19,6 +19,8 @@ type ChatMessagePropsType = {
   usersWithMode: ChatUserWithMode[];
   badges: ChatBadges | null;
   modes: ChatModeBadge[];
+  selectedAuthor: string;
+  selectAuthor: (name: string) => void;
 };
 
 type ChatMessageIconPropsType = {
@@ -56,7 +58,13 @@ const ChatMessage = ({
   usersWithMode,
   modes,
   badges,
+  selectAuthor,
+  selectedAuthor,
 }: ChatMessagePropsType) => {
+  let isAuhorSelected = true;
+  if (selectedAuthor.length && selectedAuthor !== message.author) {
+    isAuhorSelected = false;
+  }
   const [mode, setMode] = useState<{
     icon: string;
     srcset: string;
@@ -112,7 +120,7 @@ const ChatMessage = ({
     }
     if (message.subscriptiongifter > 0) {
       const [giftBadges] = modes.filter((mode) => mode.mode === 'g');
-      if (giftBadges.badges) {
+      if (giftBadges?.badges) {
         const badge = giftBadges.badges.filter(
           (badge) => badge.gifts <= message.subscriptiongifter
         );
@@ -138,8 +146,21 @@ const ChatMessage = ({
       }
     }
   }, []);
+
+  const handleAuthorClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedAuthor === message.author) {
+      selectAuthor('');
+    } else {
+      selectAuthor(message.author);
+    }
+  };
+
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      style={{ opacity: isAuhorSelected ? 1 : 0.25 }}
+    >
       <span className={styles.time}>
         {moment(message.createdAt).format('HH:mm')}
       </span>
@@ -170,9 +191,10 @@ const ChatMessage = ({
         )}
       </div>
       <span
+        onClick={handleAuthorClick}
+        className={styles.author}
         style={{
           color: message.color ? message.color : '#fff',
-          fontWeight: 500,
         }}
       >
         {message.author}

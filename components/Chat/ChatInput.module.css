@@ -37,6 +37,7 @@
 .bottom {
   flex: 1 1 50%;
   display: flex;
+  padding: 15px 0;
   justify-content: space-between;
   align-items: center;
 }
