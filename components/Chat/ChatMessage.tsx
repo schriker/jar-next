@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSelectedAuthor } from 'store/slices/appChat';
 import { useTypedSelector } from 'store/rootReducer';
@@ -51,24 +51,11 @@ const ChatMessage = ({
   const dispatch = useDispatch();
   const chat = useTypedSelector((state) => state.appChat);
 
-  let isAuhorSelected = true;
-  if (chat.selectedAuthor.length && chat.selectedAuthor !== message.author) {
-    isAuhorSelected = false;
-  }
-  const [mode, setMode] = useState<{
+  const mode: {
     icon: string;
     srcset: string;
     name: string;
-  } | null>(null);
-  const [sub, setSub] = useState<{ icon: string; srcset: string } | null>(null);
-  const [gifts, setGifts] = useState<{ icon: string; srcset: string } | null>(
-    null
-  );
-  const parsedMessage = useMemo(
-    () => messageParser(message.body, emoticons),
-    []
-  );
-  useEffect(() => {
+  } | null = useMemo(() => {
     const modesName: { [key: string]: string } = {
       a: 'Admin',
       m: 'Moderator Globalny',
@@ -83,18 +70,22 @@ const ChatMessage = ({
     if (authorMode) {
       const [mode] = authorMode.mode.filter((mode) => !!modesName[mode]);
       if (mode) {
-        setMode({
+        return {
           icon: `https://static.poorchat.net/badges/${mode}/1x`,
           srcset: `https://static.poorchat.net/badges/${mode}/1x, https://static.poorchat.net/badges/${mode}/2x 1.25x, https://static.poorchat.net/badges/${mode}/4x 2.25x`,
           name: modesName[mode],
-        });
+        };
       }
     }
+    return null;
+  }, []);
+
+  const sub: { icon: string; srcset: string } | null = useMemo(() => {
     if (message.subscription > 0 && badges) {
       const badge = badges.subscriber.filter(
         (badge) => badge.months <= message.subscription
       );
-      setSub({
+      return {
         icon: `https://static.poorchat.net/badges/${
           badge[badge.length - 1].file
         }/1x`,
@@ -105,8 +96,12 @@ const ChatMessage = ({
         }/2x 1.25x, https://static.poorchat.net/badges/${
           badge[badge.length - 1].file
         }/4x 2.25x`,
-      });
+      };
     }
+    return null;
+  }, []);
+
+  const gifts: { icon: string; srcset: string } | null = useMemo(() => {
     if (message.subscriptiongifter > 0) {
       const [giftBadges] = modes.filter((mode) => mode.mode === 'g');
       if (giftBadges?.badges) {
@@ -114,12 +109,12 @@ const ChatMessage = ({
           (badge) => badge.gifts <= message.subscriptiongifter
         );
         if (message.week_position && message.week_position <= 3) {
-          setGifts({
+          return {
             icon: `https://static.poorchat.net/badges/top_gift_${message.week_position}/1x`,
             srcset: `https://static.poorchat.net/badges/top_gift_${message.week_position}/1x, https://static.poorchat.net/badges/top_gift_${message.week_position}/2x 1.25x, https://static.poorchat.net/badges/top_gift_${message.week_position}/4x 2.25x`,
-          });
+          };
         } else {
-          setGifts({
+          return {
             icon: `https://static.poorchat.net/badges/${
               badge[badge.length - 1].file
             }/1x`,
@@ -130,11 +125,17 @@ const ChatMessage = ({
             }/2x 1.25x, https://static.poorchat.net/badges/${
               badge[badge.length - 1].file
             }/4x 2.25x`,
-          });
+          };
         }
       }
     }
+    return null;
   }, []);
+
+  let isAuhorSelected = true;
+  if (chat.selectedAuthor.length && chat.selectedAuthor !== message.author) {
+    isAuhorSelected = false;
+  }
 
   const handleAuthorClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -146,53 +147,58 @@ const ChatMessage = ({
   };
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{ opacity: isAuhorSelected ? 1 : 0.25 }}
-    >
-      {chat.showTime && (
-        <span className={styles.time}>
-          {moment(message.createdAt).format('HH:mm')}
-        </span>
-      )}
-      <div className={styles.icons}>
-        {mode && (
-          <ChatMessageIcon
-            tip={mode.name}
-            source={mode.icon}
-            srcset={mode.srcset}
-          />
-        )}
-        {sub && (
-          <ChatMessageIcon
-            tip={`Subskrybuje: ${message.subscription}`}
-            source={sub.icon}
-            srcset={sub.srcset}
-          />
-        )}
-        {gifts && (
-          <ChatMessageIcon
-            tip={`Podarował: ${message.subscriptiongifter}`}
-            source={gifts.icon}
-            srcset={gifts.srcset}
-          />
-        )}
-      </div>
-      <span
-        onClick={handleAuthorClick}
-        className={styles.author}
-        style={{
-          color: message.color ? message.color : '#fff',
-        }}
+    <div>
+      <div
+        className={styles.wrapper}
+        style={{ opacity: isAuhorSelected ? 1 : 0.25 }}
       >
-        {message.author}
-      </span>
-      <span className={styles.message}>
+        {chat.showTime && (
+          <span className={styles.time}>
+            {moment(message.createdAt).format('HH:mm')}
+          </span>
+        )}
+        <span className={styles.icons}>
+          {mode && (
+            <ChatMessageIcon
+              tip={mode.name}
+              source={mode.icon}
+              srcset={mode.srcset}
+            />
+          )}
+          {sub && (
+            <ChatMessageIcon
+              tip={`Subskrybuje: ${message.subscription}`}
+              source={sub.icon}
+              srcset={sub.srcset}
+            />
+          )}
+          {gifts && (
+            <ChatMessageIcon
+              tip={`Podarował: ${message.subscriptiongifter}`}
+              source={gifts.icon}
+              srcset={gifts.srcset}
+            />
+          )}
+        </span>
+        <span
+          onClick={handleAuthorClick}
+          className={styles.author}
+          style={{
+            color: message.color ? message.color : '#fff',
+          }}
+        >
+          {message.author}
+        </span>
         :{' '}
-        {parsedMessage.map((part, index) => (
-          <ChatMessageComponent key={`${message.uuid}-${index}`} part={part} />
-        ))}
-      </span>
+        <span className={styles.message}>
+          {messageParser(message.body, emoticons).map((part, index) => (
+            <ChatMessageComponent
+              key={`${message.uuid}-${index}`}
+              part={part}
+            />
+          ))}
+        </span>
+      </div>
     </div>
   );
 };

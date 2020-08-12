@@ -53,20 +53,10 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
                 </div>
               </div>
               {card.type === 'gifv' && (
-                <video
-                  muted
-                  autoPlay
-                  loop
-                  src={card.video[0].url}
-                ></video>
+                <video muted autoPlay loop src={card.video[0].url}></video>
               )}
               {card.type === 'video' && (
-                <video
-                  muted
-                  autoPlay
-                  loop
-                  src={card.url}
-                ></video>
+                <video muted autoPlay loop src={card.url}></video>
               )}
               {card.image && (
                 <img
@@ -97,18 +87,20 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
   }
 
   return (
-    <div
-      style={{
-        borderColor: card ? card.color : '',
-        opacity: chat.selectedAuthor.length ? 0.25 : 1,
-      }}
-      className={styles.wrapper}
-    >
-      {message.type === 'NOTICE'
-        ? message.body
-        : message.type === 'EMBED'
-        ? content
-        : null}
+    <div>
+      <div
+        style={{
+          borderColor: card ? card.color : '',
+          opacity: chat.selectedAuthor.length ? 0.25 : 1,
+        }}
+        className={styles.wrapper}
+      >
+        {message.type === 'NOTICE'
+          ? message.body
+          : message.type === 'EMBED'
+          ? content
+          : null}
+      </div>
     </div>
   );
 };

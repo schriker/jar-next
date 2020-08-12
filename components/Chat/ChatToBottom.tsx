@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
-import throttle from 'lodash.throttle';
 import styles from 'components/Chat/ChatToBottom.module.css';
 import { ChatMessageType } from 'types/message';
 
@@ -23,15 +22,12 @@ const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
       setNewMessage(true);
     }
     if (!scrollingTop && refElement) {
-      setTimeout(() => {
-        refElement.scrollTop =
-          refElement.scrollHeight - refElement.clientHeight;
-      }, 0);
+      refElement.scrollTop = refElement.scrollHeight - refElement.clientHeight;
     }
   }, [messages]);
 
   useEffect(() => {
-    const handleScroll = throttle(() => {
+    const handleScroll = () => {
       if (refElement) {
         const bottom = refElement.scrollTop + refElement.clientHeight;
         const isScrolledToBottom = bottom >= refElement.scrollHeight - 60;
@@ -42,7 +38,7 @@ const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
           setScrollingTop(true);
         }
       }
-    }, 150);
+    };
 
     if (refElement) {
       refElement.addEventListener('scroll', handleScroll);

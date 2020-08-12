@@ -14,7 +14,7 @@
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 180px;
+  max-height: 130px;
 }
 
 .wrapper a {
@@ -35,7 +35,8 @@
   position: relative;
   display: flex;
   justify-content: center;
-  height: 180px;
+  align-items: center;
+  height: 130px;
 }
 
 .open {

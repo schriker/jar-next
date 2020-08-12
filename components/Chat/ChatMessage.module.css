@@ -3,6 +3,7 @@
   min-height: 30px;
   padding: 0 15px 0 0;
   margin: 3px 0;
+  font-size: 14px;
 }
 
 .wrapper a {
@@ -12,13 +13,6 @@
 
 .wrapper a:hover {
   color: #9cffa7;
-}
-
-.wrapper span {
-  word-wrap: break-word;
-  font-size: 14px;
-  line-height: 18px;
-  font-weight: 400;
 }
 
 .author {
@@ -40,8 +34,6 @@
 }
 
 .icons img {
-  max-width: 100%;
-  height: auto;
   vertical-align: middle;
   margin: 0 4px 0 0;
 }

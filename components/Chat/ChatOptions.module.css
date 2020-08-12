@@ -14,6 +14,9 @@
 
 .title {
   color: #bbb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .row {
@@ -25,4 +28,14 @@
 
 .row span {
   cursor: pointer;
+}
+
+.close {
+  width: 10px;
+  cursor: pointer;
+  transition: all ease .2s;
+}
+
+.close:hover {
+  color: #f00;
 }
