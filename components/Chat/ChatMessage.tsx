@@ -150,9 +150,11 @@ const ChatMessage = ({
       className={styles.wrapper}
       style={{ opacity: isAuhorSelected ? 1 : 0.25 }}
     >
-      <span className={styles.time}>
-        {moment(message.createdAt).format('HH:mm')}
-      </span>
+      {chat.showTime && (
+        <span className={styles.time}>
+          {moment(message.createdAt).format('HH:mm')}
+        </span>
+      )}
       <div className={styles.icons}>
         {mode && (
           <ChatMessageIcon

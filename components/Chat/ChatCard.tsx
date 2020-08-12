@@ -39,18 +39,6 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
     }
   }
 
-  const scrollToBottom = () => {
-    if (refElement) {
-      const isScrolledToBottom =
-        refElement.scrollHeight - refElement.clientHeight <=
-        refElement.scrollTop + 400;
-
-      if (isScrolledToBottom) {
-        refElement.scrollTop = refElement.scrollHeight;
-      }
-    }
-  };
-
   if (card) {
     if (card.image || card.type === 'gifv' || card.type === 'video') {
       content = (
@@ -66,7 +54,6 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
               </div>
               {card.type === 'gifv' && (
                 <video
-                  onLoad={scrollToBottom}
                   muted
                   autoPlay
                   loop
@@ -75,7 +62,6 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
               )}
               {card.type === 'video' && (
                 <video
-                  onLoad={scrollToBottom}
                   muted
                   autoPlay
                   loop
@@ -84,7 +70,6 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
               )}
               {card.image && (
                 <img
-                  onLoad={scrollToBottom}
                   src={card.image[card.image.length - 1].url}
                   alt={card.title}
                 />

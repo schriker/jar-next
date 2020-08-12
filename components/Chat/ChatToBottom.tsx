@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import throttle from 'lodash.throttle';
 import styles from 'components/Chat/ChatToBottom.module.css';
 import { ChatMessageType } from 'types/message';
@@ -10,17 +10,22 @@ type ChatToBottomPropsType = {
 
 const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
   const [scrollingTop, setScrollingTop] = useState<boolean>(false);
+  const [newMessage, setNewMessage] = useState<boolean>(false);
 
   const scrollToBottom = (element: HTMLDivElement | null) => {
     if (element) {
-      element.scrollTop = element.scrollHeight;
+      element.scrollTop = element.scrollHeight - element.clientHeight;
     }
   };
 
-  useEffect(() => {
-    if (refElement && !scrollingTop) {
+  useLayoutEffect(() => {
+    if (scrollingTop) {
+      setNewMessage(true);
+    }
+    if (!scrollingTop && refElement) {
       setTimeout(() => {
-        refElement.scrollTop = refElement.scrollHeight;
+        refElement.scrollTop =
+          refElement.scrollHeight - refElement.clientHeight;
       }, 0);
     }
   }, [messages]);
@@ -28,16 +33,16 @@ const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
   useEffect(() => {
     const handleScroll = throttle(() => {
       if (refElement) {
-        const isScrolledToBottom =
-          refElement.scrollHeight - refElement.clientHeight <=
-          refElement.scrollTop + 200;
+        const bottom = refElement.scrollTop + refElement.clientHeight;
+        const isScrolledToBottom = bottom >= refElement.scrollHeight - 60;
         if (isScrolledToBottom) {
           setScrollingTop(false);
+          setNewMessage(false);
         } else {
           setScrollingTop(true);
         }
       }
-    }, 50);
+    }, 150);
 
     if (refElement) {
       refElement.addEventListener('scroll', handleScroll);
@@ -51,11 +56,11 @@ const ChatToBottom = ({ refElement, messages }: ChatToBottomPropsType) => {
 
   return (
     <div
-      style={{ display: scrollingTop ? 'block' : 'none' }}
+      style={{ display: scrollingTop && newMessage ? 'block' : 'none' }}
       className={styles.scrollDown}
       onClick={() => scrollToBottom(refElement)}
     >
-      Wróć do najnowszych
+      Nowe wiadomości
     </div>
   );
 };

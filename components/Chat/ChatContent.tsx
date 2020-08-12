@@ -22,6 +22,7 @@ const ChatContent = ({ video }: { video: Video }) => {
   const workerRef = useRef<Worker>();
   const bottom = useRef<HTMLDivElement | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
+  const chat = useTypedSelector((state) => state.appChat);
   const [startTime, setStartTime] = useState<string | null>(null);
   const [chatAdjustment, setChatAdjusment] = useState<number>(0);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
@@ -181,13 +182,13 @@ const ChatContent = ({ video }: { video: Video }) => {
           >
             <div className={styles.chatContent}>
               {messages.map((message) =>
-                message.author === 'irc.poorchat.net' ? (
+                message.author === 'irc.poorchat.net' && chat.showImg ? (
                   <ChatCard
                     refElement={bottom.current}
                     key={message.uuid}
                     message={message}
                   />
-                ) : (
+                ) : message.author !== 'irc.poorchat.net' ? (
                   <ChatMessage
                     key={message.uuid}
                     badges={badges}
@@ -196,7 +197,7 @@ const ChatContent = ({ video }: { video: Video }) => {
                     emoticons={emoticons}
                     usersWithMode={usersWithMode}
                   />
-                )
+                ) : null
               )}
             </div>
           </SimpleBar>

@@ -62,7 +62,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               />
               {isNew && <div className={styles.new}>New</div>}
               {router.query.streamer === 'wonziu' && (
-                <Tooltip title="ulubiony" placement="top" arrow>
+                <Tooltip title="Ulubiony" placement="top" arrow>
                   <div
                     onClick={(event) => addToBookark(event)}
                     className={styles.bookmark}

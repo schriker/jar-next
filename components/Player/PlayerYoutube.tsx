@@ -121,6 +121,7 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
       loadVideo();
     }
     return () => {
+      dispatch(end());
       dispatch(startPlayer(false));
       dispatch(setReady(false));
       if (player) {
@@ -139,7 +140,7 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
       clearInterval(interval);
     };
   }, [state.isPlaying]);
-  
+
   return <div id="player"></div>;
 };
 

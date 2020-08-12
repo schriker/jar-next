@@ -113,6 +113,7 @@ const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
       loadVideo();
     }
     return () => {
+      dispatch(end());
       dispatch(startPlayer(false));
       dispatch(setReady(false));
     };

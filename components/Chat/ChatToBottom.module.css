@@ -1,19 +1,15 @@
 .scrollDown {
-  opacity: .85;
   cursor: pointer;
   position: absolute;
   bottom: 20px;
   left: 50%;
-  color: #bbbbbb;
+  color: #fff;
+  font-weight: 500;
   font-size: 14px;
   white-space: nowrap;
   padding: 10px 20px;
   border-radius: 20px;
-  background-color: #000000;
+  background-color: #f00;
   transform: translate(-50%, 0);
   transition: all ease .2s;
-}
-
-.scrollDown:hover {
-  opacity: 1;
 }

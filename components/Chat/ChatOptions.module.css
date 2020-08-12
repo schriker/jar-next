@@ -1,0 +1,28 @@
+.wrapper {
+  width: calc(100% - 30px);
+  left: 0;
+  padding: 20px 25px;
+  top: 50%;
+  transform: translate(0, -50%);
+  position: absolute;
+  z-index: 997;
+  border-radius: 3px;
+  margin: 0 15px;
+  background-color: #1c1c1c;
+  font-size: 14px;
+}
+
+.title {
+  color: #bbb;
+}
+
+.row {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row span {
+  cursor: pointer;
+}

@@ -1,6 +1,7 @@
 import emojisArray from 'helpers/emojis';
 import linkifyHtml from 'linkifyjs/html';
 import replaceTag from 'helpers/escapeTags';
+import trimString from 'helpers/trimString';
 import { ChatEmoticon, ChatMessageComponentType } from 'types/message';
 
 declare global {
@@ -16,6 +17,13 @@ export const messageParser = (
   let messageComponents: ChatMessageComponentType[] = [];
   let message = linkifyHtml(messageToParse.replace(/[&<>]/g, replaceTag), {
     defaultProtocol: 'https',
+    format: (value, type) => {
+      if ((type = 'url')) {
+        return trimString(value, 40);
+      } else {
+        return value;
+      }
+    },
   });
 
   message = message.replace('\u0001ACTION', '');

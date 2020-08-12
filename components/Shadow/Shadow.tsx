@@ -5,10 +5,16 @@ import styles from 'components/Shadow/Shadow.module.css';
 type ShadowProps = {
   isOpen: boolean;
   delay?: number;
+  absolute?: boolean;
   onClick?: () => void;
 };
 
-const Shadow = ({ isOpen, delay = 0, onClick }: ShadowProps) => {
+const Shadow = ({
+  isOpen,
+  delay = 0,
+  onClick,
+  absolute = false,
+}: ShadowProps) => {
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
     //@ts-expect-error
@@ -32,7 +38,7 @@ const Shadow = ({ isOpen, delay = 0, onClick }: ShadowProps) => {
           item && (
             <animated.div
               onClick={() => onClickHandler()}
-              className={styles.shadow}
+              className={absolute ? styles.absolute : styles.shadow}
               key={key}
               style={props}
             />

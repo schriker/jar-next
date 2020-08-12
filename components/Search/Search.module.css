@@ -9,6 +9,7 @@
 }
 
 .searchForm input {
+  font-family: 'Ubuntu', sans-serif;
   width: 100%;
   border: 0;
   height: 35px;
