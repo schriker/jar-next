@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import useWatched from 'hooks/useWatched';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useRouter } from 'next/router';
 import VideoImagePlaceholder from 'components/Videos/VideoImagePlaceholder';
@@ -17,6 +18,9 @@ type VideosItemPropsType = {
 
 const VideosItem = ({ video }: VideosItemPropsType) => {
   const router = useRouter();
+  const { isWatched, isBookmarked, addToWatched, addToBookark } = useWatched(
+    video.id
+  );
   const isNew = Date.now() - new Date(video.started).getTime() < 86400000;
   const image = useRef<HTMLImageElement>(null!);
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -28,12 +32,6 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
       handleImageLoaded();
     }
   }, [image]);
-  const addToBookark = (event: React.MouseEvent) => {
-    event.preventDefault();
-  };
-  const addToWatched = (event: React.MouseEvent) => {
-    event.preventDefault();
-  };
   return (
     <div className={styles.container}>
       <Link
@@ -66,11 +64,9 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                   <div
                     onClick={(event) => addToBookark(event)}
                     className={styles.bookmark}
+                    style={{ color: isBookmarked ? '#f00' : '#fff' }}
                   >
-                    <FontAwesomeIcon
-                      className={styles.bookmarkIcon}
-                      icon={faHeart}
-                    />
+                    <FontAwesomeIcon icon={faHeart} />
                   </div>
                 </Tooltip>
               )}
@@ -88,11 +84,9 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                 <div
                   onClick={(event) => addToWatched(event)}
                   className={styles.check}
+                  style={{ color: isWatched ? '#f00' : '#fff' }}
                 >
-                  <FontAwesomeIcon
-                    className={styles.checkIcon}
-                    icon={faCheck}
-                  />
+                  <FontAwesomeIcon icon={faCheck} />
                 </div>
               </Tooltip>
             )}

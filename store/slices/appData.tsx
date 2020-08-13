@@ -25,7 +25,7 @@ type AppDataStateType = {
 
 const appDataInitialState: AppDataStateType = {
   server: {
-    streamers: ['wonziu', 'nvidiageforcepl', 'bonkol'],
+    streamers: ['wonziu', 'nvidiageforcepl'],
     streamersData: [],
     hideWatched: false,
   },
@@ -59,6 +59,22 @@ const appDataSlice = createSlice({
     setAppData(state, action) {
       state.client = action.payload;
     },
+    addWatched(state, { payload }: PayloadAction<string>) {
+      state.client.watched.push(payload);
+    },
+    removeWatched(state, { payload }: PayloadAction<string>) {
+      state.client.watched = state.client.watched.filter(
+        (id) => id !== payload
+      );
+    },
+    addBookmarked(state, { payload }: PayloadAction<string>) {
+      state.client.bookmarksId.push(payload);
+    },
+    removeBookmarked(state, { payload }: PayloadAction<string>) {
+      state.client.bookmarksId = state.client.bookmarksId.filter(
+        (id) => id !== payload
+      );
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -73,6 +89,10 @@ export const {
   setClientStreamers,
   setAppData,
   addServerStreamer,
+  addWatched,
+  removeWatched,
+  addBookmarked,
+  removeBookmarked,
 } = appDataSlice.actions;
 
 export default appDataSlice.reducer;

@@ -4,7 +4,7 @@
 
 .container {
   position: relative;
-  transition: all ease .2s;
+  transition: all ease 0.2s;
 }
 
 .wrapper {
@@ -13,7 +13,7 @@
 
 .thumbnail {
   position: relative;
-  transition: all ease .1s;
+  transition: all ease 0.1s;
 }
 
 .link:hover .thumbnail {
@@ -26,7 +26,7 @@
   transform: rotate(45deg) translate(2px, 0);
 }
 
-.link:hover .background::before  {
+.link:hover .background::before {
   opacity: 1;
   bottom: 0;
   right: -5px;
@@ -52,7 +52,7 @@
   width: 7px;
   height: 7px;
   display: block;
-  transition: all ease .1s;
+  transition: all ease 0.1s;
   transform: rotate(45deg);
 }
 
@@ -108,8 +108,9 @@
 .bookmark {
   z-index: 993;
   display: flex;
-  right: -3px;
-  top: 5px;
+  right: 6px;
+  top: 6px;
+  padding: 0 !important;
   background-color: transparent !important;
 }
 
@@ -125,7 +126,7 @@
 
 .date {
   font-size: 13px;
-  color: #BBBBBB;
+  color: #bbbbbb;
 }
 
 .check {
@@ -135,13 +136,13 @@
   top: 50%;
 }
 
-.checkIcon,
-.bookmarkIcon {
+.check,
+.bookmark {
   width: 14px;
-  transition: all ease .2s;
+  transition: all ease 0.2s;
 }
 
-.checkIcon:hover,
-.bookmarkIcon:hover {
-  color: #f00;
+.check:active,
+.bookmark:active {
+  transform: scale(1.3);
 }
