@@ -1,5 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type AppNotificationStateType = {
   isOpen: boolean;
@@ -15,9 +15,9 @@ const appNotificationSlice = createSlice({
   name: 'appNotification',
   initialState: appNotificationInitialState,
   reducers: {
-    setNotification(state, action: { type: string; payload: string }) {
+    setNotification(state, { payload }: PayloadAction<string>) {
       state.isOpen = true;
-      state.message = action.payload;
+      state.message = payload;
     },
     clearNotification(state) {
       state.isOpen = false;

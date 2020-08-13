@@ -1,5 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type AppPlayerStateType = {
   isReady: boolean;
@@ -25,24 +25,21 @@ const appPlayerSlice = createSlice({
   name: 'appPlayer',
   initialState: appPlayerInitialState,
   reducers: {
-    startPlayer(state, action: { type: string; payload: boolean }) {
-      state.startPlayer = action.payload;
+    startPlayer(state, { payload }: PayloadAction<boolean>) {
+      state.startPlayer = payload;
     },
-    setReady(state, action: { type: string; payload: boolean }) {
-      state.isReady = action.payload;
+    setReady(state, { payload }: PayloadAction<boolean>) {
+      state.isReady = payload;
     },
-    play(state, action: { type: string; payload: number }) {
+    play(state, { payload }: PayloadAction<number>) {
       if (!state.isPlaying) {
-        state.playerPosition = action.payload;
+        state.playerPosition = payload;
         state.isPlaying = true;
         state.finished = false;
         state.seekTo = 0;
       }
     },
-    pause(state, action: { type: string; payload?: number }) {
-      if (action.payload) {
-        state.playerPosition = action.payload;
-      }
+    pause(state) {
       state.isPlaying = false;
     },
     buffer(state) {
@@ -52,21 +49,20 @@ const appPlayerSlice = createSlice({
       state.finished = true;
       state.isPlaying = false;
     },
-    playbackRate(state, action: { type: string; payload: number }) {
-      state.playbackRate = action.payload;
+    playbackRate(state, { payload }: PayloadAction<number>) {
+      state.playbackRate = payload;
     },
     playbackRateChange(
       state,
-      action: {
-        type: string;
-        payload: { playbackRate: number; playerPosition: number };
-      }
+      {
+        payload,
+      }: PayloadAction<{ playbackRate: number; playerPosition: number }>
     ) {
-      state.playbackRate = action.payload.playbackRate;
-      state.playerPosition = action.payload.playerPosition;
+      state.playbackRate = payload.playbackRate;
+      state.playerPosition = payload.playerPosition;
     },
-    setPlayerPosition(state, action: { type: string, payload: number }) {
-      state.playerPosition = action.payload;
+    setPlayerPosition(state, { payload }: PayloadAction<number>) {
+      state.playerPosition = payload;
     },
     error(state) {
       state.isPlaying = false;
@@ -89,7 +85,7 @@ export const {
   error,
   startPlayer,
   setReady,
-  setPlayerPosition
+  setPlayerPosition,
 } = appPlayerSlice.actions;
 
 export default appPlayerSlice.reducer;

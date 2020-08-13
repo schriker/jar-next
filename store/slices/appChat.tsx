@@ -1,5 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type AppChatStateType = {
   showImg: boolean;
@@ -21,13 +21,13 @@ const appChatSlice = createSlice({
   reducers: {
     setChatOptions(
       state,
-      action: { type: string; payload: { showImg: boolean; showTime: boolean } }
+      { payload }: PayloadAction<{ showImg: boolean; showTime: boolean }>
     ) {
-      state.showImg = action.payload.showImg;
-      state.showTime = action.payload.showTime;
+      state.showImg = payload.showImg;
+      state.showTime = payload.showTime;
     },
-    setSelectedAuthor(state, action: { type: string; payload: string }) {
-      state.selectedAuthor = action.payload;
+    setSelectedAuthor(state, { payload }: PayloadAction<string>) {
+      state.selectedAuthor = payload;
     },
     toggleOptions(state) {
       state.showOptions = !state.showOptions;

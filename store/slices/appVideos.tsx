@@ -1,6 +1,6 @@
 import { Video } from 'types/video';
 import { HYDRATE } from 'next-redux-wrapper';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type AppVideosStateType = {
   videos: Video[];
@@ -18,10 +18,10 @@ const videosSlice = createSlice({
   name: 'appVideos',
   initialState: appVideosInitialState,
   reducers: {
-    setVideos(state, action: { type: string; payload: AppVideosStateType }) {
-      state.videos = action.payload.videos;
-      state.count = action.payload.count;
-      state.paginationCursor = action.payload.paginationCursor;
+    setVideos(state, { payload }: PayloadAction<AppVideosStateType>) {
+      state.videos = payload.videos;
+      state.count = payload.count;
+      state.paginationCursor = payload.paginationCursor;
     },
   },
   extraReducers: {

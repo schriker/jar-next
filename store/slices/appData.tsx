@@ -1,6 +1,6 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Streamer } from 'types/streamer';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type AppDataStateType = {
   server: {
@@ -47,14 +47,14 @@ const appDataSlice = createSlice({
     toggleHideWatched({ server }) {
       server.hideWatched = !server.hideWatched;
     },
-    setServerStreamers(state, action: { type: string; payload: Streamer[] }) {
-      state.server.streamersData = action.payload;
+    setServerStreamers(state, { payload }: PayloadAction<Streamer[]>) {
+      state.server.streamersData = payload;
     },
-    setClientStreamers(state, action: { type: string; payload: Streamer[] }) {
-      state.client.streamersData = action.payload;
+    setClientStreamers(state, { payload }: PayloadAction<Streamer[]>) {
+      state.client.streamersData = payload;
     },
-    addServerStreamer(state, action: { type: string; payload: string }) {
-      state.server.streamers.push(action.payload);
+    addServerStreamer(state, { payload }: PayloadAction<string>) {
+      state.server.streamers.push(payload);
     },
     setAppData(state, action) {
       state.client = action.payload;
