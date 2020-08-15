@@ -1,7 +1,5 @@
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  /* display: grid;
+  display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: calc(100vh - 100px) 100px; */
+  grid-template-rows: calc(100vh - 100px) 100px;
 }

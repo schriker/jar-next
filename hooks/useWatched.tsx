@@ -13,16 +13,20 @@ const useWatched = (id: string) => {
   const isWatched = app.client.watched.includes(id);
   const isBookmarked = app.client.bookmarksId.includes(id);
 
-  const addToBookark = (event: React.MouseEvent) => {
-    event.preventDefault();
+  const addToBookmark = (event?: React.MouseEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
     if (isBookmarked) {
       dispatch(removeBookmarked(id));
     } else {
       dispatch(addBookmarked(id));
     }
   };
-  const addToWatched = (event: React.MouseEvent) => {
-    event.preventDefault();
+  const addToWatched = (event?: React.MouseEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
     if (isWatched) {
       dispatch(removeWatched(id));
     } else {
@@ -33,7 +37,7 @@ const useWatched = (id: string) => {
   return {
     isWatched,
     isBookmarked,
-    addToBookark,
+    addToBookmark,
     addToWatched,
   };
 };

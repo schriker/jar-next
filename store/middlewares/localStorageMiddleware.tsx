@@ -1,4 +1,5 @@
 import { Middleware } from '@reduxjs/toolkit';
+import getObjectByString from 'helpers/getObjectByString';
 
 const persistStore = [
   {
@@ -11,6 +12,26 @@ const persistStore = [
     key: 'chatOptions',
     stateName: 'appChat',
   },
+  {
+    action: 'appData/addWatched',
+    key: 'jarchiwumData',
+    stateName: 'appData.client',
+  },
+  {
+    action: 'appData/removeWatched',
+    key: 'jarchiwumData',
+    stateName: 'appData.client',
+  },
+  {
+    action: 'appData/addBookmarked',
+    key: 'jarchiwumData',
+    stateName: 'appData.client',
+  },
+  {
+    action: 'appData/removeBookmarked',
+    key: 'jarchiwumData',
+    stateName: 'appData.client',
+  },
 ];
 
 export const localStorageMiddleware: Middleware = ({ getState }) => {
@@ -22,7 +43,7 @@ export const localStorageMiddleware: Middleware = ({ getState }) => {
     if (actionToSave) {
       localStorage.setItem(
         actionToSave.key,
-        JSON.stringify(getState()[actionToSave.stateName])
+        JSON.stringify(getObjectByString(getState(), actionToSave.stateName))
       );
     }
     return result;

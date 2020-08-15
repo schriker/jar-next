@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Video } from 'types/video';
+import useWatched from 'hooks/useWatched';
 import trimString from 'helpers/trimString';
 import { Streamer } from 'types/streamer';
 import styles from 'components/Player/PlayerContent.module.css';
@@ -38,6 +39,10 @@ const InfoBlock = ({ tooltip, content, withSpacer }: InfoBlockPropsType) => {
 };
 
 const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
+  const { isWatched, isBookmarked, addToWatched, addToBookmark } = useWatched(
+    video.id
+  );
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.profileImage}>
@@ -86,16 +91,18 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
             <span>Momenty</span>
           </ControllButton>
           <ControllButton
-            onClick={() => console.log('Click')}
+            onClick={() => addToWatched()}
             tooltip="Obejrzany"
+            red={isWatched}
           >
             <div>
               <FontAwesomeIcon icon={faCheck} />
             </div>
           </ControllButton>
           <ControllButton
-            onClick={() => console.log('Click')}
+            onClick={() => addToBookmark()}
             tooltip="Ulubiony"
+            red={isBookmarked}
           >
             <div>
               <FontAwesomeIcon icon={faHeart} />

@@ -17,7 +17,7 @@ const ControllButton = ({
 }: ControllButtonPropsType) => {
   return (
     <Tooltip title={tooltip} placement="top" arrow>
-      <div onClick={onClick} className={red ? styles.red : styles.button}>
+      <div onClick={onClick} className={styles.button} style={{ backgroundColor: red ? '#f00' : '#383838' }}>
         {children}
       </div>
     </Tooltip>

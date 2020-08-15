@@ -4,6 +4,7 @@ import appVideosReducer from 'store/slices/appVideos';
 import appPlayerReducer from 'store/slices/appPlayer';
 import appChatReducer from 'store/slices/appChat';
 import appNotificationReducer from 'store/slices/appNotification';
+import appPoorchatReducer from 'store/slices/appPoorchat';
 import { useSelector, TypedUseSelectorHook } from 'react-redux';
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   appVideos: appVideosReducer,
   appPlayer: appPlayerReducer,
   appChat: appChatReducer,
+  appPoorchat: appChatReducer,
   appNotification: appNotificationReducer,
 });
 

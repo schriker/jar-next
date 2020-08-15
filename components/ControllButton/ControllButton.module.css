@@ -5,12 +5,12 @@
   color: #fff;
   border-radius: 3px;
   background-color: #383838;
-  transition: all ease .2s;
+  transition: all ease 0.2s;
   margin: 0 3px;
 }
 
 .button:hover {
-  background-color:#f00;
+  background-color: #f00;
 }
 
 .button div {
@@ -22,17 +22,7 @@
   font-size: 13px;
 }
 
-.red {
-  cursor: pointer;
-  padding: 3px 6px;
-  display: flex;
-  color: #fff;
-  border-radius: 3px;
-  transition: all ease .2s;
-  margin: 0 3px;
-  background-color: #f00;
-}
-
-.red:hover {
-  background-color: rgb(189, 27, 27);
+.button:active {
+  background-color: #f00 !important;
+  transform: scale(1.1);
 }

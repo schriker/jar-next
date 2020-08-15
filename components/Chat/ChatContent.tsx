@@ -4,6 +4,7 @@ import { setSelectedAuthor } from 'store/slices/appChat';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 import debounce from 'lodash.debounce';
+import moment from 'moment';
 import { Video } from 'types/video';
 import { ChatMessageType } from 'types/message';
 import { fetchMessages } from 'helpers/api';
@@ -48,16 +49,29 @@ const ChatContent = ({ video }: { video: Video }) => {
 
   const getMessages = async (startTime: string) => {
     try {
-      if (video.createdAt && workerRef.current) {
+      if (workerRef.current) {
         const response = await fetchMessages({
           gt: startTime,
-          lt: video.createdAt,
+          lt: video.createdAt || moment().utc().format(),
           streamer: 'wonziu',
         });
         if (response.length === 0) {
           workerRef.current.postMessage({
             type: 'STOP',
           });
+          setMessages([
+            {
+              uuid: '1',
+              _id: '1',
+              type: 'NOTICE',
+              author: 'irc.poorchat.net',
+              body: 'Nie posiadamy zapisu wiadomości dla tego vod.',
+              color: '',
+              subscription: 0,
+              subscriptiongifter: 0,
+              createdAt: startTime,
+            },
+          ]);
         } else {
           workerRef.current.postMessage({
             type: 'START',

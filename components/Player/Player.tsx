@@ -30,7 +30,9 @@ const Player = ({ video, streamer }: PlayerPropsType) => {
         <PlayerYoutube source={youtube} />
       ) : twitch?.length ? (
         <PlayerTwitch source={twitch} />
-      ) : null}
+      ) : (
+        <PlayerTwitch source={[{ id: video.id, name: 'twitch' }]} />
+      )}
       <PlayerContent streamer={streamer} video={video} />
     </div>
   );

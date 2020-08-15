@@ -18,7 +18,7 @@ type VideosItemPropsType = {
 
 const VideosItem = ({ video }: VideosItemPropsType) => {
   const router = useRouter();
-  const { isWatched, isBookmarked, addToWatched, addToBookark } = useWatched(
+  const { isWatched, isBookmarked, addToWatched, addToBookmark } = useWatched(
     video.id
   );
   const isNew = Date.now() - new Date(video.started).getTime() < 86400000;
@@ -62,7 +62,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               {router.query.streamer === 'wonziu' && (
                 <Tooltip title="Ulubiony" placement="top" arrow>
                   <div
-                    onClick={(event) => addToBookark(event)}
+                    onClick={(event) => addToBookmark(event)}
                     className={styles.bookmark}
                     style={{ color: isBookmarked ? '#f00' : '#fff' }}
                   >
