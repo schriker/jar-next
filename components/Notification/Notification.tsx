@@ -7,14 +7,14 @@ import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 
 const Notification = () => {
-  const notification = useTypedSelector((state) => state.appNotification);
   const dispatch = useDispatch();
+  const notification = useTypedSelector((state) => state.appNotification);
   const transitions = useTransition(notification.isOpen, null, {
     from: { bottom: -100 },
     enter: { bottom: 150 },
     leave: { bottom: -100 },
   });
-
+  
   useEffect(() => {
     let timeOut: number;
     if (notification.isOpen) {
@@ -25,7 +25,7 @@ const Notification = () => {
     return () => {
       clearTimeout(timeOut);
     };
-  });
+  }, [notification.message]);
 
   return (
     <>

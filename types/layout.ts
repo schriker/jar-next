@@ -1,6 +1,6 @@
 export interface LayoutHeadProps {
   title: string;
-  ogImage: string;
+  ogImage?: string;
   ogDescription: string;
 }
 

@@ -5,7 +5,6 @@ module.exports = {
     if (!isServer) {
       config.plugins.push(
         new WorkerPlugin({
-          // use "self" as the global object when receiving hot updates.
           globalObject: 'self',
         })
       );
@@ -27,20 +26,3 @@ module.exports = {
     ];
   },
 };
-
-// module.exports = {
-//   async redirects() {
-//     return [
-//       {
-//         source: '/',
-//         destination: '/wonziu',
-//         permanent: true,
-//       },
-//       {
-//         source: '/:streamer/page/1',
-//         destination: '/:streamer',
-//         permanent: true,
-//       },
-//     ];
-//   },
-// };

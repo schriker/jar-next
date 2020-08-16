@@ -6,6 +6,7 @@ import {
   startPlayer,
   setReady,
   setPlayerPosition,
+  playbackRateChange,
 } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
@@ -128,7 +129,7 @@ const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
     return () => {
       clearInterval(interval);
     };
-  }, [state.isPlaying]);
+  }, [state.isPlaying, state.playerPosition]);
 
   return <div id="player"></div>;
 };

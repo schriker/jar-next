@@ -31,7 +31,8 @@ const appPoorchatSlice = createSlice({
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      state = { ...action.payload.appPoorchat };
+      state.user = action.payload.appPoorchat.user;
+      state.subscription = action.payload.appPoorchat.subscription;
     },
   },
 });

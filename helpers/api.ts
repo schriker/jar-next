@@ -3,6 +3,7 @@ import qs from 'qs';
 import mergeStreamersData from 'helpers/mergeStreamersData';
 import { Streamer } from 'types/streamer';
 import { Video } from 'types/video';
+import { PoorchatUser, PoorchatSubscription } from 'types/poorchat';
 import { ChatMessageType } from 'types/message';
 import { ServerVideoQuery, TwitchVideoQuery } from 'types/api';
 import { TwitchGame, TwitchStreamer, TwitchStream } from 'types/twitch';
@@ -213,6 +214,23 @@ export const fetchMessages = (body: {
       );
     } catch (err) {
       console.log('Fetching messages error:', err);
+      reject();
+    }
+  });
+};
+
+export const authCallback = (code: string) => {
+  return new Promise<{
+    user: PoorchatUser;
+    subscription: PoorchatSubscription;
+  }>(async (resolve, reject) => {
+    try {
+      const response = await API.post('/auth/callback', {
+        code,
+      });
+      resolve(response.data);
+    } catch (err) {
+      console.log('Auhtentication error:', err);
       reject();
     }
   });

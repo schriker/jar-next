@@ -16,6 +16,7 @@ import {
 import { RootState } from 'store/rootReducer';
 import { wrapper } from 'store/store';
 import Sidebar from 'components/Sidebar/Sidebar';
+import Notification from 'components/Notification/Notification';
 import App, { AppInitialProps, AppContext } from 'next/app';
 
 import NProgress from 'nprogress';
@@ -81,6 +82,7 @@ class MyApp extends App<AppInitialProps> {
     return (
       <div>
         <Sidebar />
+        <Notification />
         <Component {...pageProps} />
       </div>
     );

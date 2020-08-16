@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   appVideos: appVideosReducer,
   appPlayer: appPlayerReducer,
   appChat: appChatReducer,
-  appPoorchat: appChatReducer,
+  appPoorchat: appPoorchatReducer,
   appNotification: appNotificationReducer,
 });
 
