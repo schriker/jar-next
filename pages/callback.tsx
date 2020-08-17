@@ -2,23 +2,15 @@ import { NextPage } from 'next';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
 import { setNotification } from 'store/slices/appNotification';
 import { setPoorchatUser } from 'store/slices/appPoorchat';
 import { authCallback } from 'helpers/api';
-import { PoorchatUser, PoorchatSubscription } from 'types/poorchat';
 import Layout from 'components/Layout/Layout';
 import Toolbar from 'components/Toolbar/Toolbar';
 import Spinner from 'components/Spinner/Spinner';
 
-type PageProps = {
-  user: PoorchatUser | null;
-  subscription: PoorchatSubscription | null;
-};
-
-const Callback: NextPage<PageProps> = ({ user, subscription }) => {
+const Callback: NextPage = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -28,12 +20,6 @@ const Callback: NextPage<PageProps> = ({ user, subscription }) => {
       } else {
         router.push('/[streamer]', '/wonziu');
       }
-    }
-    if (user && subscription) {
-      dispatch(setPoorchatUser({ user, subscription }));
-      dispatch(setNotification(`Zalogowano jako: ${user.name}`));
-    } else {
-      dispatch(setNotification('Błąd autoryzacji.'));
     }
   }, []);
 
@@ -51,16 +37,14 @@ const Callback: NextPage<PageProps> = ({ user, subscription }) => {
 Callback.getInitialProps = async ({ store, query, res }) => {
   try {
     const { code } = query;
-    const { user, subscription } = await authCallback(code as string);
-    return {
-      user,
-      subscription,
-    } as PageProps;
+    const { user, subscription, cookies } = await authCallback(code as string);
+    store.dispatch(setPoorchatUser({ user, subscription }));
+    store.dispatch(setNotification(`Zalogowano jako: ${user.name}`));
+    if (res) {
+      res.setHeader('set-cookie', [...cookies]);
+    }
   } catch (err) {
-    return {
-      user: null,
-      subscription: null,
-    } as PageProps;
+    store.dispatch(setNotification('Błąd autoryzacji.'));
   }
 };
 

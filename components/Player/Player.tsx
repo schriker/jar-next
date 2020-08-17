@@ -26,13 +26,15 @@ const Player = ({ video, streamer }: PlayerPropsType) => {
   const twitch = video.source?.filter((source) => source.name === 'twitch');
   return (
     <div className={styles.wrapper}>
-      {youtube?.length ? (
-        <PlayerYoutube source={youtube} />
-      ) : twitch?.length ? (
-        <PlayerTwitch source={twitch} />
-      ) : (
-        <PlayerTwitch source={[{ id: video.id, name: 'twitch' }]} />
-      )}
+      <div>
+        {youtube?.length ? (
+          <PlayerYoutube source={youtube} />
+        ) : twitch?.length ? (
+          <PlayerTwitch source={twitch} />
+        ) : (
+          <PlayerTwitch source={[{ id: video.id, name: 'twitch' }]} />
+        )}
+      </div>
       <PlayerContent streamer={streamer} video={video} />
     </div>
   );

@@ -223,12 +223,19 @@ export const authCallback = (code: string) => {
   return new Promise<{
     user: PoorchatUser;
     subscription: PoorchatSubscription;
+    cookies: string[];
   }>(async (resolve, reject) => {
     try {
-      const response = await API.post('/auth/callback', {
-        code,
-      });
-      resolve(response.data);
+      const response = await API.post(
+        '/auth/callback',
+        {
+          code,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      resolve({ ...response.data, cookies: response.headers['set-cookie'] });
     } catch (err) {
       console.log('Auhtentication error:', err);
       reject();
