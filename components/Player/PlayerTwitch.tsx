@@ -6,7 +6,6 @@ import {
   startPlayer,
   setReady,
   setPlayerPosition,
-  playbackRateChange,
 } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
@@ -104,7 +103,7 @@ const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
   }, [state.startPlayer]);
 
   useEffect(() => {
-    if (!window.YT) {
+    if (!window.Twitch) {
       const tag = document.createElement('script');
       tag.src = 'https://player.twitch.tv/js/embed/v1.js';
       tag.addEventListener('load', loadVideo);
@@ -131,7 +130,7 @@ const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
     };
   }, [state.isPlaying, state.playerPosition]);
 
-  return <div id="player"></div>;
+  return <div style={{ height: '100%' }} id="player"></div>;
 };
 
 export default PlayerTwitch;

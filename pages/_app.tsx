@@ -7,12 +7,13 @@ import 'react-dates/initialize';
 import 'react_dates_overrides.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchStreamersData } from 'helpers/api';
+import { fetchStreamersData, auth } from 'helpers/api';
 import {
   setServerStreamers,
   setAppData,
   addServerStreamer,
 } from 'store/slices/appData';
+import { setPoorchatUser } from 'store/slices/appPoorchat';
 import { RootState } from 'store/rootReducer';
 import { wrapper } from 'store/store';
 import Sidebar from 'components/Sidebar/Sidebar';
@@ -36,7 +37,7 @@ Router.events.on('routeChangeError', () => {
 class MyApp extends App<AppInitialProps> {
   public static getInitialProps = async ({ Component, ctx }: AppContext) => {
     const state: RootState = ctx.store.getState();
-    if (!process.browser) {
+    if (typeof window === 'undefined') {
       const serverStreamers = [...state.appData.server.streamers];
       if (ctx.query.streamer) {
         if (
@@ -49,6 +50,13 @@ class MyApp extends App<AppInitialProps> {
       try {
         const streamersData = await fetchStreamersData(serverStreamers);
         ctx.store.dispatch(setServerStreamers(streamersData));
+      } catch (err) {
+        // Handle Error
+      }
+
+      try {
+        const { user, subscription } = await auth(ctx.req?.headers.cookie);
+        ctx.store.dispatch(setPoorchatUser({ user, subscription }));
       } catch (err) {
         // Handle Error
       }

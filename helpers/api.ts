@@ -242,3 +242,21 @@ export const authCallback = (code: string) => {
     }
   });
 };
+
+export const auth = (cookies: string | undefined) => {
+  return new Promise<{
+    user: PoorchatUser;
+    subscription: PoorchatSubscription;
+  }>(async (resolve, reject) => {
+    try {
+      const response = await API.get('/auth', {
+        headers: {
+          cookie: cookies,
+        },
+      });
+      resolve(response.data);
+    } catch (err) {
+      reject();
+    }
+  });
+};
