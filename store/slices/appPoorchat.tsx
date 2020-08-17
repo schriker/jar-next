@@ -1,6 +1,8 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PoorchatUser, PoorchatSubscription } from 'types/poorchat';
+import { AppThunk } from 'store/store';
+import Cookies from 'js-cookie';
 
 type AppPoorchatStateType = {
   user: PoorchatUser | null;
@@ -28,6 +30,11 @@ const appPoorchatSlice = createSlice({
       state.user = payload.user;
       state.subscription = payload.subscription;
     },
+    removePoorchatUser(state) {
+      console.log('test')
+      state.user = null;
+      state.subscription = null;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -37,6 +44,11 @@ const appPoorchatSlice = createSlice({
   },
 });
 
-export const { setPoorchatUser } = appPoorchatSlice.actions;
+export const { setPoorchatUser, removePoorchatUser } = appPoorchatSlice.actions;
 
 export default appPoorchatSlice.reducer;
+
+export const logoutPoorchatUser = (): AppThunk => async (dispatch) => {
+  Cookies.remove('payload_cookie');
+  dispatch(removePoorchatUser());
+};

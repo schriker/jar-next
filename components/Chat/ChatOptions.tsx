@@ -3,15 +3,16 @@ import { useTransition, animated } from 'react-spring';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from 'store/rootReducer';
 import { toggleImage, toggleTime, toggleOptions } from 'store/slices/appChat';
+import { logoutPoorchatUser } from 'store/slices/appPoorchat';
 import SwitchButton from 'components/SwitchButton/SwitchButton';
 import styles from 'components/Chat/ChatOptions.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const ChatOptions = () => {
-  const chat = useTypedSelector((state) => state.appChat);
+  const state = useTypedSelector((state) => state);
   const dispatch = useDispatch();
-  const transitions = useTransition(chat.showOptions, null, {
+  const transitions = useTransition(state.appChat.showOptions, null, {
     from: { opacity: 0, transform: 'translate(0, -60%)' },
     enter: { opacity: 1, transform: 'translate(0, -50%)' },
     leave: { opacity: 0, transform: 'translate(0, -60%)' },
@@ -25,7 +26,10 @@ const ChatOptions = () => {
             <animated.div key={key} style={props} className={styles.wrapper}>
               <div className={styles.title}>
                 <span>Ustawienia czatu</span>
-                <div className={styles.close} onClick={() => dispatch(toggleOptions())}>
+                <div
+                  className={styles.close}
+                  onClick={() => dispatch(toggleOptions())}
+                >
                   <FontAwesomeIcon icon={faTimes} />
                 </div>
               </div>
@@ -34,7 +38,7 @@ const ChatOptions = () => {
                   Wyświetlaj czas
                 </span>
                 <SwitchButton
-                  checked={chat.showTime}
+                  checked={state.appChat.showTime}
                   onChange={() => dispatch(toggleTime())}
                 />
               </div>
@@ -43,10 +47,20 @@ const ChatOptions = () => {
                   Podgląd onośników
                 </span>
                 <SwitchButton
-                  checked={chat.showImg}
+                  checked={state.appChat.showImg}
                   onChange={() => dispatch(toggleImage())}
                 />
               </div>
+              {state.appPoorchat.user && (
+                <div className={styles.row}>
+                  <button
+                    className={styles.button}
+                    onClick={() => dispatch(logoutPoorchatUser())}
+                  >
+                    Wyloguj
+                  </button>
+                </div>
+              )}
             </animated.div>
           )
       )}

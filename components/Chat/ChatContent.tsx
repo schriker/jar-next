@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useRef } from 'react';
+import useChatWorker from 'hooks/useChatWorker';
 import { startPlayer } from 'store/slices/appPlayer';
 import { setSelectedAuthor } from 'store/slices/appChat';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
-import debounce from 'lodash.debounce';
 import moment from 'moment';
 import { Video } from 'types/video';
 import { ChatMessageType } from 'types/message';
@@ -19,136 +19,34 @@ import ChatToBottom from 'components/Chat/ChatToBottom';
 import ControllButton from 'components/ControllButton/ControllButton';
 
 const ChatContent = ({ video }: { video: Video }) => {
+  const fetch = (startTime: string) => {
+    return fetchMessages({
+      gt: startTime,
+      lt: video.createdAt || moment().utc().format(),
+      streamer: 'wonziu',
+    });
+  };
+
+  const emptyMessage = {
+    uuid: '1',
+    _id: '1',
+    type: 'NOTICE',
+    author: 'irc.poorchat.net',
+    body: 'Nie posiadamy zapisu wiadomości dla tego vod.',
+    color: '',
+    subscription: 0,
+    subscriptiongifter: 0,
+    createdAt: video.started,
+  };
+
   const dispatch = useDispatch();
-  const workerRef = useRef<Worker>();
+  const { chatAdjustment, messages, chatAdjustmentHandler } = useChatWorker<
+    ChatMessageType
+  >(fetch, video, emptyMessage);
   const bottom = useRef<HTMLDivElement | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
   const chat = useTypedSelector((state) => state.appChat);
-  const [startTime, setStartTime] = useState<string | null>(null);
-  const [chatAdjustment, setChatAdjusment] = useState<number>(0);
-  const [messages, setMessages] = useState<ChatMessageType[]>([]);
   const { modes, usersWithMode, badges, emoticons } = useChatIconsData();
-
-  useEffect(() => {
-    workerRef.current = new Worker('../../helpers/message.worker.js', {
-      type: 'module',
-    });
-    return () => {
-      setMessages([]);
-      if (workerRef.current) {
-        workerRef.current.terminate();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (startTime) {
-      getMessages(startTime);
-    }
-  }, [startTime]);
-
-  const getMessages = async (startTime: string) => {
-    try {
-      if (workerRef.current) {
-        const response = await fetchMessages({
-          gt: startTime,
-          lt: video.createdAt || moment().utc().format(),
-          streamer: 'wonziu',
-        });
-        if (response.length === 0) {
-          workerRef.current.postMessage({
-            type: 'STOP',
-          });
-          setMessages([
-            {
-              uuid: '1',
-              _id: '1',
-              type: 'NOTICE',
-              author: 'irc.poorchat.net',
-              body: 'Nie posiadamy zapisu wiadomości dla tego vod.',
-              color: '',
-              subscription: 0,
-              subscriptiongifter: 0,
-              createdAt: startTime,
-            },
-          ]);
-        } else {
-          workerRef.current.postMessage({
-            type: 'START',
-            fetched: response,
-            messages: messages,
-            startTime: startTime,
-            playbackRate: player.playbackRate,
-          });
-          workerRef.current.onmessage = ({ data }) => {
-            switch (data.type) {
-              case 'ADD_MESSAGE':
-                setMessages((messages) => [
-                  ...messages.slice(-69),
-                  data.message,
-                ]);
-                break;
-              case 'FETCH':
-                setStartTime(data.message.createdAt);
-                break;
-            }
-          };
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    if (workerRef.current) {
-      workerRef.current.postMessage({
-        type: 'STOP',
-      });
-      if (player.isPlaying && !player.finished) {
-        setStartTime(
-          new Date(
-            new Date(video.started).getTime() +
-              player.playerPosition * 1000 +
-              chatAdjustment * 1000
-          ).toISOString()
-        );
-      }
-    }
-  }, [player.isPlaying, player.playbackRate]);
-
-  useEffect(() => {
-    if (player.finished && workerRef.current) {
-      setMessages([]);
-      dispatch(startPlayer(false));
-      workerRef.current.postMessage({
-        type: 'STOP',
-      });
-    }
-  }, [player.finished]);
-
-  const debounceChatRestart = useCallback(
-    debounce((value: number, playerPosition: number) => {
-      setStartTime(
-        new Date(
-          new Date(video.started).getTime() +
-            playerPosition * 1000 +
-            value * 1000
-        ).toISOString()
-      );
-    }, 500),
-    []
-  );
-
-  const chatAdjustmentHandler = (add: boolean) => {
-    setChatAdjusment((value) => {
-      const timeAdjustment = add ? (value += 5) : (value -= 5);
-      if (player.isPlaying) {
-        debounceChatRestart(timeAdjustment, player.playerPosition);
-      }
-      return timeAdjustment;
-    });
-  };
 
   return (
     <>

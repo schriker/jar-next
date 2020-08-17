@@ -1,7 +1,10 @@
-import rootReducer from 'store/rootReducer';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import rootReducer, { RootState } from 'store/rootReducer';
+import { ThunkAction } from 'redux-thunk';
+import { configureStore, getDefaultMiddleware, Action } from '@reduxjs/toolkit';
 import { localStorageMiddleware } from 'store/middlewares/localStorageMiddleware';
 import { createWrapper } from 'next-redux-wrapper';
+
+export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>
 
 function initStore() {
   return configureStore({
