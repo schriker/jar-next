@@ -33,6 +33,7 @@ const ChatInput = () => {
       <div className={styles.wrapper}>
         <div className={styles.input}>
           <input
+            maxLength={120}
             disabled={!poorchat.user}
             value={value}
             placeholder="Treść wiadomości"

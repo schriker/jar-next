@@ -19,9 +19,9 @@ import ChatToBottom from 'components/Chat/ChatToBottom';
 import ControllButton from 'components/ControllButton/ControllButton';
 
 const ChatContent = ({ video }: { video: Video }) => {
-  const fetch = (startTime: string) => {
+  const fetch = (startTime: string | number) => {
     return fetchMessages({
-      gt: startTime,
+      gt: startTime.toString(),
       lt: video.createdAt || moment().utc().format(),
       streamer: 'wonziu',
     });
@@ -42,7 +42,7 @@ const ChatContent = ({ video }: { video: Video }) => {
   const dispatch = useDispatch();
   const { chatAdjustment, messages, chatAdjustmentHandler } = useChatWorker<
     ChatMessageType
-  >(fetch, video, emptyMessage);
+  >({ fetch, video, emptyMessage });
   const bottom = useRef<HTMLDivElement | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
   const chat = useTypedSelector((state) => state.appChat);

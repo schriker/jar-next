@@ -7,6 +7,7 @@ import { PoorchatUser, PoorchatSubscription } from 'types/poorchat';
 import { ChatMessageType } from 'types/message';
 import { ServerVideoQuery, TwitchVideoQuery } from 'types/api';
 import { TwitchGame, TwitchStreamer, TwitchStream } from 'types/twitch';
+import { NoteType } from 'types/notes';
 import { v4 as uuidv4 } from 'uuid';
 
 const fetchStreamers = (streamers: string[]) => {
@@ -257,6 +258,27 @@ export const auth = (cookies: string | undefined) => {
       resolve(response.data);
     } catch (err) {
       reject();
+    }
+  });
+};
+
+export const fetchNotes = (id: string, timestamp: number) => {
+  return new Promise<NoteType[]>(async (resolve, reject) => {
+    try {
+      const queryString = qs.stringify({
+        streamer: 'wonziu',
+        timestamp,
+        id,
+      });
+      const response = await API.get(`/note?${queryString}`);
+      resolve(
+        response.data.map((note: ChatMessageType) => ({
+          ...note,
+          uuid: uuidv4(),
+        }))
+      );
+    } catch (err) {
+      reject(err);
     }
   });
 };

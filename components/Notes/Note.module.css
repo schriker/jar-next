@@ -1,0 +1,22 @@
+.wrapper {
+  background-color: #1c1c1c;
+  border-radius: 3px;
+  padding: 10px 20px;
+  line-height: 24px;
+  min-height: 30px;
+  font-size: 14px;
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.container {
+  margin: 5px 0;
+}
+
+.author {
+  font-weight: 500 !important;
+}
+
+.message {
+  color: rgb(219, 219, 219);
+}

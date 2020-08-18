@@ -11,6 +11,7 @@ const PlayerTwitch = dynamic(() => import('components/Player/PlayerTwitch'), {
   ssr: false,
 });
 import PlayerContent from 'components/Player/PlayerContent';
+import Notes from 'components/Notes/Notes';
 
 type PlayerPropsType = {
   video: Video;
@@ -26,7 +27,8 @@ const Player = ({ video, streamer }: PlayerPropsType) => {
   const twitch = video.source?.filter((source) => source.name === 'twitch');
   return (
     <div className={styles.wrapper}>
-      <div>
+      <div className={styles.player}>
+        <Notes video={video} />
         {youtube?.length ? (
           <PlayerYoutube source={youtube} />
         ) : twitch?.length ? (

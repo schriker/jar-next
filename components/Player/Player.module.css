@@ -3,3 +3,8 @@
   grid-template-columns: 1fr;
   grid-template-rows: calc(100vh - 100px) 100px;
 }
+
+.player {
+  position: relative;
+  overflow: hidden;
+}
