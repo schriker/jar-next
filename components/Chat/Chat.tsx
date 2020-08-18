@@ -9,6 +9,7 @@ import ChatInput from 'components/Chat/ChatInput';
 import Shadow from 'components/Shadow/Shadow';
 import ChatContent from 'components/Chat/ChatContent';
 import ChatOptions from 'components/Chat/ChatOptions';
+import useChatIconsData from 'hooks/useChatIconsData';
 
 type ChatPropsType = {
   video: Video;
@@ -17,6 +18,7 @@ type ChatPropsType = {
 const Chat = ({ video }: ChatPropsType) => {
   const dispatch = useDispatch();
   const chat = useTypedSelector((state) => state.appChat);
+  const iconsData = useChatIconsData();
 
   useEffect(() => {
     const localChatOptions = localStorage.getItem('chatOptions');
@@ -33,9 +35,9 @@ const Chat = ({ video }: ChatPropsType) => {
         onClick={() => dispatch(toggleOptions())}
         absolute
       />
-      <ChatContent video={video} />
+      <ChatContent video={video} {...iconsData} />
       <ChatOptions />
-      <ChatInput />
+      <ChatInput emoticons={iconsData.emoticons} video={video.id} />
     </div>
   );
 };

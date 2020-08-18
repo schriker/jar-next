@@ -6,7 +6,13 @@ import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { Video } from 'types/video';
-import { ChatMessageType } from 'types/message';
+import {
+  ChatMessageType,
+  ChatEmoticon,
+  ChatUserWithMode,
+  ChatBadges,
+  ChatModeBadge,
+} from 'types/message';
 import { fetchMessages } from 'helpers/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -14,11 +20,24 @@ import styles from 'components/Chat/ChatContent.module.css';
 import SimpleBar from 'simplebar-react';
 import ChatMessage from 'components/Chat/ChatMessage';
 import ChatCard from 'components/Chat/ChatCard';
-import useChatIconsData from 'hooks/useChatIconsData';
 import ChatToBottom from 'components/Chat/ChatToBottom';
 import ControllButton from 'components/ControllButton/ControllButton';
 
-const ChatContent = ({ video }: { video: Video }) => {
+type ChatContentPropsType = {
+  video: Video;
+  emoticons: ChatEmoticon[];
+  usersWithMode: ChatUserWithMode[];
+  badges: ChatBadges | null;
+  modes: ChatModeBadge[];
+};
+
+const ChatContent = ({
+  video,
+  emoticons,
+  usersWithMode,
+  badges,
+  modes,
+}: ChatContentPropsType) => {
   const fetch = (startTime: string | number) => {
     return fetchMessages({
       gt: startTime.toString(),
@@ -46,7 +65,6 @@ const ChatContent = ({ video }: { video: Video }) => {
   const bottom = useRef<HTMLDivElement | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
   const chat = useTypedSelector((state) => state.appChat);
-  const { modes, usersWithMode, badges, emoticons } = useChatIconsData();
 
   return (
     <>

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useTypedSelector } from 'store/rootReducer';
 import { fetchNotes } from 'helpers/api';
 import { Video } from 'types/video';
 import { NoteType } from 'types/notes';
@@ -15,9 +16,26 @@ const Notes = ({ video }: NotesPropsType) => {
   const fetch = (_: string | number, timestamp: number) => {
     return fetchNotes(video.id, timestamp);
   };
+  const chat = useTypedSelector((state) => state.appChat);
   const { emoticons } = useChatIconsData();
-  const { messages } = useChatWorker<NoteType>({ fetch, video, isNote: true });
-  
+  const { messages, setMessages } = useChatWorker<NoteType>({
+    fetch,
+    video,
+    isNote: true,
+  });
+
+  useEffect(() => {
+    if (chat.userNote) {
+      setMessages((messages) => {
+        if (chat.userNote) {
+          return [...messages, chat.userNote];
+        } else {
+          return [...messages];
+        }
+      });
+    }
+  }, [chat.userNote]);
+
   return (
     <div className={styles.wrapper}>
       {messages.map((message) => (

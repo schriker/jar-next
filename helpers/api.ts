@@ -272,11 +272,32 @@ export const fetchNotes = (id: string, timestamp: number) => {
       });
       const response = await API.get(`/note?${queryString}`);
       resolve(
-        response.data.map((note: ChatMessageType) => ({
+        response.data.map((note: NoteType) => ({
           ...note,
           uuid: uuidv4(),
         }))
       );
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+export const postNote = (note: {
+  body: string;
+  streamer: string;
+  timestamp: number;
+  video: string;
+}) => {
+  return new Promise<NoteType>(async (resolve, reject) => {
+    try {
+      const response = await API.post('/note', note, {
+        withCredentials: true,
+      });
+      resolve({
+        ...response.data,
+        uuid: uuidv4(),
+      });
     } catch (err) {
       reject(err);
     }

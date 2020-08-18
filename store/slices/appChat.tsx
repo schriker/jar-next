@@ -1,7 +1,9 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NoteType } from 'types/notes';
 
 type AppChatStateType = {
+  userNote: NoteType | null;
   showImg: boolean;
   showTime: boolean;
   showOptions: boolean;
@@ -9,6 +11,7 @@ type AppChatStateType = {
 };
 
 const appChatInitialState: AppChatStateType = {
+  userNote: null,
   showImg: true,
   showTime: true,
   showOptions: false,
@@ -38,6 +41,9 @@ const appChatSlice = createSlice({
     toggleImage(state) {
       state.showImg = !state.showImg;
     },
+    setUserNote(state, { payload }: PayloadAction<NoteType | null>) {
+      state.userNote = payload;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -52,6 +58,7 @@ export const {
   toggleImage,
   toggleTime,
   toggleOptions,
+  setUserNote,
 } = appChatSlice.actions;
 
 export default appChatSlice.reducer;
