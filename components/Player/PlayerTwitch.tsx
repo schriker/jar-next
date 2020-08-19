@@ -103,6 +103,12 @@ const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
   }, [state.startPlayer]);
 
   useEffect(() => {
+    if (playerRef) {
+      playerRef.seek(state.seekTo);
+    }
+  }, [state.seekTo]);
+
+  useEffect(() => {
     if (!window.Twitch) {
       const tag = document.createElement('script');
       tag.src = 'https://player.twitch.tv/js/embed/v1.js';

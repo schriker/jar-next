@@ -2,6 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { Video } from 'types/video';
 import useWatched from 'hooks/useWatched';
+import { useDispatch } from 'react-redux';
+import { toggleHighlights } from 'store/slices/appPlayer';
+import { useTypedSelector } from 'store/rootReducer';
 import trimString from 'helpers/trimString';
 import { Streamer } from 'types/streamer';
 import styles from 'components/Player/PlayerContent.module.css';
@@ -39,6 +42,8 @@ const InfoBlock = ({ tooltip, content, withSpacer }: InfoBlockPropsType) => {
 };
 
 const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
+  const dispatch = useDispatch();
+  const player = useTypedSelector((state) => state.appPlayer);
   const { isWatched, isBookmarked, addToWatched, addToBookmark } = useWatched(
     video.id
   );
@@ -81,33 +86,40 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
             tooltip="Wyświetleń"
             withSpacer
           />
-          <ControllButton
-            onClick={() => console.log('Click')}
-            tooltip="Najciekawsze momenty"
-          >
-            <div>
-              <FontAwesomeIcon icon={faFire} />
-            </div>
-            <span>Momenty</span>
-          </ControllButton>
-          <ControllButton
-            onClick={() => addToWatched()}
-            tooltip="Obejrzany"
-            red={isWatched}
-          >
-            <div>
-              <FontAwesomeIcon icon={faCheck} />
-            </div>
-          </ControllButton>
-          <ControllButton
-            onClick={() => addToBookmark()}
-            tooltip="Ulubiony"
-            red={isBookmarked}
-          >
-            <div>
-              <FontAwesomeIcon icon={faHeart} />
-            </div>
-          </ControllButton>
+          {video.highLights && (
+            <ControllButton
+              onClick={() => dispatch(toggleHighlights())}
+              tooltip="Najciekawsze momenty"
+              red={player.showHighlights}
+            >
+              <div>
+                <FontAwesomeIcon icon={faFire} />
+              </div>
+              <span>Momenty</span>
+            </ControllButton>
+          )}
+          {streamer.login === 'wonziu' && (
+            <ControllButton
+              onClick={() => addToWatched()}
+              tooltip="Obejrzany"
+              red={isWatched}
+            >
+              <div>
+                <FontAwesomeIcon icon={faCheck} />
+              </div>
+            </ControllButton>
+          )}
+          {streamer.login === 'wonziu' && (
+            <ControllButton
+              onClick={() => addToBookmark()}
+              tooltip="Ulubiony"
+              red={isBookmarked}
+            >
+              <div>
+                <FontAwesomeIcon icon={faHeart} />
+              </div>
+            </ControllButton>
+          )}
           <ControllButton
             onClick={() => console.log('Click')}
             tooltip="Tryb kinowy"

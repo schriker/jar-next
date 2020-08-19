@@ -27,7 +27,6 @@ const Chat = ({ video }: ChatPropsType) => {
       dispatch(setChatOptions(chatOptions));
     }
   }, []);
-
   return (
     <div className={styles.wrapper}>
       <Shadow

@@ -12,6 +12,7 @@ const PlayerTwitch = dynamic(() => import('components/Player/PlayerTwitch'), {
 });
 import PlayerContent from 'components/Player/PlayerContent';
 import Notes from 'components/Notes/Notes';
+import Highlights from 'components/Highlights/Highlights';
 
 type PlayerPropsType = {
   video: Video;
@@ -22,12 +23,23 @@ const Player = ({ video, streamer }: PlayerPropsType) => {
   useEffect(() => {
     updateViews(streamer.login, video.id);
   }, []);
-
+  let duration = 0;
+  if (video.createdAt) {
+    duration =
+      new Date(video.createdAt).getTime() - new Date(video.started).getTime();
+  }
   const youtube = video.source?.filter((source) => source.name === 'youtube');
   const twitch = video.source?.filter((source) => source.name === 'twitch');
   return (
     <div className={styles.wrapper}>
       <div className={styles.player}>
+        {video.highLights && (
+          <Highlights
+            started={video.started}
+            duration={duration}
+            highlights={video.highLights}
+          />
+        )}
         <Notes video={video} />
         {youtube?.length ? (
           <PlayerYoutube source={youtube} />

@@ -9,6 +9,7 @@ type AppPlayerStateType = {
   playerPosition: number;
   playbackRate: number;
   seekTo: number;
+  showHighlights: boolean;
 };
 
 const appPlayerInitialState: AppPlayerStateType = {
@@ -19,6 +20,7 @@ const appPlayerInitialState: AppPlayerStateType = {
   playerPosition: 0,
   playbackRate: 1,
   seekTo: 0,
+  showHighlights: false,
 };
 
 const appPlayerSlice = createSlice({
@@ -36,7 +38,6 @@ const appPlayerSlice = createSlice({
         state.playerPosition = payload;
         state.isPlaying = true;
         state.finished = false;
-        state.seekTo = 0;
       }
     },
     pause(state) {
@@ -67,6 +68,12 @@ const appPlayerSlice = createSlice({
     error(state) {
       state.isPlaying = false;
     },
+    toggleHighlights(state) {
+      state.showHighlights = !state.showHighlights;
+    },
+    seekTo(state, { payload }: PayloadAction<number>) {
+      state.seekTo = payload;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -85,7 +92,9 @@ export const {
   error,
   startPlayer,
   setReady,
+  seekTo,
   setPlayerPosition,
+  toggleHighlights,
 } = appPlayerSlice.actions;
 
 export default appPlayerSlice.reducer;

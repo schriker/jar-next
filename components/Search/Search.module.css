@@ -25,6 +25,7 @@
 
 .searchForm input:focus {
   border: 2px solid #f00;
+  background-color: #0d0d0d;
 }
 
 .searchButton {

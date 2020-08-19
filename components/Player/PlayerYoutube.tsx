@@ -111,6 +111,12 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
   }, [state.startPlayer]);
 
   useEffect(() => {
+    if (playerRef) {
+      playerRef.seekTo(state.seekTo);
+    }
+  }, [state.seekTo]);
+
+  useEffect(() => {
     if (!window.YT) {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
