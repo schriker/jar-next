@@ -8,6 +8,7 @@ import Shadow from 'components/Shadow/Shadow';
 import { Streamer } from 'types/streamer';
 import { fetchStreamersData } from 'helpers/api';
 import { useTypedSelector } from 'store/rootReducer';
+import AddStreamer from 'components/AddStreamer/AddStreamer';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Sidebar = () => {
   const [isfetching, setIsFetching] = useState(false);
 
   useEffect(() => {
+    console.log(client.streamers);
     const fetchClientStreamers = async () => {
       setIsFetching(true);
       const response = await fetchStreamersData(client.streamers);
@@ -34,6 +36,8 @@ const Sidebar = () => {
     };
     if (client.streamers.length) {
       fetchClientStreamers();
+    } else {
+      setStreamers([]);
     }
   }, [client.streamers]);
   return (
@@ -55,7 +59,6 @@ const Sidebar = () => {
             />
           );
         })}
-        {isfetching && <SidebarItem isOpen={isOpen} />}
         {streamers.map((streamer) => {
           return (
             <SidebarItem
@@ -65,6 +68,8 @@ const Sidebar = () => {
             />
           );
         })}
+        {isfetching && <SidebarItem isOpen={isOpen} />}
+        <AddStreamer isOpen={isOpen} />
       </animated.div>
     </>
   );

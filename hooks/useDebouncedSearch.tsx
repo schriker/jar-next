@@ -10,7 +10,7 @@ const useDebouncedSearch = (searchFunction: any) => {
   const watched = state.server.hideWatched ? state.client.watched : [];
 
   const debouncedSearchFunction = useConstant(() =>
-    AwesomeDebouncePromise(searchFunction, 500)
+    AwesomeDebouncePromise(searchFunction, 300)
   );
 
   const searchResults = useAsync(async () => {

@@ -53,6 +53,17 @@ const appDataSlice = createSlice({
     setClientStreamers(state, { payload }: PayloadAction<Streamer[]>) {
       state.client.streamersData = payload;
     },
+    addClientStreamer(state, { payload }: PayloadAction<string>) {
+      state.client.streamers.push(payload);
+    },
+    removeClientStreamer(state, { payload }: PayloadAction<string>) {
+      state.client.streamers = state.client.streamers.filter(
+        (streamer) => streamer !== payload
+      );
+      state.client.streamersData = state.client.streamersData.filter(
+        (streamer) => streamer.login !== payload
+      );
+    },
     addServerStreamer(state, { payload }: PayloadAction<string>) {
       state.server.streamers.push(payload);
     },
@@ -88,6 +99,8 @@ export const {
   setServerStreamers,
   setClientStreamers,
   setAppData,
+  addClientStreamer,
+  removeClientStreamer,
   addServerStreamer,
   addWatched,
   removeWatched,

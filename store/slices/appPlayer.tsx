@@ -68,8 +68,8 @@ const appPlayerSlice = createSlice({
     error(state) {
       state.isPlaying = false;
     },
-    toggleHighlights(state) {
-      state.showHighlights = !state.showHighlights;
+    showHighlights(state, { payload }: PayloadAction<boolean>) {
+      state.showHighlights = payload;
     },
     seekTo(state, { payload }: PayloadAction<number>) {
       state.seekTo = payload;
@@ -94,7 +94,7 @@ export const {
   setReady,
   seekTo,
   setPlayerPosition,
-  toggleHighlights,
+  showHighlights
 } = appPlayerSlice.actions;
 
 export default appPlayerSlice.reducer;

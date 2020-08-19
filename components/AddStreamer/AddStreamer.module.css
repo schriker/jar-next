@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  width: 360px;
+  align-items: center;
+  height: 50px;
+  margin: 5px 0;
+  padding: 8px 0 8px 5px;
+}
+
+.addIcon {
+  flex: 1 0 32px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  margin: 0 0 0 3px;
+  border-radius: 50%;
+  background-color: #f00;
+  transition: all ease 0.2s;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper input {
+  margin: 0 15px;
+}
+
+.addIcon div {
+  padding: 2px 0 0 0;
+  width: 10px;
+}
+
+.addIcon:hover {
+  background-color: rgb(189, 27, 27);
+}

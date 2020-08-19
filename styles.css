@@ -21,3 +21,23 @@ body {
   background: #373737 !important;
   border-radius: 3px;
 }
+
+input {
+  font-family: 'Ubuntu', sans-serif;
+  width: 100%;
+  border: 0;
+  height: 35px;
+  font-size: 14px;
+  color: #bbbbbb;
+  padding: 10px 20px;
+  border-radius: 3px;
+  background-color: #2c2c2c;
+  outline: 0;
+  transition: all ease .2s;
+  border: 2px solid transparent;
+}
+
+input:focus {
+  border: 2px solid #f00;
+  background-color: #0d0d0d;
+}

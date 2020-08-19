@@ -10,6 +10,7 @@ import {
   startPlayer,
   setReady,
   setPlayerPosition,
+  showHighlights
 } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
@@ -130,6 +131,8 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
       dispatch(end());
       dispatch(startPlayer(false));
       dispatch(setReady(false));
+      dispatch(setPlayerPosition(0));
+      dispatch(showHighlights(false));
       if (player) {
         player.destroy();
       }

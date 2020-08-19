@@ -32,6 +32,16 @@ const persistStore = [
     key: 'jarchiwumData',
     stateName: 'appData.client',
   },
+  {
+    action: 'appData/addClientStreamer',
+    key: 'jarchiwumData',
+    stateName: 'appData.client',
+  },
+  {
+    action: 'appData/removeClientStreamer',
+    key: 'jarchiwumData',
+    stateName: 'appData.client',
+  },
 ];
 
 export const localStorageMiddleware: Middleware = ({ getState }) => {

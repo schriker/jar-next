@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Video } from 'types/video';
 import useWatched from 'hooks/useWatched';
 import { useDispatch } from 'react-redux';
-import { toggleHighlights } from 'store/slices/appPlayer';
+import { showHighlights } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import trimString from 'helpers/trimString';
 import { Streamer } from 'types/streamer';
@@ -88,7 +88,7 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
           />
           {video.highLights && (
             <ControllButton
-              onClick={() => dispatch(toggleHighlights())}
+              onClick={() => dispatch(showHighlights(!player.showHighlights))}
               tooltip="Najciekawsze momenty"
               red={player.showHighlights}
             >

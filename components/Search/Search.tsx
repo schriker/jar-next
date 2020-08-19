@@ -8,16 +8,19 @@ import styles from 'components/Search/Search.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const useSearch = () => 
+const useSearch = () =>
   useDebouncedSearch((searchValue: string, watched: string[]) =>
-    fetchServerVideos({
-      page: 1,
-      per_page: 5,
-      streamer: 'wonziu',
-      search: searchValue,
-    }, {
-      watched: watched
-    })
+    fetchServerVideos(
+      {
+        page: 1,
+        per_page: 5,
+        streamer: 'wonziu',
+        search: searchValue,
+      },
+      {
+        watched: watched,
+      }
+    )
   );
 
 const Search = () => {
@@ -59,6 +62,7 @@ const Search = () => {
           onChange={onChangeHanlder}
           placeholder="Słowa kluczowe"
           type="text"
+          style={{ padding: '10px 55px 10px 20px' }}
         />
         <button className={styles.searchButton} type="submit">
           <span>
