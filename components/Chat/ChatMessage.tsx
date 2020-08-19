@@ -50,6 +50,7 @@ const ChatMessage = ({
 }: ChatMessagePropsType) => {
   const dispatch = useDispatch();
   const chat = useTypedSelector((state) => state.appChat);
+  const isAction = message.body.split(' ')[0] === '\u0001ACTION';
 
   const mode: {
     icon: string;
@@ -154,50 +155,57 @@ const ChatMessage = ({
       >
         {chat.showTime && (
           <span className={styles.time}>
-            {moment(message.createdAt).format('HH:mm')}
+            {!isAction && moment(message.createdAt).format('HH:mm')}
+            {isAction && '*'}
           </span>
         )}
-        <span className={styles.icons}>
-          {mode && (
-            <ChatMessageIcon
-              tip={mode.name}
-              source={mode.icon}
-              srcset={mode.srcset}
-            />
-          )}
-          {sub && (
-            <ChatMessageIcon
-              tip={`Subskrybuje: ${message.subscription}`}
-              source={sub.icon}
-              srcset={sub.srcset}
-            />
-          )}
-          {gifts && (
-            <ChatMessageIcon
-              tip={`Podarował: ${message.subscriptiongifter}`}
-              source={gifts.icon}
-              srcset={gifts.srcset}
-            />
-          )}
-        </span>
+        {!isAction && (
+          <span className={styles.icons}>
+            {mode && (
+              <ChatMessageIcon
+                tip={mode.name}
+                source={mode.icon}
+                srcset={mode.srcset}
+              />
+            )}
+            {sub && (
+              <ChatMessageIcon
+                tip={`Subskrybuje: ${message.subscription}`}
+                source={sub.icon}
+                srcset={sub.srcset}
+              />
+            )}
+            {gifts && (
+              <ChatMessageIcon
+                tip={`Podarował: ${message.subscriptiongifter}`}
+                source={gifts.icon}
+                srcset={gifts.srcset}
+              />
+            )}
+          </span>
+        )}
         <span
           onClick={handleAuthorClick}
           className={styles.author}
           style={{
             color: message.color ? message.color : '#fff',
+            fontStyle: isAction ? 'italic' : 'normal',
           }}
         >
           {message.author}
         </span>
         :{' '}
-        <span className={styles.message}>
-          {messageParser(message.body, emoticons).map((part, index) => (
-            <ChatMessageComponent
-              key={`${message.uuid}-${index}`}
-              part={part}
-            />
-          ))}
-        </span>
+        {!isAction && (
+          <span className={styles.message}>
+            {messageParser(message.body, emoticons).map((part, index) => (
+              <ChatMessageComponent
+                key={`${message.uuid}-${index}`}
+                part={part}
+              />
+            ))}
+          </span>
+        )}
+        {isAction && <span className={styles.action}>{message.body}</span>}
       </div>
     </div>
   );

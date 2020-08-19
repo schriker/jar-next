@@ -29,6 +29,11 @@
   color: rgb(219, 219, 219);
 }
 
+.action {
+  font-style: italic;
+  color: rgb(219, 219, 219);
+}
+
 .icons {
   display: inline-block;
 }
