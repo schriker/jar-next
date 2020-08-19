@@ -2,4 +2,5 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 365px;
+  background-color: #141414;
 }

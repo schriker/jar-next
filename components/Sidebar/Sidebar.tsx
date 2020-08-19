@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setClientStreamers } from 'store/slices/appData';
+import { setClientStreamers, removeClientStreamer } from 'store/slices/appData';
 import styles from 'components/Sidebar/Sidebar.module.css';
 import { useSpring, animated } from 'react-spring';
 import SidebarItem from 'components/Sidebar/SidebarItem';
@@ -26,18 +26,20 @@ const Sidebar = () => {
   const [isfetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    console.log(client.streamers);
     const fetchClientStreamers = async () => {
       setIsFetching(true);
       const response = await fetchStreamersData(client.streamers);
+      if (response.length < client.streamers.length) {
+        dispatch(removeClientStreamer(client.streamers[client.streamers.length - 1]))
+      }
       setStreamers(response);
       dispatch(setClientStreamers(response));
       setIsFetching(false);
     };
-    if (client.streamers.length) {
+    if (client.streamers.length > streamers.length) {
       fetchClientStreamers();
     } else {
-      setStreamers([]);
+      setStreamers(client.streamersData);
     }
   }, [client.streamers]);
   return (

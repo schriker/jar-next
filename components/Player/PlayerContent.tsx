@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
 import { Video } from 'types/video';
 import useWatched from 'hooks/useWatched';
@@ -11,6 +11,7 @@ import styles from 'components/Player/PlayerContent.module.css';
 import moment from 'moment';
 import Tooltip from '@material-ui/core/Tooltip';
 import ControllButton from 'components/ControllButton/ControllButton';
+import parseDuration from 'helpers/parseDuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFire,
@@ -18,10 +19,12 @@ import {
   faHeart,
   faExpand,
 } from '@fortawesome/free-solid-svg-icons';
+import { FullScreenHandle } from 'react-full-screen';
 
 type PlayerContentPropsType = {
   video: Video;
   streamer: Streamer;
+  fullscreen: FullScreenHandle;
 };
 
 type InfoBlockPropsType = {
@@ -31,22 +34,43 @@ type InfoBlockPropsType = {
 };
 
 const InfoBlock = ({ tooltip, content, withSpacer }: InfoBlockPropsType) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+
   return (
     <>
-      <Tooltip title={tooltip} placement="top" arrow>
-        <div className={styles.infoBlock}>{content}</div>
+      <Tooltip
+        title={tooltip}
+        placement="top"
+        arrow
+        PopperProps={{ container: ref.current }}
+      >
+        <div ref={ref} className={styles.infoBlock}>
+          {content}
+        </div>
       </Tooltip>
       {withSpacer && <div className={styles.spacer}></div>}
     </>
   );
 };
 
-const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
+const PlayerContent = ({
+  video,
+  streamer,
+  fullscreen,
+}: PlayerContentPropsType) => {
   const dispatch = useDispatch();
   const player = useTypedSelector((state) => state.appPlayer);
   const { isWatched, isBookmarked, addToWatched, addToBookmark } = useWatched(
     video.id
   );
+
+  const handleFullscreen = () => {
+    if (fullscreen.active) {
+      fullscreen.exit();
+    } else {
+      fullscreen.enter();
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -77,7 +101,7 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
       <div className={styles.leftPanel}>
         <div className={styles.info}>
           <InfoBlock
-            content={video.duration}
+            content={parseDuration(video.duration)}
             tooltip="Czas trwania"
             withSpacer
           />
@@ -121,7 +145,8 @@ const PlayerContent = ({ video, streamer }: PlayerContentPropsType) => {
             </ControllButton>
           )}
           <ControllButton
-            onClick={() => console.log('Click')}
+            red={fullscreen.active}
+            onClick={handleFullscreen}
             tooltip="Tryb kinowy"
           >
             <div>

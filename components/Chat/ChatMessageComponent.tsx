@@ -7,9 +7,13 @@ import styles from 'components/Chat/ChatMessageComponent.module.css';
 
 type ChatMessageComponentPropsType = {
   part: ChatMessageComponentType;
+  tooltipContainer: HTMLDivElement | null;
 };
 
-const ChatMessageComponent = ({ part }: ChatMessageComponentPropsType) => {
+const ChatMessageComponent = ({
+  part,
+  tooltipContainer,
+}: ChatMessageComponentPropsType) => {
   return (
     <>
       {part.type === 'text' ? (
@@ -19,7 +23,12 @@ const ChatMessageComponent = ({ part }: ChatMessageComponentPropsType) => {
           ></span>
         </>
       ) : (
-        <Tooltip title={part.value} placement="top" arrow>
+        <Tooltip
+          title={part.value}
+          placement="top"
+          arrow
+          PopperProps={{ container: tooltipContainer }}
+        >
           <div
             className={styles.emoticon}
             dangerouslySetInnerHTML={{ __html: part.body }}

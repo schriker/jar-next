@@ -13,13 +13,15 @@ const PlayerTwitch = dynamic(() => import('components/Player/PlayerTwitch'), {
 import PlayerContent from 'components/Player/PlayerContent';
 import Notes from 'components/Notes/Notes';
 import Highlights from 'components/Highlights/Highlights';
+import { FullScreenHandle } from 'react-full-screen';
 
 type PlayerPropsType = {
   video: Video;
   streamer: Streamer;
+  fullscreen: FullScreenHandle;
 };
 
-const Player = ({ video, streamer }: PlayerPropsType) => {
+const Player = ({ video, streamer, fullscreen }: PlayerPropsType) => {
   useEffect(() => {
     updateViews(streamer.login, video.id);
   }, []);
@@ -49,7 +51,11 @@ const Player = ({ video, streamer }: PlayerPropsType) => {
           <PlayerTwitch source={[{ id: video.id, name: 'twitch' }]} />
         )}
       </div>
-      <PlayerContent streamer={streamer} video={video} />
+      <PlayerContent
+        streamer={streamer}
+        video={video}
+        fullscreen={fullscreen}
+      />
     </div>
   );
 };

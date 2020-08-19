@@ -21,21 +21,29 @@ type ChatMessagePropsType = {
   usersWithMode: ChatUserWithMode[];
   badges: ChatBadges | null;
   modes: ChatModeBadge[];
+  tooltipContainer: HTMLDivElement | null;
 };
 
 type ChatMessageIconPropsType = {
   tip: string;
   source: string;
   srcset?: string;
+  tooltipContainer: HTMLDivElement | null;
 };
 
 const ChatMessageIcon = ({
   tip,
   source,
   srcset = '',
+  tooltipContainer,
 }: ChatMessageIconPropsType) => {
   return (
-    <Tooltip title={tip} placement="top" arrow>
+    <Tooltip
+      title={tip}
+      placement="top"
+      arrow
+      PopperProps={{ container: tooltipContainer }}
+    >
       <img width="18px" height="18px" src={source} alt="" srcSet={srcset} />
     </Tooltip>
   );
@@ -47,6 +55,7 @@ const ChatMessage = ({
   usersWithMode,
   modes,
   badges,
+  tooltipContainer,
 }: ChatMessagePropsType) => {
   const dispatch = useDispatch();
   const chat = useTypedSelector((state) => state.appChat);
@@ -163,6 +172,7 @@ const ChatMessage = ({
           <span className={styles.icons}>
             {mode && (
               <ChatMessageIcon
+                tooltipContainer={tooltipContainer}
                 tip={mode.name}
                 source={mode.icon}
                 srcset={mode.srcset}
@@ -170,6 +180,7 @@ const ChatMessage = ({
             )}
             {sub && (
               <ChatMessageIcon
+                tooltipContainer={tooltipContainer}
                 tip={`Subskrybuje: ${message.subscription}`}
                 source={sub.icon}
                 srcset={sub.srcset}
@@ -177,6 +188,7 @@ const ChatMessage = ({
             )}
             {gifts && (
               <ChatMessageIcon
+                tooltipContainer={tooltipContainer}
                 tip={`Podarował: ${message.subscriptiongifter}`}
                 source={gifts.icon}
                 srcset={gifts.srcset}
@@ -199,6 +211,7 @@ const ChatMessage = ({
           <span className={styles.message}>
             {messageParser(message.body, emoticons).map((part, index) => (
               <ChatMessageComponent
+                tooltipContainer={tooltipContainer}
                 key={`${message.uuid}-${index}`}
                 part={part}
               />

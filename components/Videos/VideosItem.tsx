@@ -11,6 +11,7 @@ import moment from 'moment';
 import { Video } from 'types/video';
 import styles from 'components/Videos/VideosItem.module.css';
 import trimString from 'helpers/trimString';
+import parseDuration from 'helpers/parseDuration';
 
 type VideosItemPropsType = {
   video: Video;
@@ -70,7 +71,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                   </div>
                 </Tooltip>
               )}
-              <div className={styles.duration}>{video.duration}</div>
+              <div className={styles.duration}>{parseDuration(video.duration)}</div>
               <div className={styles.views}>{video.views}</div>
             </div>
           </div>

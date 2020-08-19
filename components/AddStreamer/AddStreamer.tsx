@@ -5,6 +5,7 @@ import { addClientStreamer, removeClientStreamer } from 'store/slices/appData';
 import { animated, useSpring } from 'react-spring';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Tooltip from '@material-ui/core/Tooltip';
 import styles from 'components/AddStreamer/AddStreamer.module.css';
 
 type AddStreamerPropsType = {
@@ -43,13 +44,15 @@ const AddStreamer = ({ isOpen }: AddStreamerPropsType) => {
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </button>
-      <animated.input
-        style={slideIn}
-        type="text"
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-        placeholder="Dodaj lub usuń kanał"
-      />
+      <Tooltip title="Wpisz nazwę kanału, który chcesz dodać lub usunąć." arrow>
+        <animated.input
+          style={slideIn}
+          type="text"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder="Dodaj lub usuń kanał"
+        />
+      </Tooltip>
     </form>
   );
 };

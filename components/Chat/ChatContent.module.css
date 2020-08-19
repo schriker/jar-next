@@ -8,7 +8,7 @@
 .chatWrapper {
   flex: 1 1 auto;
   position: relative;
-  overflow: auto;
+  overflow-x: hidden;
   margin: 0 -15px 0 0;
 }
 

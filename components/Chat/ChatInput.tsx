@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { toggleOptions, setUserNote } from 'store/slices/appChat';
@@ -18,6 +18,7 @@ type ChatInputPropsType = {
 };
 
 const ChatInput = ({ video, emoticons }: ChatInputPropsType) => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const poorchatClientID = 'zZ8b2kcex1VVrhtBB1a2KApZKyubeAWkpy4LARLE';
   const poorchatRedirectURL = 'http://localhost:8080/callback';
   const poorchatAuthLink = `https://poorchat.net/oauth/authorize?client_id=${poorchatClientID}&redirect_uri=${poorchatRedirectURL}&response_type=code&scope=user+user_subscriptions`;
@@ -96,7 +97,7 @@ const ChatInput = ({ video, emoticons }: ChatInputPropsType) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className={styles.wrapper}>
+      <div ref={ref} className={styles.wrapper}>
         <div className={styles.input}>
           <input
             maxLength={120}
@@ -109,7 +110,7 @@ const ChatInput = ({ video, emoticons }: ChatInputPropsType) => {
           />
         </div>
         <div className={styles.bottom}>
-          <Tooltip title="Ustawienia" placement="top" arrow>
+          <Tooltip PopperProps={{ container: ref.current }} title="Ustawienia" placement="top" arrow>
             <div
               onClick={() => dispatch(toggleOptions())}
               className={styles.icon}

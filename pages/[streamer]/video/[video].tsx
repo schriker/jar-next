@@ -11,6 +11,7 @@ import Chat from 'components/Chat/Chat';
 import { RootState } from 'store/rootReducer';
 import { TwitchVideoQuery } from 'types/api';
 import CustomError404 from 'pages/404';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
 type PageProps = {
   video: Video | null;
@@ -18,6 +19,7 @@ type PageProps = {
 };
 
 const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
+  const handle = useFullScreenHandle();
   return video ? (
     <Layout
       title={`${streamer.displayName} - ${trimString(video.title, 25)}`}
@@ -26,10 +28,12 @@ const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
         .replace('%{height}', '360')}
       ogDescription="Oglądaj powtórki strumieni z czatem."
     >
-      <div className={styles.wrapper}>
-        <Player streamer={streamer} video={video} />
-        <Chat video={video} />
-      </div>
+      <FullScreen handle={handle}>
+        <div className={styles.wrapper}>
+          <Player streamer={streamer} video={video} fullscreen={handle} />
+          <Chat video={video} />
+        </div>
+      </FullScreen>
     </Layout>
   ) : (
     <Layout

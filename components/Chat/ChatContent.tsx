@@ -63,6 +63,7 @@ const ChatContent = ({
     ChatMessageType
   >({ fetch, video, emptyMessage });
   const bottom = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
   const chat = useTypedSelector((state) => state.appChat);
 
@@ -104,6 +105,7 @@ const ChatContent = ({
         <div
           onClick={() => dispatch(setSelectedAuthor(''))}
           className={styles.chatWrapper}
+          ref={ref}
         >
           <SimpleBar
             scrollableNodeProps={{ ref: bottom }}
@@ -125,6 +127,7 @@ const ChatContent = ({
                     modes={modes}
                     message={message}
                     emoticons={emoticons}
+                    tooltipContainer={ref.current}
                     usersWithMode={usersWithMode}
                   />
                 ) : null
