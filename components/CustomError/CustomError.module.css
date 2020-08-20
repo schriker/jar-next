@@ -4,9 +4,9 @@
   justify-content: center;
   align-items: center;
   /* padding: 250px; */
-  height: 100vh;
+  height: calc(100vh - 80px);
   width: calc(100% - 60px);
-  top: 0;
+  bottom: 0;
   left: 60px;
 }
 

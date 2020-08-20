@@ -22,6 +22,8 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
   const { isWatched, isBookmarked, addToWatched, addToBookmark } = useWatched(
     video.id
   );
+  const isWonziu =
+    router.query.streamer === 'wonziu' || router.pathname.includes('favourite');
   const isNew = Date.now() - new Date(video.started).getTime() < 86400000;
   const image = useRef<HTMLImageElement>(null!);
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -60,7 +62,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                 alt=""
               />
               {isNew && <div className={styles.new}>New</div>}
-              {router.query.streamer === 'wonziu' && (
+              {isWonziu && (
                 <Tooltip title="Ulubiony" placement="top" arrow>
                   <div
                     onClick={(event) => addToBookmark(event)}
@@ -71,7 +73,9 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                   </div>
                 </Tooltip>
               )}
-              <div className={styles.duration}>{parseDuration(video.duration)}</div>
+              <div className={styles.duration}>
+                {parseDuration(video.duration)}
+              </div>
               <div className={styles.views}>{video.views}</div>
             </div>
           </div>
@@ -80,7 +84,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
             <div className={styles.date}>
               {moment(video.started).format('DD-MM-YYYY • HH:mm:ss')}
             </div>
-            {router.query.streamer === 'wonziu' && (
+            {isWonziu && (
               <Tooltip title="Obejrzany" placement="top" arrow>
                 <div
                   onClick={(event) => addToWatched(event)}

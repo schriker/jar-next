@@ -78,6 +78,7 @@ Page.getInitialProps = async ({ store, query }) => {
       };
       const response = await fetchServerVideos(serverQuery, {
         watched: watched,
+        favourite: []
       });
       videos = response.videos;
       count = response.count;

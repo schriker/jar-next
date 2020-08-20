@@ -23,12 +23,23 @@ const ToggleWatched = () => {
     const queryString = qs.stringify(query);
     dispatch(toggleHideWatched());
     if (Object.keys(query).length) {
-      router.push(
-        `/[streamer]?${queryString}`,
-        `/${router.query.streamer}?${queryString}`
-      );
+      if (router.pathname.includes('favourite')) {
+        router.push(
+          `/favourite?${queryString}`,
+          `/favourite?${queryString}`
+        );
+      } else {
+        router.push(
+          `/[streamer]?${queryString}`,
+          `/${router.query.streamer}?${queryString}`
+        );
+      }
     } else {
-      router.push(`/[streamer]`, `/${router.query.streamer}`);
+      if (router.pathname.includes('favourite')) {
+        router.push('/favourite', '/favourite');
+      } else {
+        router.push(`/[streamer]`, `/${router.query.streamer}`);
+      }
     }
   };
 

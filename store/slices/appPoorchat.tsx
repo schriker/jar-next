@@ -31,7 +31,6 @@ const appPoorchatSlice = createSlice({
       state.subscription = payload.subscription;
     },
     removePoorchatUser(state) {
-      console.log('test')
       state.user = null;
       state.subscription = null;
     },

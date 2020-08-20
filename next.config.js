@@ -19,6 +19,11 @@ module.exports = {
         permanent: true,
       },
       {
+        source: '/favourite/page/1',
+        destination: '/favourite',
+        permanent: true,
+      },
+      {
         source: '/:streamer/page/1',
         destination: '/:streamer',
         permanent: true,

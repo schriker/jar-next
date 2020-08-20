@@ -106,7 +106,7 @@ export const fetchServerVideoById = (query: {
 
 export const fetchServerVideos = (
   query: ServerVideoQuery,
-  body?: { watched: string[] }
+  body?: { watched: string[]; favourite: string[] }
 ) => {
   return new Promise<{ videos: Video[]; count: number }>(
     async (resolve, reject) => {
@@ -114,6 +114,7 @@ export const fetchServerVideos = (
         const queryString = qs.stringify(query);
         const response = await API.post(`/videos_api?${queryString}`, {
           watched: body?.watched,
+          favourite: body?.favourite,
         });
         resolve({
           videos: response.data.videos.map(

@@ -50,21 +50,35 @@ const PaginationPages = ({ count }: PaginationPagesPropsType) => {
     pageNumber: number
   ): { href: string; as: string } => {
     const query = {
-      ...router.query
-    }
+      ...router.query,
+    };
     delete query.streamer;
     delete query.page;
     const queryString = qs.stringify(query);
     if (Object.keys(query).length) {
-      return {
-        href: `/[streamer]/page/[page]?${queryString}`,
-        as: `/${router.query.streamer}/page/${pageNumber}?${queryString}`,
-      };
+      if (router.pathname.includes('favourite')) {
+        return {
+          href: `/favourite/page/[page]?${queryString}`,
+          as: `/favourite/page/${pageNumber}?${queryString}`,
+        };
+      } else {
+        return {
+          href: `/[streamer]/page/[page]?${queryString}`,
+          as: `/${router.query.streamer}/page/${pageNumber}?${queryString}`,
+        };
+      }
     } else {
-      return {
-        href: '/[streamer]/page/[page]',
-        as: `/${router.query.streamer}/page/${pageNumber}`,
-      };
+      if (router.pathname.includes('favourite')) {
+        return {
+          href: '/favourite/page/[page]',
+          as: `/favourite/page/${pageNumber}`,
+        };
+      } else {
+        return {
+          href: '/[streamer]/page/[page]',
+          as: `/${router.query.streamer}/page/${pageNumber}`,
+        };
+      }
     }
   };
 

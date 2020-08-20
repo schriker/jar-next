@@ -29,7 +29,11 @@ const Sort = ({ close, isOpen = true }: SortPropsType) => {
     });
     const queryString = qs.stringify(query);
     setValue(e.target.value);
-    router.push(`/[streamer]?${queryString}`, `/wonziu?${queryString}`);
+    if (router.pathname.includes('favourite')) {
+      router.push(`/favourite?${queryString}`, `/favourite?${queryString}`);
+    } else {
+      router.push(`/[streamer]?${queryString}`, `/wonziu?${queryString}`);
+    }
   };
   return (
     <div className={styles.wrapper}>

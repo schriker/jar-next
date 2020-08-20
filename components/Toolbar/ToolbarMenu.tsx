@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import styles from 'components/Toolbar/ToolbarMenu.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,6 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const ToolbarMenu = () => {
+  const router = useRouter();
   const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
   const [isSortOpen, setSortOpen] = useState<boolean>(false);
 
@@ -35,7 +37,7 @@ const ToolbarMenu = () => {
       icon: <FontAwesomeIcon icon={faHeart} />,
       text: 'Ulubione',
       child: null,
-      onClick: () => console.log('Test 3'),
+      onClick: () => router.push('/favourite', '/favourite')
     },
   ];
 

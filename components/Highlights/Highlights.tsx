@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTransition, animated } from 'react-spring';
 import { VideoHighLight } from 'types/video';
 import { useTypedSelector } from 'store/rootReducer';
@@ -15,6 +15,7 @@ type HighlightsPropsType = {
 
 const Highlights = ({ highlights, duration, started }: HighlightsPropsType) => {
   const player = useTypedSelector((state) => state.appPlayer);
+  const tooltipContainer = useRef<HTMLDivElement | null>(null);
   const timelineWidth = (player.playerPosition / (duration / 1000)) * 100;
   const transition = useTransition(player.showHighlights, null, {
     from: { opacity: 0, transform: 'translateY(50px)' },
@@ -30,7 +31,7 @@ const Highlights = ({ highlights, duration, started }: HighlightsPropsType) => {
       {transition.map(
         ({ props, key, item }) =>
           item && (
-            <animated.div className={styles.wrapper} key={key} style={props}>
+            <animated.div ref={tooltipContainer} className={styles.wrapper} key={key} style={props}>
               <HighlightsTimeline width={timelineWidth} />
               {[...Array(Math.floor(duration / 1000 / 60 / 2))].map(
                 (_, index) => (
@@ -44,6 +45,7 @@ const Highlights = ({ highlights, duration, started }: HighlightsPropsType) => {
                   highlight={highlight}
                   duration={duration}
                   max={maxCount}
+                  tooltipContainer={tooltipContainer.current}
                 />
               ))}
             </animated.div>

@@ -38,6 +38,7 @@ type HighlightsBarPropsType = {
   duration: number;
   started: string;
   max: number;
+  tooltipContainer: HTMLDivElement | null;
 };
 
 const HighlightsBar = ({
@@ -45,6 +46,7 @@ const HighlightsBar = ({
   duration,
   started,
   max,
+  tooltipContainer,
 }: HighlightsBarPropsType) => {
   const dispatch = useDispatch();
   const momentMs =
@@ -59,8 +61,13 @@ const HighlightsBar = ({
   }%, 0%, 1)`;
 
   return (
-    <Tooltip title={highlight.type} arrow placement="top">
-      <StyledHighlightBar onClick={() => dispatch(seekTo(momentMs / 1000 - 25))} color={color} left={left} height={height}>
+    <Tooltip title={highlight.type} arrow placement="top" PopperProps={{ container: tooltipContainer }}>
+      <StyledHighlightBar
+        onClick={() => dispatch(seekTo(momentMs / 1000 - 25))}
+        color={color}
+        left={left}
+        height={height}
+      >
         <div></div>
       </StyledHighlightBar>
     </Tooltip>

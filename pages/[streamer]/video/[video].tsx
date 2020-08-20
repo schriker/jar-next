@@ -38,7 +38,7 @@ const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
   ) : (
     <Layout
       title={`Coś poszło nie tak :(`}
-      ogImage={'/img_placeholder.jpg'}
+      ogImage="/img_placeholder.jpg"
       ogDescription="Oglądaj powtórki strumieni z czatem."
     >
       <CustomError404 />
