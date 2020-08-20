@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { removeClientStreamer } from 'store/slices/appData';
+import { useDispatch } from 'react-redux';
 import { useSpring, animated } from 'react-spring';
 import Link from 'next/link';
 import trimString from 'helpers/trimString';
@@ -6,6 +8,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import styles from 'components/Sidebar/SidebarItem.module.css';
 import { Streamer } from 'types/streamer';
+import Tooltip from '@material-ui/core/Tooltip';
 
 type SidebarItemProps = {
   isOpen: boolean;
@@ -51,13 +54,22 @@ const StatusIcon = styled.div<StatusIconProps>`
 const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const router = useRouter();
+  const dispatch = useDispatch();
   const fadeIn = useSpring({ opacity: loaded ? 1 : isServerSide ? 1 : 0 });
   const slideIn = useSpring({
     opacity: isOpen ? 1 : 0,
     config: {
-      duration: 200
-    }
+      duration: 200,
+    },
   });
+
+  const onRemove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+    if (streamer) {
+      dispatch(removeClientStreamer(streamer.login));
+    }
+  };
+
   return !streamer ? (
     <ItemAnchor isActive={false} className={styles.wrapper}>
       <div className={styles.sidebarItem}></div>
@@ -80,14 +92,21 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
           </animated.div>
         </div>
         <animated.div style={slideIn} className={styles.content}>
-          <div>
+          <div className={styles.name}>
             <div>{streamer.displayName}</div>
             {streamer.game && (
               <div className={styles.gameName}>
-                {trimString(streamer.game.name, 25)}
+                {trimString(streamer.game.name, 20)}
               </div>
             )}
           </div>
+          {!isServerSide && (
+            <Tooltip title="Usuń" arrow placement="top">
+              <div onClick={onRemove} className={styles.remove}>
+                x
+              </div>
+            </Tooltip>
+          )}
           <div className={styles.status}>
             <StatusIcon centerVertical={true} isLive={streamer.isLive} />{' '}
             {streamer.isLive ? streamer.viewers : 'offline'}

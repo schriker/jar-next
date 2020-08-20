@@ -39,7 +39,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
     <div className={styles.container}>
       <Link
         href="/[streamer]/video/[video]"
-        as={`/${router.query.streamer}/video/${video.id}`}
+        as={`/${isWonziu ? 'wonziu' : router.query.streamer}/video/${video.id}`}
       >
         <a className={styles.link}>
           <div className={styles.wrapper}>

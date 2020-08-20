@@ -19,15 +19,15 @@
 }
 
 @keyframes fade {
-	0% {
-		background-color: rgba(20, 20, 20, 1);
-	}
-	50% {
-		background-color: rgba(20, 20, 20, .5);
-	}
-	100% {
-		background-color: rgba(20, 20, 20, 1);
-	}
+  0% {
+    background-color: rgba(20, 20, 20, 1);
+  }
+  50% {
+    background-color: rgba(20, 20, 20, 0.5);
+  }
+  100% {
+    background-color: rgba(20, 20, 20, 1);
+  }
 }
 
 .content {
@@ -40,8 +40,31 @@
   white-space: nowrap;
 }
 
+.name {
+  flex: 1 0 auto;
+}
+
+.remove {
+  color: #1c1c1c;
+  margin: 0 8px 0 0;
+  width: 13px;
+  height: 13px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 10px;
+  background-color: #6b6b6b;
+  border-radius: 50%;
+  transition: all ease 0.2s;
+}
+
+.remove:hover {
+  background-color: #f00;
+  color: #fff;
+}
+
 .gameName {
-  color: #6B6B6B;
+  color: #6b6b6b;
   padding: 3px 0 0 0;
   font-size: 14px;
 }
