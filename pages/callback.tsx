@@ -25,7 +25,7 @@ const Callback: NextPage = () => {
 
   return (
     <Layout
-      title={`Archiwum Strumieni - logowanie`}
+      title={`Archiwum Strumieni - Logowanie`}
       ogDescription="Oglądaj powtórki strumieni z czatem."
     >
       <Toolbar />

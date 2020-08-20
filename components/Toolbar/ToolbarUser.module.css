@@ -1,0 +1,21 @@
+.wrapper {
+  margin: 0 0 0 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background-color: #2c2c2c;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all ease 0.2s;
+}
+
+.wrapper:hover {
+  background-color: #f00;
+}
+
+.wrapper svg {
+  width: 15px;
+}

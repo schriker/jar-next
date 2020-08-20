@@ -1,7 +1,8 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import ToolbarMenu from 'components/Toolbar/ToolbarMenu';
-import ToggleWatched from 'components/ToggleWatched/ToggleWatched'
+import ToggleWatched from 'components/ToggleWatched/ToggleWatched';
+import ToolbarUser from 'components/Toolbar/ToolbarUser';
 const Search = dynamic(() => import('components/Search/Search'), {
   ssr: false,
 });
@@ -12,8 +13,9 @@ const Toolbar = () => {
     <div className={styles.toolbar}>
       <ToolbarMenu />
       <Search />
-      <div style={{ marginLeft: 'auto' }}>
+      <div className={styles.right}>
         <ToggleWatched />
+        <ToolbarUser />
       </div>
     </div>
   );

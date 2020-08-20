@@ -1,0 +1,75 @@
+.wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  border-radius: 3px;
+  background-color: #232323;
+  z-index: 997;
+  padding: 0 20px 40px 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.tabs {
+  display: flex;
+  width: 100%;
+  list-style: none;
+}
+
+.tabs li {
+  color: #bbb;
+  cursor: pointer;
+  padding: 20px 0;
+  flex: 1 1 auto;
+  text-align: center;
+  transition: all ease 0.2s;
+  border-bottom: 2px solid #373737;
+}
+
+.tabs li:hover,
+.tabs li.active {
+  color: #fff;
+  border-bottom: 2px solid #f00;
+}
+
+.row {
+  margin: 10px 0;
+}
+
+.row label {
+  display: inline-block;
+  margin: 10px 0;
+}
+
+.button {
+  width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  background-color: #f00;
+  transition: all ease 0.2s;
+  margin: 30px 0 0 0;
+}
+
+.button:hover {
+  background-color: rgb(189, 27, 27);
+}
+
+.close {
+  top: 10px;
+  right: 10px;
+  color: #bbb;
+  width: 10px;
+  cursor: pointer;
+  transition: all ease 0.2s;
+  position: absolute;
+}
+
+.close:hover {
+  color: #f00;
+}
