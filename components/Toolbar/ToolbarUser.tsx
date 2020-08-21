@@ -6,6 +6,7 @@ import { useTypedSelector } from 'store/rootReducer';
 import styles from 'components/Toolbar/ToolbarUser.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from '@material-ui/core/Tooltip';
 const Login = dynamic(() => import('components/Login/Login'));
 
 const ToolbarUser = () => {
@@ -19,12 +20,14 @@ const ToolbarUser = () => {
   return (
     <>
       {appFirebase.uid ? (
-        <div
-          onClick={() => dispatch(appFirebaseSignOut())}
-          className={styles.wrapper}
-        >
-          <FontAwesomeIcon icon={faSignOutAlt} />
-        </div>
+        <Tooltip title="Wyloguj" arrow placement="bottom">
+          <div
+            onClick={() => dispatch(appFirebaseSignOut())}
+            className={styles.wrapper}
+          >
+            <FontAwesomeIcon icon={faSignOutAlt} />
+          </div>
+        </Tooltip>
       ) : (
         <div onClick={onClick} className={styles.wrapper}>
           <FontAwesomeIcon icon={faUser} />

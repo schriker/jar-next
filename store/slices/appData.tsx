@@ -23,7 +23,7 @@ type AppDataStateType = {
   };
 };
 
-const appDataInitialState: AppDataStateType = {
+export const appDataInitialState: AppDataStateType = {
   server: {
     streamers: ['wonziu'],
     streamersData: [],
@@ -68,7 +68,7 @@ const appDataSlice = createSlice({
       state.server.streamers.push(payload);
     },
     setAppData(state, action) {
-      state.client = action.payload;
+      state.client = { ...state.client, ...action.payload };
     },
     addWatched(state, { payload }: PayloadAction<string>) {
       state.client.watched.push(payload);

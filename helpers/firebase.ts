@@ -56,3 +56,5 @@ export const firebaseErrorHandler = (code: string) => {
       return 'Błąd serwera.';
   }
 };
+
+export const firestore = firebase.firestore();

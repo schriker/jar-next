@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTypedSelector } from 'store/rootReducer';
 import { toggleOptions } from 'store/slices/appChat';
-import { setChatOptions } from 'store/slices/appChat';
 import { useDispatch } from 'react-redux';
 import styles from 'components/Chat/Chat.module.css';
 import { Video } from 'types/video';
@@ -20,13 +19,6 @@ const Chat = ({ video }: ChatPropsType) => {
   const chat = useTypedSelector((state) => state.appChat);
   const iconsData = useChatIconsData();
 
-  useEffect(() => {
-    const localChatOptions = localStorage.getItem('chatOptions');
-    if (localChatOptions) {
-      const chatOptions = JSON.parse(localChatOptions);
-      dispatch(setChatOptions(chatOptions));
-    }
-  }, []);
   return (
     <div className={styles.wrapper}>
       <Shadow

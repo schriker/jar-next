@@ -8,7 +8,7 @@ import styles from 'components/Login/Login.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import LoginFormInput from 'components/Login/LoginFormInput';
-import { appFirebaseSignIn, appFirebaseCreateUser } from 'store/slices/appFirebase';
+import { appFirebaseSignIn, appFirebaseCreateUser, appFirebaseSaveData } from 'store/slices/appFirebase';
 import Spinner from 'components/Spinner/Spinner';
 
 type LoginPropsType = {

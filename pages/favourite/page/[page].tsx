@@ -37,15 +37,11 @@ const FavourtiePage: NextPage = () => {
       setCount(response.count);
       setVideos(response.videos);
     };
-    const localUserData = localStorage.getItem('jarchiwumData');
-    if (localUserData) {
-      const userData = JSON.parse(localUserData);
-      if (userData.bookmarksId.length) {
-        fetchVideos(userData.bookmarksId, userData.watched);
-      } else {
-        setCount(0);
-        setVideos([]);
-      }
+    if (appData.client.bookmarksId.length) {
+      fetchVideos(appData.client.bookmarksId, appData.client.watched);
+    } else {
+      setCount(0);
+      setVideos([]);
     }
   }, [appData.server.hideWatched, router.query, appData.client.bookmarksId]);
 
@@ -57,7 +53,9 @@ const FavourtiePage: NextPage = () => {
     >
       <Toolbar />
       {isLoading && <Spinner />}
-      {!isLoading && <CustomError code="404" message="Twoja lista ulubionych jest pusta." />}
+      {!isLoading && (
+        <CustomError code="404" message="Twoja lista ulubionych jest pusta." />
+      )}
     </Layout>
   ) : (
     <Layout

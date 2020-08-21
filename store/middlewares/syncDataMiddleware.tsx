@@ -1,5 +1,7 @@
-import { Middleware } from '@reduxjs/toolkit';
+import { Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 import getObjectByString from 'helpers/getObjectByString';
+import { RootState } from 'store/rootReducer';
+import { appFirebaseSaveData } from 'store/slices/appFirebase';
 
 const persistStore = [
   {
@@ -44,17 +46,21 @@ const persistStore = [
   },
 ];
 
-export const localStorageMiddleware: Middleware = ({ getState }) => {
+export const syncDataMiddleware: Middleware = ({ getState, dispatch }: MiddlewareAPI<any>) => {
   return (next) => (action) => {
     const result = next(action);
+    const state: RootState = getState();
+
     const [actionToSave] = persistStore.filter(
       (item) => item.action === result.type
     );
-    if (actionToSave) {
+    if (actionToSave && !state.appFirebase.uid) {
       localStorage.setItem(
         actionToSave.key,
-        JSON.stringify(getObjectByString(getState(), actionToSave.stateName))
+        JSON.stringify(getObjectByString(state, actionToSave.stateName))
       );
+    } else if (actionToSave) {
+      dispatch(appFirebaseSaveData());
     }
     return result;
   };

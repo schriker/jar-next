@@ -8,11 +8,7 @@ import 'react_dates_overrides.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchStreamersData, auth } from 'helpers/api';
-import {
-  setServerStreamers,
-  setAppData,
-  addServerStreamer,
-} from 'store/slices/appData';
+import { setServerStreamers, addServerStreamer } from 'store/slices/appData';
 import { setPoorchatUser } from 'store/slices/appPoorchat';
 import { appFirebaseAuthStateChanged } from 'store/slices/appFirebase';
 import { RootState } from 'store/rootReducer';
@@ -51,15 +47,15 @@ class MyApp extends App<AppInitialProps> {
       try {
         const streamersData = await fetchStreamersData(serverStreamers);
         ctx.store.dispatch(setServerStreamers(streamersData));
-      } catch (err) {
-        // Handle Error
+      } catch (error) {
+        console.log(error);
       }
 
       try {
         const { user, subscription } = await auth(ctx.req?.headers.cookie);
         ctx.store.dispatch(setPoorchatUser({ user, subscription }));
-      } catch (err) {
-        // Handle Error
+      } catch (error) {
+        console.log(error);
       }
     }
 
@@ -75,17 +71,6 @@ class MyApp extends App<AppInitialProps> {
   componentDidMount() {
     // @ts-expect-error: Need to pass setAppData to this.props type
     this.props.firebaseAuthStateChanged();
-    const localUserData = localStorage.getItem('jarchiwumData');
-    if (localUserData) {
-      const userData = JSON.parse(localUserData);
-      // @ts-expect-error: Need to pass setAppData to this.props type
-      const { serverStreamers }: { serverStreamers: string[] } = this.props;
-      userData.streamers = userData.streamers.filter(
-        (streamer: string) => !serverStreamers.includes(streamer)
-      );
-      // @ts-expect-error: Need to pass setAppData to this.props type
-      this.props.setAppData(userData);
-    }
   }
 
   render() {
@@ -108,7 +93,6 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    setAppData: (appData: any) => dispatch(setAppData(appData)),
     firebaseAuthStateChanged: () => dispatch(appFirebaseAuthStateChanged()),
   };
 };
