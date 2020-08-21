@@ -5,6 +5,7 @@ import appPlayerReducer from 'store/slices/appPlayer';
 import appChatReducer from 'store/slices/appChat';
 import appNotificationReducer from 'store/slices/appNotification';
 import appPoorchatReducer from 'store/slices/appPoorchat';
+import appFirebaseReducer from 'store/slices/appFirebase';
 import { useSelector, TypedUseSelectorHook } from 'react-redux';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   appPlayer: appPlayerReducer,
   appChat: appChatReducer,
   appPoorchat: appPoorchatReducer,
+  appFirebase: appFirebaseReducer,
   appNotification: appNotificationReducer,
 });
 

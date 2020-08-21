@@ -27,6 +27,7 @@
     "@zeit/next-workers": "^1.0.0",
     "awesome-debounce-promise": "^2.1.0",
     "axios": "^0.19.2",
+    "firebase": "^7.19.0",
     "irc-formatting": "^1.0.0-rc3",
     "js-cookie": "^2.2.1",
     "linkifyjs": "^2.1.9",

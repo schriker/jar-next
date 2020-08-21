@@ -19,6 +19,7 @@ const useSearch = () =>
       },
       {
         watched: watched,
+        favourite: [],
       }
     )
   );

@@ -1,11 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { setNotification } from 'store/slices/appNotification';
 import { animated, useTransition } from 'react-spring';
 import Shadow from 'components/Shadow/Shadow';
 import styles from 'components/Login/Login.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import Tooltip from '@material-ui/core/Tooltip';
+import LoginFormInput from 'components/Login/LoginFormInput';
+import { appFirebaseSignIn, appFirebaseCreateUser } from 'store/slices/appFirebase';
+import Spinner from 'components/Spinner/Spinner';
 
 type LoginPropsType = {
   isOpen: boolean;
@@ -18,17 +22,31 @@ type Inputs = {
 };
 
 const Login = ({ isOpen, close }: LoginPropsType) => {
-  const tooltipContainer = useRef<HTMLDivElement | null>(null);
+  const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const { register, handleSubmit, errors } = useForm<Inputs>();
+  const tooltipContainer = useRef<HTMLDivElement | null>(null);
   const transition = useTransition(isOpen, null, {
     from: { opacity: 0, transform: 'translate(-50%, -70%)' },
     enter: { opacity: 1, transform: 'translate(-50%, -50%)' },
     leave: { opacity: 0, transform: 'translate(-50%, -70%)' },
   });
 
-  const onSubmit = handleSubmit(({ email, password }) => {
-    console.log(email, password);
+  const onSubmit = handleSubmit(async ({ email, password }) => {
+    try {
+      setLoading(true);
+      if (isLogin) {
+        await appFirebaseSignIn({ email, password });
+      } else {
+        await appFirebaseCreateUser({ email, password });
+      }
+      closeModal();
+      setLoading(false);
+    } catch (error) {
+      dispatch(setNotification(error));
+      setLoading(false);
+    }
   });
 
   const closeModal = () => {
@@ -66,48 +84,37 @@ const Login = ({ isOpen, close }: LoginPropsType) => {
               </div>
               <div>
                 <form onSubmit={onSubmit}>
-                  <div className={styles.row}>
-                    <label htmlFor="email">Mail</label>
-                    <Tooltip
-                      PopperProps={{ container: tooltipContainer.current }}
-                      title="Podaj poprawny e-mail."
-                      open={!!errors.email}
-                      placement="left"
-                      arrow
-                    >
-                      <input
-                        ref={register({
-                          required: true,
-                          pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                        })}
-                        type="text"
-                        name="email"
-                        id="email"
-                        placeholder="Adres e-mail"
-                      />
-                    </Tooltip>
-                  </div>
-                  <div className={styles.row}>
-                    <label htmlFor="password">Hasło</label>
-                    <Tooltip
-                      PopperProps={{ container: tooltipContainer.current }}
-                      title="Hasło min. 6 znaków."
-                      open={!!errors.password}
-                      placement="left"
-                      arrow
-                    >
-                      <input
-                        ref={register({ required: true, minLength: 6 })}
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Hasło"
-                      />
-                    </Tooltip>
-                  </div>
+                  <LoginFormInput
+                    label="Mail"
+                    title="Podaj poprawny e-mail."
+                    placeholder="Adres e-mail"
+                    name="email"
+                    tooltipContainer={tooltipContainer.current}
+                    errors={errors.email}
+                    register={() =>
+                      register({
+                        required: true,
+                        pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      })
+                    }
+                  />
+                  <LoginFormInput
+                    label="Hasło"
+                    title="Hasło min. 6 znaków."
+                    placeholder="Hasło"
+                    name="password"
+                    type="password"
+                    tooltipContainer={tooltipContainer.current}
+                    errors={errors.password}
+                    register={() => register({ required: true, minLength: 6 })}
+                  />
                   <div>
-                    <button className={styles.button} type="submit">
-                      Wyślij
+                    <button
+                      disabled={isLoading}
+                      className={styles.button}
+                      type="submit"
+                    >
+                      {isLoading ? <Spinner /> : 'Wyślij'}
                     </button>
                   </div>
                 </form>

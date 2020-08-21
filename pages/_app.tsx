@@ -14,6 +14,7 @@ import {
   addServerStreamer,
 } from 'store/slices/appData';
 import { setPoorchatUser } from 'store/slices/appPoorchat';
+import { appFirebaseAuthStateChanged } from 'store/slices/appFirebase';
 import { RootState } from 'store/rootReducer';
 import { wrapper } from 'store/store';
 import Sidebar from 'components/Sidebar/Sidebar';
@@ -72,6 +73,8 @@ class MyApp extends App<AppInitialProps> {
   };
 
   componentDidMount() {
+    // @ts-expect-error: Need to pass setAppData to this.props type
+    this.props.firebaseAuthStateChanged();
     const localUserData = localStorage.getItem('jarchiwumData');
     if (localUserData) {
       const userData = JSON.parse(localUserData);
@@ -106,6 +109,7 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     setAppData: (appData: any) => dispatch(setAppData(appData)),
+    firebaseAuthStateChanged: () => dispatch(appFirebaseAuthStateChanged()),
   };
 };
 

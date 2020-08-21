@@ -32,21 +32,14 @@
   border-bottom: 2px solid #f00;
 }
 
-.row {
-  margin: 10px 0;
-}
-
-.row label {
-  display: inline-block;
-  margin: 10px 0;
-}
-
 .button {
+  position: relative;
   width: 100%;
   font-family: 'Ubuntu', sans-serif;
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 500;
+  height: 37px;
   border: 0;
   color: #fff;
   cursor: pointer;
@@ -57,6 +50,11 @@
 }
 
 .button:hover {
+  background-color: rgb(189, 27, 27);
+}
+
+.button:disabled {
+  cursor: initial;
   background-color: rgb(189, 27, 27);
 }
 

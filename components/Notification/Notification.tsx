@@ -14,7 +14,7 @@ const Notification = () => {
     enter: { bottom: 150 },
     leave: { bottom: -100 },
   });
-  
+
   useEffect(() => {
     let timeOut: number;
     if (notification.isOpen) {
@@ -25,7 +25,7 @@ const Notification = () => {
     return () => {
       clearTimeout(timeOut);
     };
-  }, [notification.message]);
+  });
 
   return (
     <>

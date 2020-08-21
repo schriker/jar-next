@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTransition, animated } from 'react-spring';
 import styles from 'components/Notes/Note.module.css';
 import { NoteType } from 'types/notes';
@@ -13,6 +13,7 @@ type NotePropsType = {
 
 const Note = ({ note, emoticons }: NotePropsType) => {
   const [refMap] = useState(() => new WeakMap());
+  const tooltipContainer = useRef<HTMLDivElement | null>(null);
   const [items, setItems] = useState<NoteType[]>([note]);
   const transition = useTransition(items, null, {
     from: { opacity: 0, height: 0 },
@@ -34,6 +35,7 @@ const Note = ({ note, emoticons }: NotePropsType) => {
         ({ item, props }) =>
           item && (
             <animated.div
+              ref={tooltipContainer}
               className={styles.container}
               style={props}
               key={note.uuid}
@@ -46,6 +48,7 @@ const Note = ({ note, emoticons }: NotePropsType) => {
                 <span className={styles.message}>
                   {messageParser(note.body, emoticons).map((part, index) => (
                     <ChatMessageComponent
+                      tooltipContainer={tooltipContainer.current}
                       key={`${note.uuid}-${index}`}
                       part={part}
                     />
