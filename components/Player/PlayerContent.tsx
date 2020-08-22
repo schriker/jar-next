@@ -86,15 +86,18 @@ const PlayerContent = ({
         </div>
         {video.keywords && (
           <div className={styles.keywords}>
-            {video.keywords?.split(' ').map((keyword, index) => (
-              <Link
-                key={index}
-                href={`/[streamer]?search=${keyword}`}
-                as={`/wonziu?search=${keyword}`}
-              >
-                <a className={styles.keyword}>{keyword}</a>
-              </Link>
-            ))}
+            {video.keywords
+              .split(',')
+              .slice(0, 8)
+              .map((keyword, index) => (
+                <Link
+                  key={index}
+                  href={`/[streamer]?search=${keyword.trim()}`}
+                  as={`/wonziu?search=${keyword.trim()}`}
+                >
+                  <a className={styles.keyword}>{keyword.trim()}</a>
+                </Link>
+              ))}
           </div>
         )}
       </div>

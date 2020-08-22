@@ -5,10 +5,12 @@ import styles from 'components/Sidebar/Sidebar.module.css';
 import { useSpring, animated } from 'react-spring';
 import SidebarItem from 'components/Sidebar/SidebarItem';
 import Shadow from 'components/Shadow/Shadow';
-import { Streamer } from 'types/streamer';
 import { fetchStreamersData } from 'helpers/api';
 import { useTypedSelector } from 'store/rootReducer';
 import AddStreamer from 'components/AddStreamer/AddStreamer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import SimpleBar from 'simplebar-react';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -18,28 +20,35 @@ const Sidebar = () => {
   });
 
   const {
-    server: { streamersData: serverStreamers },
+    server,
     client,
   } = useTypedSelector((state) => state.appData);
 
-  const [streamers, setStreamers] = useState<Streamer[]>([]);
   const [isfetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     const fetchClientStreamers = async () => {
-      setIsFetching(true);
-      const response = await fetchStreamersData(client.streamers);
-      if (response.length < client.streamers.length) {
-        dispatch(removeClientStreamer(client.streamers[client.streamers.length - 1]))
+      try {
+        setIsFetching(true);
+        const response = await fetchStreamersData(client.streamers);
+        if (response.length < client.streamers.length) {
+          dispatch(
+            removeClientStreamer(client.streamers[client.streamers.length - 1])
+          );
+        }
+        dispatch(setClientStreamers(response));
+        setIsFetching(false);
+      } catch (error) {
+        dispatch(
+          removeClientStreamer(client.streamers[client.streamers.length - 1])
+        );
+        setIsFetching(false);
       }
-      setStreamers(response);
-      dispatch(setClientStreamers(response));
-      setIsFetching(false);
     };
-    if (client.streamers.length > streamers.length) {
+    if (client.streamers.length) {
       fetchClientStreamers();
     } else {
-      setStreamers(client.streamersData);
+      dispatch(setClientStreamers([]));
     }
   }, [client.streamers]);
   return (
@@ -51,27 +60,35 @@ const Sidebar = () => {
         onMouseOver={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        {serverStreamers.map((streamer) => {
-          return (
-            <SidebarItem
-              isOpen={isOpen}
-              isServerSide
-              key={streamer.id}
-              streamer={streamer}
-            />
-          );
-        })}
-        {streamers.map((streamer) => {
-          return (
-            <SidebarItem
-              isOpen={isOpen}
-              key={streamer.id}
-              streamer={streamer}
-            />
-          );
-        })}
-        {isfetching && <SidebarItem isOpen={isOpen} />}
+        <SimpleBar
+          style={{ height: '100%', overflowX: 'hidden' }}
+          autoHide={true}
+        >
+          {server.streamersData.map((streamer) => {
+            return (
+              <SidebarItem
+                isOpen={isOpen}
+                isServerSide
+                key={streamer.id}
+                streamer={streamer}
+              />
+            );
+          })}
+          {client.streamersData.map((streamer) => {
+            return (
+              <SidebarItem
+                isOpen={isOpen}
+                key={streamer.id}
+                streamer={streamer}
+              />
+            );
+          })}
+          {isfetching && <SidebarItem isOpen={isOpen} />}
+        </SimpleBar>
         <AddStreamer isOpen={isOpen} />
+        <a className={styles.faq} href="#" target="_blank">
+          <FontAwesomeIcon icon={faQuestion} />
+        </a>
       </animated.div>
     </>
   );

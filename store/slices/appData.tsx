@@ -89,7 +89,8 @@ const appDataSlice = createSlice({
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      state.server = action.payload.appData.server;
+      state.server.streamers = action.payload.appData.server.streamers;
+      state.server.streamersData = action.payload.appData.server.streamersData;
     },
   },
 });

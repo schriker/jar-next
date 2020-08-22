@@ -1,13 +1,14 @@
 import rootReducer, { RootState } from 'store/rootReducer';
 import { ThunkAction } from 'redux-thunk';
-import { configureStore, getDefaultMiddleware, Action, Middleware } from '@reduxjs/toolkit';
+import { configureStore, Action } from '@reduxjs/toolkit';
 import { syncDataMiddleware } from 'store/middlewares/syncDataMiddleware';
 import { createWrapper } from 'next-redux-wrapper';
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: true,
-  middleware: [...getDefaultMiddleware(), syncDataMiddleware],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(syncDataMiddleware),
 });
 
 function initStore() {

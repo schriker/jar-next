@@ -1,4 +1,9 @@
-import { Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
+import {
+  Middleware,
+  Action,
+  ThunkAction,
+  ThunkDispatch,
+} from '@reduxjs/toolkit';
 import getObjectByString from 'helpers/getObjectByString';
 import { RootState } from 'store/rootReducer';
 import { appFirebaseSaveData } from 'store/slices/appFirebase';
@@ -46,7 +51,11 @@ const persistStore = [
   },
 ];
 
-export const syncDataMiddleware: Middleware = ({ getState, dispatch }: MiddlewareAPI<any>) => {
+export const syncDataMiddleware: Middleware<
+  {},
+  RootState,
+  ThunkDispatch<RootState, unknown, Action>
+> = ({ getState, dispatch }) => {
   return (next) => (action) => {
     const result = next(action);
     const state: RootState = getState();

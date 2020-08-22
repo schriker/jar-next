@@ -52,7 +52,7 @@ const useChatIconsData = () => {
         setBadges(badges.data);
         setUsersWithMode(usersWithMods.data);
       } catch (error) {
-        console.log(error);
+        console.log('Icons:', error);
       }
     };
     fetchAllIcons();

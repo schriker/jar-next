@@ -11,3 +11,26 @@
   z-index: 998;
   width: 50px;
 }
+
+.faq {
+  flex: 0 0 auto;
+  margin: auto 0 10px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #bbb;
+  background-color: #2c2c2c;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  transition: all ease 0.2s;
+}
+
+.faq:hover {
+  color: #fff;
+  background-color: #f00;
+}
+
+.faq svg {
+  width: 10px;
+}

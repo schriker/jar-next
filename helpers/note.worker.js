@@ -47,5 +47,5 @@ onmessage = ({ data }) => {
 }
 
 onerror = (error) => {
-  console.log(error)
+  console.log('Note worker:', error)
 }

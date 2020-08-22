@@ -84,7 +84,7 @@ const useChatWorker = <T extends unknown>({
         }
       }
     } catch (err) {
-      console.log(err);
+      console.log('useChatWorker:', err);
     }
   };
 
