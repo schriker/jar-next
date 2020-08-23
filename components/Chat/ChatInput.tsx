@@ -29,7 +29,9 @@ const ChatInput = ({ video, emoticons }: ChatInputPropsType) => {
 
   const onAuth = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    Cookies.set('callback_redirect', router.asPath);
+    if (router.asPath.includes('wonziu')) {
+      Cookies.set('callback_redirect', router.asPath);
+    }
     window.location.href = poorchatAuthLink;
   };
 
@@ -73,7 +75,7 @@ const ChatInput = ({ video, emoticons }: ChatInputPropsType) => {
       if (lastWord.length >= 2) {
         const regex = new RegExp(`^${lastWord.toLowerCase()}`);
         const matchedEmoticons = emoticons.filter((el) =>
-        regex.test(el.name.toLowerCase())
+          regex.test(el.name.toLowerCase())
         );
         if (matchedEmoticons.length > 0) {
           const words = value.split(' ');
@@ -110,7 +112,12 @@ const ChatInput = ({ video, emoticons }: ChatInputPropsType) => {
           />
         </div>
         <div className={styles.bottom}>
-          <Tooltip PopperProps={{ container: ref.current }} title="Ustawienia" placement="top" arrow>
+          <Tooltip
+            PopperProps={{ container: ref.current }}
+            title="Ustawienia"
+            placement="top"
+            arrow
+          >
             <div
               onClick={() => dispatch(toggleOptions())}
               className={styles.icon}

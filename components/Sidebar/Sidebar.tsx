@@ -75,13 +75,15 @@ const Sidebar = () => {
             );
           })}
           {client.streamersData.map((streamer) => {
-            return (
-              <SidebarItem
-                isOpen={isOpen}
-                key={streamer.id}
-                streamer={streamer}
-              />
-            );
+            if (!server.streamers.includes(streamer.login)) {
+              return (
+                <SidebarItem
+                  isOpen={isOpen}
+                  key={streamer.id}
+                  streamer={streamer}
+                />
+              );
+            }
           })}
           {isfetching && <SidebarItem isOpen={isOpen} />}
         </SimpleBar>

@@ -6,6 +6,7 @@ type ControllButtonPropsType = {
   children: React.ReactNode;
   onClick: () => void;
   tooltip: string;
+  tooltipContainer: HTMLDivElement | null;
   red?: boolean;
 };
 
@@ -14,16 +15,15 @@ const ControllButton = ({
   onClick,
   red,
   tooltip,
+  tooltipContainer,
 }: ControllButtonPropsType) => {
-  const ref = useRef<HTMLDivElement | null>(null);
-
   return (
-    <div ref={ref}>
+    <div>
       <Tooltip
         title={tooltip}
         placement="top"
         arrow
-        PopperProps={{ container: ref.current }}
+        PopperProps={{ container: tooltipContainer }}
       >
         <div
           onClick={onClick}

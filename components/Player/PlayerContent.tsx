@@ -31,22 +31,24 @@ type InfoBlockPropsType = {
   tooltip: string;
   content: string;
   withSpacer?: boolean;
+  tooltipContainer: HTMLDivElement | null;
 };
 
-const InfoBlock = ({ tooltip, content, withSpacer }: InfoBlockPropsType) => {
-  const ref = useRef<HTMLDivElement | null>(null);
-
+const InfoBlock = ({
+  tooltip,
+  content,
+  withSpacer,
+  tooltipContainer,
+}: InfoBlockPropsType) => {
   return (
     <>
       <Tooltip
         title={tooltip}
         placement="top"
         arrow
-        PopperProps={{ container: ref.current }}
+        PopperProps={{ container: tooltipContainer }}
       >
-        <div ref={ref} className={styles.infoBlock}>
-          {content}
-        </div>
+        <div className={styles.infoBlock}>{content}</div>
       </Tooltip>
       {withSpacer && <div className={styles.spacer}></div>}
     </>
@@ -59,6 +61,7 @@ const PlayerContent = ({
   fullscreen,
 }: PlayerContentPropsType) => {
   const dispatch = useDispatch();
+  const ref = useRef<HTMLDivElement | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
   const { isWatched, isBookmarked, addToWatched, addToBookmark } = useWatched(
     video.id
@@ -73,7 +76,7 @@ const PlayerContent = ({
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div ref={ref} className={styles.wrapper}>
       <div className={styles.profileImage}>
         <img src={streamer.profileImage} alt="" />
       </div>
@@ -104,17 +107,20 @@ const PlayerContent = ({
       <div className={styles.leftPanel}>
         <div className={styles.info}>
           <InfoBlock
+            tooltipContainer={ref.current}
             content={parseDuration(video.duration)}
             tooltip="Czas trwania"
             withSpacer
           />
           <InfoBlock
+            tooltipContainer={ref.current}
             content={video.views.toString()}
             tooltip="Wyświetleń"
             withSpacer
           />
           {video.highLights && (
             <ControllButton
+              tooltipContainer={ref.current}
               onClick={() => dispatch(showHighlights(!player.showHighlights))}
               tooltip="Najciekawsze momenty"
               red={player.showHighlights}
@@ -127,6 +133,7 @@ const PlayerContent = ({
           )}
           {streamer.login === 'wonziu' && (
             <ControllButton
+              tooltipContainer={ref.current}
               onClick={() => addToWatched()}
               tooltip="Obejrzany"
               red={isWatched}
@@ -138,6 +145,7 @@ const PlayerContent = ({
           )}
           {streamer.login === 'wonziu' && (
             <ControllButton
+              tooltipContainer={ref.current}
               onClick={() => addToBookmark()}
               tooltip="Ulubiony"
               red={isBookmarked}
@@ -148,6 +156,7 @@ const PlayerContent = ({
             </ControllButton>
           )}
           <ControllButton
+            tooltipContainer={ref.current}
             red={fullscreen.active}
             onClick={handleFullscreen}
             tooltip="Tryb kinowy"

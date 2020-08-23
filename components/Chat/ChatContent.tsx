@@ -69,8 +69,9 @@ const ChatContent = ({
 
   return (
     <>
-      <div className={styles.adjustment}>
+      <div ref={ref} className={styles.adjustment}>
         <ControllButton
+          tooltipContainer={ref.current}
           onClick={() => chatAdjustmentHandler(false)}
           tooltip="Cofnij"
         >
@@ -80,6 +81,7 @@ const ChatContent = ({
         </ControllButton>
         <span>{chatAdjustment}s</span>
         <ControllButton
+          tooltipContainer={ref.current}
           onClick={() => chatAdjustmentHandler(true)}
           tooltip="Do przodu"
         >
@@ -102,15 +104,16 @@ const ChatContent = ({
           </div>
         </div>
       ) : (
-        <div
-          onClick={() => dispatch(setSelectedAuthor(''))}
-          className={styles.chatWrapper}
-          ref={ref}
-        >
+        // <div
+        //   onClick={() => dispatch(setSelectedAuthor(''))}
+        //   className={styles.chatWrapper}
+        // >
+        <>
           <SimpleBar
             scrollableNodeProps={{ ref: bottom }}
             style={{ height: '100%', overflowX: 'hidden' }}
             autoHide={true}
+            className={styles.chatWrapper}
           >
             <div className={styles.chatContent}>
               {messages.map((message) =>
@@ -135,7 +138,8 @@ const ChatContent = ({
             </div>
           </SimpleBar>
           <ChatToBottom refElement={bottom.current} messages={messages} />
-        </div>
+        </>
+        // </div>
       )}
     </>
   );

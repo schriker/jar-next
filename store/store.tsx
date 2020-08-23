@@ -4,15 +4,13 @@ import { configureStore, Action } from '@reduxjs/toolkit';
 import { syncDataMiddleware } from 'store/middlewares/syncDataMiddleware';
 import { createWrapper } from 'next-redux-wrapper';
 
-const store = configureStore({
-  reducer: rootReducer,
-  devTools: true,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(syncDataMiddleware),
-});
-
 function initStore() {
-  return store;
+  return configureStore({
+    reducer: rootReducer,
+    devTools: true,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(syncDataMiddleware),
+  });
 }
 
 export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
