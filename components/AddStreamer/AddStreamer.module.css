@@ -24,6 +24,8 @@
 }
 
 .wrapper input {
+  /* flex: 1 1 auto; */
+  /* min-width: 0; */
   margin: 0 15px;
 }
 

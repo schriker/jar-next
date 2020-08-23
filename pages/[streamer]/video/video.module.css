@@ -4,3 +4,17 @@
   grid-template-columns: 1fr 365px;
   background-color: #141414;
 }
+
+@media (max-width: 980px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    grid-template-rows: 55vh 45vh;
+  }
+}
+
+@media (orientation: landscape) {
+  .wrapper {
+    grid-template-columns: 1fr 365px;
+    grid-template-rows: auto;
+  }
+}

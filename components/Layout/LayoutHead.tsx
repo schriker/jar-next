@@ -21,7 +21,7 @@ const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {
         <meta property="og:description" content={ogDescription} />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1"
+          content="width=device-width, initial-scale=1, viewport-fit=auto"
         ></meta>
         <link
           href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap"

@@ -8,3 +8,15 @@
   position: relative;
   overflow: hidden;
 }
+
+@media (max-width: 980px) {
+  .wrapper {
+    grid-template-rows: calc(55vh - 50px) 50px;
+  }
+}
+
+@media (orientation: landscape) {
+  .wrapper {
+    grid-template-rows: calc(100vh - 100px) 100px;
+  }
+}

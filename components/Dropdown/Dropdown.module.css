@@ -9,7 +9,7 @@
     z-index: 999;
     position: fixed;
     top: 60px;
-    left: calc(50% + 50px);
-    transform: translate(calc(-50% - 25px), 0);
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 }

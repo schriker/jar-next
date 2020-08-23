@@ -7,3 +7,14 @@
   flex-direction: column;
   padding: 5px 15px;
 }
+
+.wrapper {
+  width: 100%;
+  height: auto;
+}
+
+@media (orientation: landscape) {
+  .wrapper {
+    height: 100vh;
+  }
+}

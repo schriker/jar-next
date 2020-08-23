@@ -11,7 +11,11 @@ import {
 } from 'helpers/firebase';
 import { FirebaseUserCredentials } from 'types/firebase';
 import { setChatOptions } from 'store/slices/appChat';
-import { setAppData, appDataInitialState } from 'store/slices/appData';
+import {
+  setAppData,
+  appDataInitialState,
+  addStreamer,
+} from 'store/slices/appData';
 
 type AppFirebaseStateType = {
   uid: string | null;
@@ -87,13 +91,15 @@ export const appFirebaseAuthStateChanged = (): AppThunk => (
             streamers: userData.streamers
               ? userData.streamers.filter(
                   (streamer: string) =>
-                    !appData.server.streamers.includes(streamer)
+                    !appData.server.streamers.includes(streamer) ||
+                    !appData.client.streamers.includes(streamer)
                 )
               : [],
             watched: userData.watched || [],
             bookmarksId: userData.bookmarksId || [],
           };
           dispatch(setAppData(payload));
+          dispatch(addStreamer(payload.streamers));
           if (userData.appChat) {
             dispatch(
               setChatOptions({
@@ -118,12 +124,16 @@ export const appFirebaseAuthStateChanged = (): AppThunk => (
         const payload = {
           ...userData,
           streamers: userData.streamers.filter(
-            (streamer: string) => !appData.server.streamers.includes(streamer)
+            (streamer: string) =>
+              !appData.server.streamers.includes(streamer) ||
+              !appData.client.streamers.includes(streamer)
           ),
         };
         dispatch(setAppData(payload));
+        dispatch(addStreamer(payload.streamers));
       } else {
         dispatch(setAppData(appDataInitialState.client));
+        dispatch(addStreamer(appDataInitialState.client.streamers));
       }
       dispatch(logOutUser());
     }

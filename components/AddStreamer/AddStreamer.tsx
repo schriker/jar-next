@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from 'store/rootReducer';
-import { addClientStreamer, removeClientStreamer } from 'store/slices/appData';
+import { addStreamer, setIsFetching } from 'store/slices/appData';
 import { animated, useSpring } from 'react-spring';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Tooltip from '@material-ui/core/Tooltip';
 import styles from 'components/AddStreamer/AddStreamer.module.css';
 
 type AddStreamerPropsType = {
@@ -30,9 +29,8 @@ const AddStreamer = ({ isOpen }: AddStreamerPropsType) => {
       !state.client.streamers.includes(value.toLowerCase()) &&
       !state.server.streamers.includes(value.toLowerCase())
     ) {
-      dispatch(addClientStreamer(value.toLowerCase()));
-    } else if (value.length) {
-      dispatch(removeClientStreamer(value.toLowerCase()));
+      dispatch(setIsFetching(true));
+      dispatch(addStreamer([...state.client.streamers, value.toLowerCase()]));
     }
     setValue('');
   };
@@ -44,15 +42,14 @@ const AddStreamer = ({ isOpen }: AddStreamerPropsType) => {
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </button>
-      <Tooltip title="Wpisz nazwę kanału, który chcesz dodać lub usunąć." arrow>
-        <animated.input
-          style={slideIn}
-          type="text"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-          placeholder="Dodaj lub usuń kanał"
-        />
-      </Tooltip>
+      <animated.input
+        style={slideIn}
+        disabled={state.client.isFetching}
+        type="text"
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+        placeholder="Dodaj kanał"
+      />
     </form>
   );
 };

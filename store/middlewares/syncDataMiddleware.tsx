@@ -49,6 +49,11 @@ const persistStore = [
     key: 'jarchiwumData',
     stateName: 'appData.client',
   },
+  {
+    action: 'appData/setIsFetching',
+    key: 'jarchiwumData',
+    stateName: 'appData.client',
+  },
 ];
 
 export const syncDataMiddleware: Middleware<

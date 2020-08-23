@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import useViewWidth from 'hooks/useViewWidth';
-import { setClientStreamers, removeClientStreamer } from 'store/slices/appData';
 import styles from 'components/Sidebar/Sidebar.module.css';
 import { useSpring, animated } from 'react-spring';
 import SidebarItem from 'components/Sidebar/SidebarItem';
 import Shadow from 'components/Shadow/Shadow';
-import { fetchStreamersData } from 'helpers/api';
 import { useTypedSelector } from 'store/rootReducer';
 import AddStreamer from 'components/AddStreamer/AddStreamer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from 'simplebar-react';
+import Spinner from 'components/Spinner/Spinner';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -24,33 +23,6 @@ const Sidebar = () => {
 
   const { server, client } = useTypedSelector((state) => state.appData);
 
-  const [isfetching, setIsFetching] = useState(false);
-
-  useEffect(() => {
-    const fetchClientStreamers = async () => {
-      try {
-        setIsFetching(true);
-        const response = await fetchStreamersData(client.streamers);
-        if (response.length < client.streamers.length) {
-          dispatch(
-            removeClientStreamer(client.streamers[client.streamers.length - 1])
-          );
-        }
-        dispatch(setClientStreamers(response));
-        setIsFetching(false);
-      } catch (error) {
-        dispatch(
-          removeClientStreamer(client.streamers[client.streamers.length - 1])
-        );
-        setIsFetching(false);
-      }
-    };
-    if (client.streamers.length) {
-      fetchClientStreamers();
-    } else {
-      dispatch(setClientStreamers([]));
-    }
-  }, [client.streamers]);
   return (
     <>
       <Shadow isOpen={isOpen} />
@@ -85,7 +57,8 @@ const Sidebar = () => {
               );
             }
           })}
-          {isfetching && <SidebarItem isOpen={isOpen} />}
+          {client.isFetching && <SidebarItem isOpen={isOpen} />}
+          {/* {client.isFetching && <Spinner />} */}
         </SimpleBar>
         <AddStreamer isOpen={isOpen} />
         <a className={styles.faq} href="#" target="_blank">

@@ -1,6 +1,8 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Streamer } from 'types/streamer';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppThunk } from 'store/store';
+import { fetchStreamersData } from 'helpers/api';
 
 type AppDataStateType = {
   server: {
@@ -9,6 +11,7 @@ type AppDataStateType = {
     hideWatched: boolean;
   };
   client: {
+    isFetching: boolean;
     streamers: string[];
     streamersData: Streamer[];
     watched: string[];
@@ -30,6 +33,7 @@ export const appDataInitialState: AppDataStateType = {
     hideWatched: false,
   },
   client: {
+    isFetching: false,
     streamers: [],
     streamersData: [],
     watched: [],
@@ -53,8 +57,8 @@ const appDataSlice = createSlice({
     setClientStreamers(state, { payload }: PayloadAction<Streamer[]>) {
       state.client.streamersData = payload;
     },
-    addClientStreamer(state, { payload }: PayloadAction<string>) {
-      state.client.streamers.push(payload);
+    addClientStreamer(state, { payload }: PayloadAction<string[]>) {
+      state.client.streamers = payload;
     },
     removeClientStreamer(state, { payload }: PayloadAction<string>) {
       state.client.streamers = state.client.streamers.filter(
@@ -80,6 +84,9 @@ const appDataSlice = createSlice({
     },
     addBookmarked(state, { payload }: PayloadAction<string>) {
       state.client.bookmarksId.push(payload);
+    },
+    setIsFetching(state, { payload }: PayloadAction<boolean>) {
+      state.client.isFetching = payload;
     },
     removeBookmarked(state, { payload }: PayloadAction<string>) {
       state.client.bookmarksId = state.client.bookmarksId.filter(
@@ -107,6 +114,20 @@ export const {
   removeWatched,
   addBookmarked,
   removeBookmarked,
+  setIsFetching,
 } = appDataSlice.actions;
 
 export default appDataSlice.reducer;
+
+export const addStreamer = (streamer: string[]): AppThunk => async (dispatch) => {
+  try {
+    if (streamer.length) {
+      const response = await fetchStreamersData(streamer);
+      dispatch(setClientStreamers(response));
+      dispatch(addClientStreamer(streamer));
+      dispatch(setIsFetching(false));
+    }
+  } catch (error) {
+    dispatch(setIsFetching(false));
+  }
+}
