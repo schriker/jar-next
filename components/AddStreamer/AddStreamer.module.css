@@ -35,3 +35,9 @@
 .addIcon:hover {
   background-color: rgb(189, 27, 27);
 }
+
+@media (max-width: 1290px) {
+  .wrapper {
+    width: 280px;
+  }
+}

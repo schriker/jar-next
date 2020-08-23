@@ -2,9 +2,16 @@
   z-index: 998;
   position: fixed;
   left: 50%;
+  white-space: nowrap;
   border-radius: 3px;
   padding: 25px 40px 25px 40px;
   transform: translate(-50%, 0);
   background-color: #1c1c1c;
   border-left: 3px solid #f00;
+}
+
+@media (max-width: 720px) {
+  .notification {
+    padding: 25px 20px;
+  }
 }

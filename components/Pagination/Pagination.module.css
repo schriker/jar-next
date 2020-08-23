@@ -7,7 +7,6 @@
 .wrapper ul {
   display: flex;
   list-style: none;
-
 }
 
 .wrapper a {
@@ -20,4 +19,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 1290px) {
+  .wrapper {
+    margin: 0 25px;
+  }
+}
+
+@media (max-width: 425px) {
+  .wrapper ul {
+    display: flex;
+    justify-content: center;
+  }
 }

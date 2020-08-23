@@ -37,6 +37,9 @@ const ItemAnchor = styled.a<ItemAnchorProps>`
     cursor: pointer;
     background-color: #232323;
   }
+  @media (max-width: 1290px) {
+    width: 280px;
+  }
 `;
 const StatusIcon = styled.div<StatusIconProps>`
   position: absolute;
@@ -93,10 +96,10 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
         </div>
         <animated.div style={slideIn} className={styles.content}>
           <div className={styles.name}>
-            <div>{streamer.displayName}</div>
+            <div>{trimString(streamer.displayName, 15)}</div>
             {streamer.game && (
               <div className={styles.gameName}>
-                {trimString(streamer.game.name, 20)}
+                {trimString(streamer.game.name, 15)}
               </div>
             )}
           </div>

@@ -82,7 +82,7 @@ const PlayerContent = ({
       </div>
       <div>
         <div className={styles.title}>
-          {trimString(video.title, 65)}
+          <span title={video.title}>{trimString(video.title, 55)}</span>
           <div className={styles.date}>
             {moment(video.started).format('DD-MM-YYYY • HH:mm:ss')}
           </div>

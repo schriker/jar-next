@@ -40,7 +40,7 @@ const ChatMessageIcon = ({
   return (
     <Tooltip
       title={tip}
-      placement="right"
+      placement="top"
       arrow
       PopperProps={{ container: tooltipContainer }}
     >

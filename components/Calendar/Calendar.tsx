@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Dropdown from 'components/Dropdown/Dropdown';
 import { fetchDates } from 'helpers/api';
 import styles from 'components/Calendar/Calendar.module.css';
+import useViewWidth from 'hooks/useViewWidth';
 import { DayPickerSingleDateController } from 'react-dates';
 import moment from 'moment';
 
@@ -16,6 +17,7 @@ moment.locale('pl');
 const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
   const [date, setDate] = useState<moment.Moment>(moment());
   const [focused, setFocused] = useState<boolean>(true);
+  const viewWidth = useViewWidth();
 
   const [dates, setDates] = useState<{ [key: string]: number }>({});
   const [datesSet, setDatesSet] = useState<Set<string> | null>(null);
@@ -71,8 +73,10 @@ const Calendar = ({ isOpen, setCalendarOpen }: CalenderPropsType) => {
           onDateChange={onDateChange}
           focused={focused}
           transitionDuration={0}
-          numberOfMonths={2}
-          initialVisibleMonth={() => moment(date).subtract(1, 'months')}
+          numberOfMonths={viewWidth < 800 ? 1 : 2}
+          initialVisibleMonth={() =>
+            viewWidth < 800 ? moment(date) : moment(date).subtract(1, 'months')
+          }
           isDayBlocked={isDayBlockedHandler}
           onOutsideClick={() => setCalendarOpen(false)}
           onFocusChange={() => setFocused(true)}

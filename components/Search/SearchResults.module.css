@@ -88,3 +88,9 @@
 .more:hover {
   color: #fff !important;
 }
+
+@media (max-width: 470px) {
+  .wrapper {
+    display: none;
+  }
+}

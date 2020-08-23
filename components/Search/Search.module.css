@@ -29,3 +29,19 @@
 .searchButton span {
   width: 15px;
 }
+
+@media (max-width: 1115px) {
+  .searchWrapper {
+    width: 100%;
+    margin: 0 10px;
+  }
+  .searchForm {
+    width: 100%;
+  }
+}
+
+@media (max-width: 990px) {
+  .searchWrapper {
+    margin: 10px 0;
+  }
+}

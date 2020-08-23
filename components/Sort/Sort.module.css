@@ -23,9 +23,9 @@
   display: none;
 }
 
-.option input:checked ~ label::before{
+.option input:checked ~ label::before {
   background-color: #f00;
-  border: 2px solid #f00; 
+  border: 2px solid #f00;
 }
 
 .option label::before {
@@ -36,7 +36,7 @@
   border: 2px solid #373737;
   border-radius: 3px;
   margin: 0 10px 0 0;
-  transition: all ease .2s;
+  transition: all ease 0.2s;
 }
 
 .option label {
@@ -48,5 +48,12 @@
 }
 
 .option label:hover::before {
-  border: 2px solid #f00; 
+  border: 2px solid #f00;
+}
+
+@media (max-width: 990px) {
+  .sort {
+    position: fixed;
+    transform: translate(-50%, 0);
+  }
 }

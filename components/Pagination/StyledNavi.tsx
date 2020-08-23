@@ -19,6 +19,9 @@ const StyledNavi = styled.li<NaviPropsType>`
   a {
     padding: ${(props) => props.fixedWidth ? '0' : '0 10px'};
   }
+  @media (max-width: 425px) {
+    margin-right: 5px;
+  }
 `;
 
 export default StyledNavi;

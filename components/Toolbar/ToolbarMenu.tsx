@@ -42,7 +42,7 @@ const ToolbarMenu = () => {
   ];
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <ul className={styles.toolbarMenu}>
         {links.map((link, index) => {
           return (

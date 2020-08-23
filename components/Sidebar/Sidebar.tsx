@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import useViewWidth from 'hooks/useViewWidth';
 import { setClientStreamers, removeClientStreamer } from 'store/slices/appData';
 import styles from 'components/Sidebar/Sidebar.module.css';
 import { useSpring, animated } from 'react-spring';
@@ -15,14 +16,13 @@ import SimpleBar from 'simplebar-react';
 const Sidebar = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const viewWitdh = useViewWidth();
+
   const slideIn = useSpring({
-    width: isOpen ? 360 : 50,
+    width: isOpen && viewWitdh > 1290 ? 360 : isOpen ? 280 : 50,
   });
 
-  const {
-    server,
-    client,
-  } = useTypedSelector((state) => state.appData);
+  const { server, client } = useTypedSelector((state) => state.appData);
 
   const [isfetching, setIsFetching] = useState(false);
 

@@ -12,3 +12,34 @@
   margin-left: auto;
   display: flex;
 }
+
+
+@media (max-width: 1290px) {
+  .toolbar {
+    margin: 0 25px 30px 25px;
+  }
+}
+
+@media (max-width: 1115px) {
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
+  .right {
+    flex: 1 0 auto;
+    margin: 0;
+  }
+}
+
+@media (max-width: 990px) {
+  .toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+
+  }
+  .right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

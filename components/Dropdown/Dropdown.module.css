@@ -3,3 +3,13 @@
   z-index: 997;
   top: 18px;
 }
+
+@media (max-width: 990px) {
+  .wrapper {
+    z-index: 999;
+    position: fixed;
+    top: 60px;
+    left: calc(50% + 50px);
+    transform: translate(calc(-50% - 25px), 0);
+  }
+}

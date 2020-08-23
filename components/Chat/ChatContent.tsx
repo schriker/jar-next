@@ -104,12 +104,9 @@ const ChatContent = ({
           </div>
         </div>
       ) : (
-        // <div
-        //   onClick={() => dispatch(setSelectedAuthor(''))}
-        //   className={styles.chatWrapper}
-        // >
         <>
           <SimpleBar
+            onClick={() => dispatch(setSelectedAuthor(''))}
             scrollableNodeProps={{ ref: bottom }}
             style={{ height: '100%', overflowX: 'hidden' }}
             autoHide={true}

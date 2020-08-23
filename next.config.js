@@ -28,6 +28,11 @@ module.exports = {
         destination: '/:streamer',
         permanent: true,
       },
+      {
+        source: '/:streamer/:video',
+        destination: '/:streamer/video/:video',
+        permanent: true,
+      },
     ];
   },
 };
