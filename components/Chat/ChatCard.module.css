@@ -9,7 +9,8 @@
   overflow: hidden;
 }
 
-.wrapper img {
+.wrapper img,
+.wrapper video {
   display: block;
   width: auto;
   height: auto;

@@ -44,7 +44,7 @@ const ChatOptions = () => {
               </div>
               <div className={styles.row}>
                 <span onClick={() => dispatch(toggleImage())}>
-                  Podgląd onośników
+                  Podgląd odnośników
                 </span>
                 <SwitchButton
                   checked={state.appChat.showImg}
