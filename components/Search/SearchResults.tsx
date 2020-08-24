@@ -36,7 +36,7 @@ const SearchResults = ({
         return (
           <Link
             key={video.id}
-            href="/wonziu/video/[video]"
+            href="/[streamer]/video/[video]"
             as={`/wonziu/video/${video.id}`}
           >
             <a>
