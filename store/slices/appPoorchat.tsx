@@ -48,6 +48,8 @@ export const { setPoorchatUser, removePoorchatUser } = appPoorchatSlice.actions;
 export default appPoorchatSlice.reducer;
 
 export const logoutPoorchatUser = (): AppThunk => async (dispatch) => {
-  Cookies.remove('payload_cookie');
+  Cookies.remove('payload_cookie', {
+    domain: '.jarchiwum.pl'
+  });
   dispatch(removePoorchatUser());
 };

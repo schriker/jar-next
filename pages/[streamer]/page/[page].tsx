@@ -27,8 +27,8 @@ const Page: NextPage<PageProps> = ({
 }) => {
   return !videos.length ? (
     <Layout
-      title={`Archiwum Strumieni - ${streamer.displayName}`}
-      ogImage={streamer.profileImage}
+      title={`Coś poszło nie tak :(`}
+      ogImage="/img_placeholder.jpg"
       ogDescription="Oglądaj powtórki strumieni z czatem."
     >
       <Toolbar />
@@ -78,7 +78,7 @@ Page.getInitialProps = async ({ store, query }) => {
       };
       const response = await fetchServerVideos(serverQuery, {
         watched: watched,
-        favourite: []
+        favourite: [],
       });
       videos = response.videos;
       count = response.count;

@@ -48,10 +48,11 @@ class MyApp extends App<AppInitialProps> {
         const streamersData = await fetchStreamersData(serverStreamers);
         ctx.store.dispatch(setServerStreamers(streamersData));
       } catch (error) {}
-
       try {
-        const { user, subscription } = await auth(ctx.req?.headers.cookie);
-        ctx.store.dispatch(setPoorchatUser({ user, subscription }));
+        if (ctx.req && ctx.req.headers.cookie?.includes('payload_cookie')) {
+          const { user, subscription } = await auth(ctx.req.headers.cookie);
+          ctx.store.dispatch(setPoorchatUser({ user, subscription }));
+        }
       } catch (error) {}
     }
 
