@@ -77,7 +77,6 @@ export const fetchStreamersData = (streamers: string[]) => {
       );
       resolve(streamersData);
     } catch (err) {
-      console.log('Fetching server streamers error:', err.response);
       reject();
     }
   });
@@ -98,7 +97,6 @@ export const fetchServerVideoById = (query: {
         },
       });
     } catch (err) {
-      console.log('Fetching server videos error:', err.response);
       reject();
     }
   });
@@ -133,7 +131,6 @@ export const fetchServerVideos = (
           count: response.data.count,
         });
       } catch (err) {
-        console.log('Fetching server videos error:', err.response);
         reject();
       }
     }
@@ -165,7 +162,6 @@ export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
           paginationCursor: response.data.pagination.cursor,
         });
       } catch (err) {
-        console.log('Fetching twitch videos error:', err);
         reject();
       }
     }
@@ -184,7 +180,6 @@ export const fetchDates = (streamer: string) => {
       }
       resolve(response.data);
     } catch (err) {
-      console.log('Fetching dates error:', err);
       reject();
     }
   });
@@ -215,7 +210,6 @@ export const fetchMessages = (body: {
         }))
       );
     } catch (err) {
-      console.log('Fetching messages error:', err);
       reject();
     }
   });
@@ -239,7 +233,6 @@ export const authCallback = (code: string) => {
       );
       resolve({ ...response.data, cookies: response.headers['set-cookie'] });
     } catch (err) {
-      console.log('Auhtentication error:', err);
       reject();
     }
   });

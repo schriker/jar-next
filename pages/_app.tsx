@@ -47,9 +47,7 @@ class MyApp extends App<AppInitialProps> {
       try {
         const streamersData = await fetchStreamersData(serverStreamers);
         ctx.store.dispatch(setServerStreamers(streamersData));
-      } catch (error) {
-        console.log('Streamers data:', error);
-      }
+      } catch (error) {}
 
       try {
         const { user, subscription } = await auth(ctx.req?.headers.cookie);
