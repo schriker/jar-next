@@ -28,6 +28,7 @@ const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {
           rel="stylesheet"
         />
         <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131295801-1"></script>
       </Head>
     </>
   );
