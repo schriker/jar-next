@@ -60,7 +60,7 @@ const Sidebar = () => {
           {client.isFetching && <SidebarItem isOpen={isOpen} />}
         </SimpleBar>
         <AddStreamer isOpen={isOpen} />
-        <a className={styles.faq} href="#" target="_blank">
+        <a className={styles.faq} href="https://github.com/schriker/jar-next/blob/master/faq.md" target="_blank">
           <FontAwesomeIcon icon={faQuestion} />
         </a>
       </animated.div>
