@@ -7,7 +7,7 @@ import { createWrapper } from 'next-redux-wrapper';
 function initStore() {
   return configureStore({
     reducer: rootReducer,
-    devTools: true,
+    devTools: process.env.NODE_ENV === 'development' ? true : false,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(syncDataMiddleware),
   });

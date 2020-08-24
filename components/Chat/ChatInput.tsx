@@ -20,7 +20,7 @@ type ChatInputPropsType = {
 const ChatInput = ({ video, emoticons }: ChatInputPropsType) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const poorchatClientID = 'zZ8b2kcex1VVrhtBB1a2KApZKyubeAWkpy4LARLE';
-  const poorchatRedirectURL = 'http://localhost:8080/callback';
+  const poorchatRedirectURL = 'https://jarchiwum.pl/callback';
   const poorchatAuthLink = `https://poorchat.net/oauth/authorize?client_id=${poorchatClientID}&redirect_uri=${poorchatRedirectURL}&response_type=code&scope=user+user_subscriptions`;
   const router = useRouter();
   const dispatch = useDispatch();
