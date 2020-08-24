@@ -1,11 +1,9 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 import ToolbarMenu from 'components/Toolbar/ToolbarMenu';
 import ToggleWatched from 'components/ToggleWatched/ToggleWatched';
 import ToolbarUser from 'components/Toolbar/ToolbarUser';
-const Search = dynamic(() => import('components/Search/Search'), {
-  ssr: false,
-});
+import Search from 'components/Search/Search';
+
 import styles from 'components/Toolbar/Toolbar.module.css';
 
 const Toolbar = () => {
