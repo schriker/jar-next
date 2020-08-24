@@ -22,7 +22,7 @@ const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
   const handle = useFullScreenHandle();
   return video ? (
     <Layout
-      title={`${streamer.displayName} - ${trimString(video.title, 25)}`}
+      title={`${streamer.displayName} - ${trimString(video.title, 35)}`}
       ogImage={video.thumbnail
         .replace('%{width}', '640')
         .replace('%{height}', '360')}
