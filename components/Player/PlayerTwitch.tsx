@@ -131,7 +131,7 @@ const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
       if (playerRef && state.isPlaying) {
         dispatch(setPlayerPosition(playerRef.getCurrentTime()));
       }
-    }, 1000);
+    }, 2000);
     return () => {
       clearInterval(interval);
     };

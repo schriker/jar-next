@@ -18,7 +18,7 @@ const Chat = ({ video }: ChatPropsType) => {
   const dispatch = useDispatch();
   const chat = useTypedSelector((state) => state.appChat);
   const iconsData = useChatIconsData();
-
+  
   return (
     <div className={styles.wrapper}>
       <Shadow

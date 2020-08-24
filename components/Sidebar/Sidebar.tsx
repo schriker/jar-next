@@ -58,7 +58,6 @@ const Sidebar = () => {
             }
           })}
           {client.isFetching && <SidebarItem isOpen={isOpen} />}
-          {/* {client.isFetching && <Spinner />} */}
         </SimpleBar>
         <AddStreamer isOpen={isOpen} />
         <a className={styles.faq} href="#" target="_blank">

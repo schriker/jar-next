@@ -121,7 +121,7 @@ export default appDataSlice.reducer;
 
 export const addStreamer = (streamer: string[]): AppThunk => async (dispatch) => {
   try {
-    if (streamer.length) {
+    if (streamer.length && streamer.length < 100) {
       const response = await fetchStreamersData(streamer);
       dispatch(setClientStreamers(response));
       dispatch(addClientStreamer(streamer));

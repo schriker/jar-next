@@ -136,7 +136,6 @@ const ChatContent = ({
           </SimpleBar>
           <ChatToBottom refElement={bottom.current} messages={messages} />
         </>
-        // </div>
       )}
     </>
   );

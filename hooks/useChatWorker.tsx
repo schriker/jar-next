@@ -72,7 +72,7 @@ const useChatWorker = <T extends unknown>({
             switch (data.type) {
               case 'ADD_MESSAGE':
                 setMessages((messages) => [
-                  ...messages.slice(-69),
+                  ...messages.slice(-149),
                   data.message,
                 ]);
                 break;

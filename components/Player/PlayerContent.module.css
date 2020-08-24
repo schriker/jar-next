@@ -95,17 +95,17 @@
 }
 
 @media (max-width: 980px) {
-  .title span {
+  .title {
     display: none;
+  }
+  .leftPanel {
+    margin: 0 auto;
   }
 }
 
 @media (max-width: 530px) {
   .title {
     display: none;
-  }
-  .leftPanel {
-    margin: 0 auto;
   }
 }
 
@@ -119,13 +119,6 @@
 }
 
 @media (max-width: 390px) {
-  .infoBlock,
-  .spacer {
-    display: none;
-  }
-}
-
-@media (orientation: landscape) {
   .infoBlock,
   .spacer {
     display: none;

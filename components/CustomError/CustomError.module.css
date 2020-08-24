@@ -3,9 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   width: calc(100% - 60px);
-  bottom: 0;
+  top: 50%;
   left: 60px;
 }
 

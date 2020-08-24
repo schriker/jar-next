@@ -79,7 +79,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
               <div className={styles.views}>{video.views}</div>
             </div>
           </div>
-          <div className={styles.content}>
+          <div title={video.title} className={styles.content}>
             <div className={styles.title}>{trimString(video.title, 25)}</div>
             <div className={styles.date}>
               {moment(video.started).format('DD-MM-YYYY • HH:mm:ss')}

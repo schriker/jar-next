@@ -1,30 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Jarchiwum - NextJS
 
-## Getting Started
+## [Check live version](https://jarchiwum.pl/) 
 
-First, run the development server:
+![Preview](preview.jpg)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+The app allows users to subscribe their favorite twitch streamers, and watch streams that they have missed.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App simply starts with just demo state of default channels that community of jadisco.pl watch. User then can simply add their own channels and/or remove them. Mark videos as watched and bookmarked. 
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+By default state will be stored in browser localStorage, but you can register simple user account so your data will be stored in firebase for syncing state between browsers you use. 
 
-## Learn More
+If you are a streamer yo can share link like:  https://jarchiwum.pl/your-twitch-name and that will automatically  add your channel to users favorites. 
 
-To learn more about Next.js, take a look at the following resources:
+*Important note:* chat on some video page is made by [tr0lit](https://tr0l.it/) [poorchat](https://www.poorchat.net/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Frontend
 
-## Deploy on Vercel
+* [NextJS](https://nextjs.org/) 
+* [Redux](https://redux.js.org/) 
+* [TypeScript](https://sass-lang.com/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* [NodeJS](https://nodejs.org/en/) 
+* [MongoDB](https://www.mongodb.com/) 
+* [Elasticsearch](https://www.elastic.co/) 
+
+## Installation
+You can just clone repository files and run to install all dependencies:
+
+`npm install`
+
+After that just run to start server:
+
+`npm run dev`
+
+To build project:
+
+`npm run build`
+
+*All project files are located in ./src/*
