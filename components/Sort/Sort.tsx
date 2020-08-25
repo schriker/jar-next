@@ -18,21 +18,30 @@ const Sort = ({ close, isOpen = true }: SortPropsType) => {
     if (query.sort) {
       const [value] = Object.keys(query.sort);
       setValue(value);
+    } else if (router.asPath.includes('search')) {
+      setValue('score');
     } else {
       setValue('createdAt');
     }
     close();
   }, [router.asPath]);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = parseURLQuery(router.asPath, {
-      sort: { [e.target.value]: -1 },
-    });
-    const queryString = qs.stringify(query);
-    setValue(e.target.value);
-    if (router.pathname.includes('favourite')) {
-      router.push(`/favourite?${queryString}`, `/favourite?${queryString}`);
+    if (e.target.value === 'score') {
+      router.push(
+        `/[streamer]?search=${router.query.search}`,
+        `/wonziu?search=${router.query.search}`
+      );
     } else {
-      router.push(`/[streamer]?${queryString}`, `/wonziu?${queryString}`);
+      const query = parseURLQuery(router.asPath, {
+        sort: { [e.target.value]: -1 },
+      });
+      const queryString = qs.stringify(query);
+      setValue(e.target.value);
+      if (router.pathname.includes('favourite')) {
+        router.push(`/favourite?${queryString}`, `/favourite?${queryString}`);
+      } else {
+        router.push(`/[streamer]?${queryString}`, `/wonziu?${queryString}`);
+      }
     }
   };
   return (
@@ -40,6 +49,19 @@ const Sort = ({ close, isOpen = true }: SortPropsType) => {
       <Dropdown isOpen={isOpen} close={close}>
         <div className={styles.sort}>
           <span>Sortuj według:</span>
+          {router.asPath.includes('search') && (
+            <div className={styles.option}>
+              <input
+                type="radio"
+                id="score"
+                name="sort"
+                value="score"
+                onChange={onChange}
+                checked={value === 'score'}
+              />
+              <label htmlFor="score">Trafności</label>
+            </div>
+          )}
           <div className={styles.option}>
             <input
               type="radio"
