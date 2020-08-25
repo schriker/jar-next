@@ -73,6 +73,13 @@
   max-height: 100%;
 }
 
+.thumbnail svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+
 .thumbnail > div {
   z-index: 992;
   position: absolute;
