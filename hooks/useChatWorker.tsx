@@ -21,6 +21,7 @@ const useChatWorker = <T extends unknown>({
   const dispatch = useDispatch();
   const workerRef = useRef<Worker>();
   const [messages, setMessages] = useState<T[]>([]);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<string | number | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
   const [chatAdjustment, setChatAdjusment] = useState<number>(0);
@@ -61,11 +62,20 @@ const useChatWorker = <T extends unknown>({
             setMessages([emptyMessage]);
           }
         } else {
+          if (!isNote && !isFetching) {
+            setMessages(response.slice(0, 25));
+          }
+          setIsFetching(false);
           workerRef.current.postMessage({
             type: 'START',
-            fetched: response,
+            fetched: !isNote
+              ? response.slice(25, response.length - 1)
+              : response,
             messages: messages,
-            startTime: isNote && typeof startTime === 'number' ? startTime * 1000 : startTime,
+            startTime:
+              isNote && typeof startTime === 'number'
+                ? startTime * 1000
+                : startTime,
             playbackRate: player.playbackRate,
           });
           workerRef.current.onmessage = ({ data }) => {
@@ -77,6 +87,7 @@ const useChatWorker = <T extends unknown>({
                 ]);
                 break;
               case 'FETCH':
+                setIsFetching(true);
                 setStartTime(data.message.createdAt);
                 break;
             }

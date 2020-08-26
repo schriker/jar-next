@@ -10,7 +10,6 @@ import AddStreamer from 'components/AddStreamer/AddStreamer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from 'simplebar-react';
-import Spinner from 'components/Spinner/Spinner';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -19,6 +18,7 @@ const Sidebar = () => {
 
   const slideIn = useSpring({
     width: isOpen && viewWitdh > 1290 ? 360 : isOpen ? 280 : 50,
+    config: { mass: 1, tension: 160, friction: 22 }
   });
 
   const { server, client } = useTypedSelector((state) => state.appData);
