@@ -11,7 +11,7 @@ type SortPropsType = {
 };
 
 const Sort = ({ close, isOpen = true }: SortPropsType) => {
-  const [value, setValue] = useState<string>('createdAt');
+  const [value, setValue] = useState<string>('started');
   const router = useRouter();
   useEffect(() => {
     const query = parseURLQuery(router.asPath, {});
@@ -21,7 +21,7 @@ const Sort = ({ close, isOpen = true }: SortPropsType) => {
     } else if (router.asPath.includes('search')) {
       setValue('score');
     } else {
-      setValue('createdAt');
+      setValue('started');
     }
     close();
   }, [router.asPath]);
@@ -87,13 +87,13 @@ const Sort = ({ close, isOpen = true }: SortPropsType) => {
           <div className={styles.option}>
             <input
               type="radio"
-              id="createdAt"
+              id="started"
               name="sort"
-              value="createdAt"
+              value="started"
               onChange={onChange}
-              checked={value === 'createdAt'}
+              checked={value === 'started'}
             />
-            <label htmlFor="createdAt">Daty nagrania</label>
+            <label htmlFor="started">Daty nagrania</label>
           </div>
         </div>
       </Dropdown>
