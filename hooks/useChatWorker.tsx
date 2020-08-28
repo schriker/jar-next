@@ -63,13 +63,13 @@ const useChatWorker = <T extends unknown>({
           }
         } else {
           if (!isNote && !isFetching) {
-            setMessages(response.slice(0, 25));
+            setMessages(response.slice(0, 150));
           }
           setIsFetching(false);
           workerRef.current.postMessage({
             type: 'START',
             fetched: !isNote
-              ? response.slice(25, response.length - 1)
+              ? response.slice(150, response.length - 1)
               : response,
             messages: messages,
             startTime:
