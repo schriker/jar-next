@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTypedSelector } from 'store/rootReducer';
 import styles from 'components/Chat/ChatCard.module.css';
 import { ChatMessageType } from 'types/message';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { useInView } from 'react-intersection-observer';
 
 type ChatCardType = {
   color: string;
@@ -28,9 +29,20 @@ type ChatCardPropsType = {
 };
 
 const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
-  const chat = useTypedSelector((state) => state.appChat);
   let content = null;
   let card: ChatCardType | null = null;
+  const chat = useTypedSelector((state) => state.appChat);
+  const [inViewRef, inView] = useInView();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  if (videoRef.current) {
+    if (!inView) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+  }
+
   if (message.type === 'EMBED') {
     try {
       card = JSON.parse(message.body);
@@ -42,7 +54,7 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
   if (card) {
     if (card.image || card.type === 'gifv' || card.type === 'video') {
       content = (
-        <div>
+        <div ref={inViewRef}>
           <div className={styles.provider}>{card.provider}</div>
           <a href={card.url} target="_blank">
             {card.title && <div className={styles.title}>{card.title}</div>}
@@ -53,10 +65,22 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
                 </div>
               </div>
               {card.type === 'gifv' && (
-                <video muted autoPlay loop src={card.video[0].url}></video>
+                <video
+                  ref={videoRef}
+                  muted
+                  autoPlay
+                  loop
+                  src={card.video[0].url}
+                ></video>
               )}
               {card.type === 'video' && (
-                <video muted autoPlay loop src={card.url}></video>
+                <video
+                  ref={videoRef}
+                  muted
+                  autoPlay
+                  loop
+                  src={card.url}
+                ></video>
               )}
               {card.image && (
                 <img
