@@ -71,8 +71,9 @@ const Search = () => {
           </span>
         </button>
       </form>
-      {showResults && (
+      {inputText.length >= 3 && showResults &&(
         <SearchResults
+          isLoading={searchResults.loading}
           hideResults={() => setShowResults(false)}
           resetForm={onResetForm}
           searchValue={inputText}

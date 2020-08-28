@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from 'store/rootReducer';
 import { addStreamer, setIsFetching } from 'store/slices/appData';
@@ -9,10 +9,12 @@ import styles from 'components/AddStreamer/AddStreamer.module.css';
 
 type AddStreamerPropsType = {
   isOpen: boolean;
+  open: (value: boolean) => void;
 };
 
-const AddStreamer = ({ isOpen }: AddStreamerPropsType) => {
+const AddStreamer = ({ isOpen, open }: AddStreamerPropsType) => {
   const dispatch = useDispatch();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const state = useTypedSelector((state) => state.appData);
   const [value, setValue] = useState<string>('');
   const slideIn = useSpring({
@@ -31,6 +33,11 @@ const AddStreamer = ({ isOpen }: AddStreamerPropsType) => {
     ) {
       dispatch(setIsFetching(true));
       dispatch(addStreamer([...state.client.streamers, value.toLowerCase()]));
+    } else {
+      open(true);
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
     setValue('');
   };
@@ -42,14 +49,16 @@ const AddStreamer = ({ isOpen }: AddStreamerPropsType) => {
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </button>
-      <animated.input
-        style={slideIn}
-        disabled={state.client.isFetching}
-        type="text"
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-        placeholder="Dodaj kanał"
-      />
+      <animated.div style={slideIn} className={styles.inputWrapper}>
+        <input
+          ref={inputRef}
+          disabled={state.client.isFetching}
+          type="text"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder="Dodaj kanał"
+        />
+      </animated.div>
     </form>
   );
 };

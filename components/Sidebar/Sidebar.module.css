@@ -7,9 +7,38 @@
   background-color: #1c1c1c;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   z-index: 998;
   width: 50px;
+  overflow-x: hidden;
+}
+
+.open {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.open div {
+  transition: all ease 0.2s;
+  cursor: pointer;
+  color: #bbb;
+  background-color: #383838;
+  width: 50px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  margin: 0 3px 10px 3px;
+}
+
+.open div:hover {
+  color: #fff;
+  background-color: #f00;
+}
+
+.open svg {
+  height: 13px;
 }
 
 .faq {
