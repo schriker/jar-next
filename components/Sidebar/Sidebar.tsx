@@ -12,7 +12,6 @@ import {
   faAngleDoubleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from 'simplebar-react';
-import ControllButton from 'components/ControllButton/ControllButton';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,11 +28,16 @@ const Sidebar = () => {
     <>
       <Shadow isOpen={isOpen} onClick={() => setIsOpen(false)} />
       <animated.div style={slideIn} className={styles.sidebar}>
-        <div
-          className={styles.open}
-          onClick={() => setIsOpen((isOpen) => !isOpen)}
-        >
-          <div>
+        <div className={styles.open}>
+          <div
+            role="button"
+            aria-pressed={isOpen}
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.keyCode !== 9) setIsOpen((isOpen) => !isOpen);
+            }}
+            onClick={() => setIsOpen((isOpen) => !isOpen)}
+          >
             <FontAwesomeIcon
               icon={faAngleDoubleRight}
               transform={{ rotate: isOpen ? -180 : 0 }}
