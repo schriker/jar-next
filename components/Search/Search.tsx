@@ -43,6 +43,54 @@ const Search = () => {
     }
   };
 
+  const [focusIndex, setFocusIndex] = useState<number | null>(null);
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (searchResults.result) {
+      if (event.keyCode === 40) {
+        event.preventDefault();
+        setFocusIndex((index) => {
+          if (index === null || index === searchResults.result.videos.length) {
+            return 0;
+          } else {
+            return index + 1;
+          }
+        });
+      } else if (event.keyCode === 38) {
+        event.preventDefault();
+        setFocusIndex((index) => {
+          if (index === null || index === 0) {
+            return searchResults.result.videos.length;
+          } else {
+            return index - 1;
+          }
+        });
+      } else if (event.keyCode === 13 && focusIndex) {
+        event.preventDefault();
+        if (focusIndex === searchResults.result.videos.length) {
+          router.push(
+            `/[streamer]?search=${inputText.trim()}`,
+            `/wonziu?search=${inputText.trim()}`
+          );
+        } else {
+          router.push(
+            `/[streamer]/video/[video]`,
+            `/wonziu/video/${searchResults.result.videos[focusIndex].id}`
+          );
+        }
+        setInputText('');
+        setFocusIndex(null);
+      } else {
+        setFocusIndex(null);
+      }
+    }
+  };
+
+  const onFocus = () => {
+    setFocusIndex(null);
+    setShowResults(true);
+  };
+
   const onResetForm = () => {
     setInputText('');
   };
@@ -58,7 +106,8 @@ const Search = () => {
       <form onSubmit={onSubmitHandler} className={styles.searchForm}>
         <input
           onClick={() => setShowResults(true)}
-          onFocus={() => setShowResults(true)}
+          onFocus={onFocus}
+          onKeyDown={onKeyDown}
           value={inputText}
           onChange={onChangeHanlder}
           placeholder="Słowa kluczowe"
@@ -71,8 +120,9 @@ const Search = () => {
           </span>
         </button>
       </form>
-      {inputText.length >= 3 && showResults &&(
+      {inputText.length >= 3 && showResults && (
         <SearchResults
+          focus={focusIndex}
           isLoading={searchResults.loading}
           hideResults={() => setShowResults(false)}
           resetForm={onResetForm}

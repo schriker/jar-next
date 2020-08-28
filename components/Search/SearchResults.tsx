@@ -18,6 +18,7 @@ type SearchResultPropsType = {
     | undefined;
   searchValue: string;
   isLoading: boolean;
+  focus: number | null;
   resetForm: () => void;
   hideResults: () => void;
 };
@@ -26,24 +27,25 @@ const SearchResults = ({
   results,
   hideResults,
   searchValue,
+  focus,
   resetForm,
   isLoading,
 }: SearchResultPropsType) => {
   const ref = useRef(null);
   useOnClickOutside(ref, hideResults);
-  console.log(isLoading);
+
   return (
     <div ref={ref} className={styles.wrapper}>
       {results && results.videos?.length ? (
         <>
-          {results.videos.map((video) => {
+          {results.videos.map((video, index) => {
             return (
               <Link
                 key={video.id}
                 href="/[streamer]/video/[video]"
                 as={`/wonziu/video/${video.id}`}
               >
-                <a>
+                <a className={focus === index ? styles.active : ''}>
                   <div className={styles.result}>
                     <div className={styles.thumbnail}>
                       <Spinner />
@@ -69,7 +71,14 @@ const SearchResults = ({
               href={`/[streamer]?search=${searchValue}`}
               as={`/wonziu?search=${searchValue}`}
             >
-              <a onClick={() => resetForm()} className={styles.more}>
+              <a
+                onClick={() => resetForm()}
+                className={
+                  focus === results.videos.length
+                    ? `${styles.active} ${styles.more}`
+                    : styles.more
+                }
+              >
                 Zobacz wszystkie wyniki.
               </a>
             </Link>

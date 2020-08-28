@@ -41,6 +41,10 @@
   background-color: #232323;
 }
 
+.active {
+  background-color: #232323;
+}
+
 .result {
   display: flex;
   height: 80px;
