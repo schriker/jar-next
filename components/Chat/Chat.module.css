@@ -8,9 +8,11 @@
   padding: 5px 15px;
 }
 
-.wrapper {
-  width: 100%;
-  height: auto;
+@media (max-width: 980px) {
+  .wrapper {
+    width: 100%;
+    height: auto;
+  }
 }
 
 @media (orientation: landscape) {
