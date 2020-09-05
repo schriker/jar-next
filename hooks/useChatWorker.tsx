@@ -61,7 +61,7 @@ const useChatWorker = <T extends unknown>({
           if (emptyMessage) {
             setMessages([emptyMessage]);
           }
-        } else {
+        } else if (player.isPlaying) {
           if (!isNote && !isFetching) {
             setMessages(response.slice(0, 150));
           }
