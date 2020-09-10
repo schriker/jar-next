@@ -15,9 +15,8 @@ const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {
           property="og:url"
           content={`${process.env.HOST}${router.asPath}`}
         />
+        <meta property="og:site_name" content="Jarchiwum" />
         <meta property="og:image" content={ogImage} />
-        <meta content="1800" property="og:image:width" />
-        <meta content="950" property="og:image:height" />
         <meta property="og:description" content={ogDescription} />
         <meta
           name="viewport"

@@ -13,7 +13,7 @@ import Videos from 'components/Videos/Videos';
 import Toolbar from 'components/Toolbar/Toolbar';
 
 type PageProps = {
-  streamer: Streamer;
+  streamer: Streamer | undefined;
   videos: Video[];
   count: number;
   paginationCursor: string;
@@ -25,7 +25,7 @@ const Page: NextPage<PageProps> = ({
   count,
   paginationCursor,
 }) => {
-  return !videos.length ? (
+  return !videos.length || !streamer ? (
     <Layout
       title={`Coś poszło nie tak :(`}
       ogImage="/img_placeholder.jpg"

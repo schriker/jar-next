@@ -15,12 +15,12 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
 type PageProps = {
   video: Video | null;
-  streamer: Streamer;
+  streamer: Streamer | undefined;
 };
 
 const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
   const handle = useFullScreenHandle();
-  return video ? (
+  return video && streamer ? (
     <Layout
       title={`${streamer.displayName} - ${trimString(video.title, 35)}`}
       ogImage={video.thumbnail
