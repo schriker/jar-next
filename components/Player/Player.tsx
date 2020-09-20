@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { updateViews } from 'helpers/api';
+import { useDispatch } from 'react-redux';
+import { setSource } from 'store/slices/appPlayer';
 import dynamic from 'next/dynamic';
 import { Video } from 'types/video';
 import { Streamer } from 'types/streamer';
@@ -14,6 +16,7 @@ import PlayerContent from 'components/Player/PlayerContent';
 import Notes from 'components/Notes/Notes';
 import Highlights from 'components/Highlights/Highlights';
 import { FullScreenHandle } from 'react-full-screen';
+import { useTypedSelector } from 'store/rootReducer';
 
 type PlayerPropsType = {
   video: Video;
@@ -22,16 +25,26 @@ type PlayerPropsType = {
 };
 
 const Player = ({ video, streamer, fullscreen }: PlayerPropsType) => {
+  let duration = 0;
+  const dispatch = useDispatch();
+  const player = useTypedSelector((state) => state.appPlayer);
+  const youtube = video.source?.filter((source) => source.name === 'youtube');
+  const twitch = video.source?.filter((source) => source.name === 'twitch');
+
   useEffect(() => {
     updateViews(streamer.login, video.id);
+    if (youtube?.length) {
+      dispatch(setSource('YOUTUBE'));
+    } else if (twitch?.length) {
+      dispatch(setSource('TWITCH'));
+    }
   }, []);
-  let duration = 0;
+
   if (video.createdAt) {
     duration =
       new Date(video.createdAt).getTime() - new Date(video.started).getTime();
   }
-  const youtube = video.source?.filter((source) => source.name === 'youtube');
-  const twitch = video.source?.filter((source) => source.name === 'twitch');
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.player}>
@@ -43,9 +56,9 @@ const Player = ({ video, streamer, fullscreen }: PlayerPropsType) => {
           />
         )}
         <Notes video={video} />
-        {youtube?.length ? (
+        {player.source === 'YOUTUBE' && youtube ? (
           <PlayerYoutube source={youtube} />
-        ) : twitch?.length ? (
+        ) : player.source === 'TWITCH' && twitch ? (
           <PlayerTwitch source={twitch} />
         ) : (
           <PlayerTwitch source={[{ id: video.id, name: 'twitch' }]} />

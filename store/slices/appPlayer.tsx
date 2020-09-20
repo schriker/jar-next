@@ -2,6 +2,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type AppPlayerStateType = {
+  source: 'TWITCH' | 'YOUTUBE' | null;
   isReady: boolean;
   startPlayer: boolean;
   finished: boolean;
@@ -13,6 +14,7 @@ type AppPlayerStateType = {
 };
 
 const appPlayerInitialState: AppPlayerStateType = {
+  source: null,
   isReady: false,
   startPlayer: false,
   finished: false,
@@ -39,6 +41,9 @@ const appPlayerSlice = createSlice({
         state.isPlaying = true;
         state.finished = false;
       }
+    },
+    setSource(state, { payload }: PayloadAction<'TWITCH' | 'YOUTUBE'>) {
+      state.source = payload;
     },
     pause(state) {
       state.isPlaying = false;
@@ -94,7 +99,8 @@ export const {
   setReady,
   seekTo,
   setPlayerPosition,
-  showHighlights
+  showHighlights,
+  setSource,
 } = appPlayerSlice.actions;
 
 export default appPlayerSlice.reducer;

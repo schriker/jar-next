@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Video } from 'types/video';
 import useWatched from 'hooks/useWatched';
 import { useDispatch } from 'react-redux';
-import { showHighlights } from 'store/slices/appPlayer';
+import { showHighlights, setSource } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import trimString from 'helpers/trimString';
 import { Streamer } from 'types/streamer';
@@ -18,6 +18,7 @@ import {
   faCheck,
   faHeart,
   faExpand,
+  faExchangeAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FullScreenHandle } from 'react-full-screen';
 
@@ -66,6 +67,14 @@ const PlayerContent = ({
   const { isWatched, isBookmarked, addToWatched, addToBookmark } = useWatched(
     video.id
   );
+
+  const handleSourceChange = () => {
+    if (player.source === 'TWITCH') {
+      dispatch(setSource('YOUTUBE'));
+    } else  {
+      dispatch(setSource('TWITCH'));
+    }
+  }
 
   const handleFullscreen = () => {
     if (fullscreen.active) {
@@ -165,6 +174,17 @@ const PlayerContent = ({
               <FontAwesomeIcon icon={faExpand} />
             </div>
           </ControllButton>
+          {video.source && video.source.length > 1 && (
+            <ControllButton
+              tooltipContainer={ref.current}
+              onClick={handleSourceChange}
+              tooltip="Zmień źródło"
+            >
+              <div>
+                <FontAwesomeIcon icon={faExchangeAlt} />
+              </div>
+            </ControllButton>
+          )}
         </div>
       </div>
     </div>
