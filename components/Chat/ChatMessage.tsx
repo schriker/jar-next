@@ -111,6 +111,17 @@ const ChatMessage = ({
     return null;
   }, []);
 
+  const twitch: { icon: string; srcset: string } | null = useMemo(() => {
+    if (message.type === 'TWITCH') {
+      return {
+        icon: `/twitch_1x.png`,
+        srcset: `/twitch_1x.png, /twitch_2x.png 1.25x, /twitch_4x.png 2.25x`,
+      };
+    } else {
+      return null;
+    }
+  }, []);
+
   const gifts: { icon: string; srcset: string } | null = useMemo(() => {
     if (message.subscriptiongifter > 0) {
       const [giftBadges] = modes.filter((mode) => mode.mode === 'g');
@@ -170,6 +181,14 @@ const ChatMessage = ({
         )}
         {!isAction && (
           <span className={styles.icons}>
+            {twitch && (
+              <ChatMessageIcon
+                tooltipContainer={tooltipContainer}
+                tip={'Twitch'}
+                source={twitch.icon}
+                srcset={twitch.srcset}
+              />
+            )}
             {mode && (
               <ChatMessageIcon
                 tooltipContainer={tooltipContainer}
