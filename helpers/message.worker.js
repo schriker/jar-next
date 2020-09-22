@@ -1,47 +1,59 @@
-let messageInterval
-let timeInterval
-const intervalNumber = 500
+let time;
+let timeInterval;
+let messageInterval;
+const intervalNumber = 100;
 
 onmessage = ({ data }) => {
+  const timeIntervalFunction = () => {
+    time = new Date(
+      new Date(time).getTime() + data.playbackRate * intervalNumber
+    );
+    timeInterval = setTimeout(timeIntervalFunction, intervalNumber);
+  };
+
   const intervalFunction = () => {
     if (data.fetched.length === 0 && data.messages.length !== 0) {
       postMessage({
         type: 'FETCH',
-        message: data.messages[data.messages.length - 1]
-      })
-      clearInterval(messageInterval)
-    }
-    
-    const messagesInView = data.fetched.filter((message) => {
-      const condition = new Date(message.createdAt).getTime() < new Date(data.startTime).getTime()
-      return condition
-    })
-    if (messagesInView.length) {
-      postMessage({
-        type: 'ADD_MESSAGE',
-        message: messagesInView
-      })
+        message: data.messages[data.messages.length - 1],
+      });
+    } else {
+      const messagesInView = data.fetched.filter((message) => {
+        const condition =
+          new Date(message.createdAt).getTime() < new Date(time).getTime();
+        return condition;
+      });
+      if (messagesInView.length) {
+        postMessage({
+          type: 'ADD_MESSAGE',
+          message: messagesInView,
+        });
 
-      data.fetched = data.fetched.filter((oldMessage) => {
-        return !messagesInView.some(message => {
-          return message._id === oldMessage._id
-        })
-      })
+        data.fetched = data.fetched.filter((oldMessage) => {
+          return !messagesInView.some((message) => {
+            return message._id === oldMessage._id;
+          });
+        });
+      }
+      messageInterval = setTimeout(intervalFunction, intervalNumber);
     }
-    data.startTime = new Date(new Date(data.startTime).getTime() + 1 * data.playbackRate * intervalNumber)
-    timeInterval = setTimeout(intervalFunction, intervalNumber);
-  }
+  };
 
   switch (data.type) {
     case 'START':
-      intervalFunction()
-      break
+      time = data.startTime;
+      clearTimeout(timeInterval);
+      clearTimeout(messageInterval);
+      intervalFunction();
+      timeIntervalFunction();
+      break;
     case 'STOP':
-      clearTimeout(timeInterval)
-      break
+      clearTimeout(messageInterval);
+      clearTimeout(timeInterval);
+      break;
   }
-}
+};
 
 onerror = (error) => {
-  console.log('Chat worker:', error)
-}
+  console.log('Chat worker:', error);
+};

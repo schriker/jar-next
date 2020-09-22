@@ -71,12 +71,15 @@ const useChatWorker = <T extends unknown>({
             fetched: !isNote
               ? response.slice(150, response.length - 1)
               : response,
-            messages: messages,
+            messages: !isNote
+              ? response.slice(150, response.length - 1)
+              : response,
             startTime:
               isNote && typeof startTime === 'number'
                 ? startTime * 1000
                 : startTime,
             playbackRate: player.playbackRate,
+            playerPosition: player.playerPosition
           });
           workerRef.current.onmessage = ({ data }) => {
             switch (data.type) {
