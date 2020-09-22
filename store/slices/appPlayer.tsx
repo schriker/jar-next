@@ -42,7 +42,7 @@ const appPlayerSlice = createSlice({
         state.finished = false;
       }
     },
-    setSource(state, { payload }: PayloadAction<'TWITCH' | 'YOUTUBE'>) {
+    setSource(state, { payload }: PayloadAction<'TWITCH' | 'YOUTUBE' | null>) {
       state.source = payload;
     },
     pause(state) {

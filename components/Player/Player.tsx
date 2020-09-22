@@ -56,9 +56,9 @@ const Player = ({ video, streamer, fullscreen }: PlayerPropsType) => {
           />
         )}
         <Notes video={video} />
-        {player.source === 'YOUTUBE' && youtube ? (
+        {player.source === 'YOUTUBE' && youtube?.length ? (
           <PlayerYoutube source={youtube} />
-        ) : player.source === 'TWITCH' && twitch ? (
+        ) : player.source === 'TWITCH' && twitch?.length ? (
           <PlayerTwitch source={twitch} />
         ) : (
           <PlayerTwitch source={[{ id: video.id, name: 'twitch' }]} />
