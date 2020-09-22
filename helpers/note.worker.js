@@ -1,5 +1,6 @@
 let messageInterval
 let timeInterval
+const intervalNumber = 1000
 
 onmessage = ({ data }) => {
   const intervalFunction = () => {
@@ -10,38 +11,33 @@ onmessage = ({ data }) => {
       })
       clearInterval(messageInterval)
     }
-
-    const messagesInView = data.fetched.filter((message, index) => {
+    
+    const messagesInView = data.fetched.filter((message) => {
       const condition = (message.timestamp * 1000) <= data.startTime
-      if (condition) {
-        data.fetched.splice(index, 1)
-      }
       return condition
     })
-
-    for (let message of messagesInView) {
-      data.messages.push(message)
+    if (messagesInView.length) {
       postMessage({
         type: 'ADD_MESSAGE',
-        message: message
+        message: messagesInView
+      })
+
+      data.fetched = data.fetched.filter((oldMessage) => {
+        return !messagesInView.some(message => {
+          return message._id === oldMessage._id
+        })
       })
     }
-  }
-
-  const timeFunction = () => {
-    data.startTime = data.startTime + 1 * data.playbackRate * 1000
+    data.startTime = new Date(new Date(data.startTime).getTime() + 1 * data.playbackRate * intervalNumber)
+    timeInterval = setTimeout(intervalFunction, intervalNumber);
   }
 
   switch (data.type) {
     case 'START':
-      clearInterval(messageInterval)
-      clearInterval(timeInterval)
-      messageInterval = setInterval(intervalFunction, 1000)
-      timeInterval = setInterval(timeFunction, 1000)
+      intervalFunction()
       break
     case 'STOP':
-      clearInterval(messageInterval)
-      clearInterval(timeInterval)
+      clearTimeout(timeInterval)
       break
   }
 }

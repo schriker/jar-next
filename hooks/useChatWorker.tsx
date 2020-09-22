@@ -83,7 +83,7 @@ const useChatWorker = <T extends unknown>({
               case 'ADD_MESSAGE':
                 setMessages((messages) => [
                   ...messages.slice(-149),
-                  data.message,
+                  ...data.message,
                 ]);
                 break;
               case 'FETCH':
