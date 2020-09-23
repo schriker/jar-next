@@ -14,6 +14,7 @@ import {
 import styles from 'components/Chat/ChatMessage.module.css';
 import { messageParser } from 'helpers/messageParser';
 import ChatMessageComponent from 'components/Chat/ChatMessageComponent';
+import checkContrast from 'helpers/checkContrast';
 
 type ChatMessagePropsType = {
   message: ChatMessageType;
@@ -60,6 +61,13 @@ const ChatMessage = ({
   const dispatch = useDispatch();
   const chat = useTypedSelector((state) => state.appChat);
   const isAction = message.body.split(' ')[0] === '\u0001ACTION';
+
+  let nickColor = message.color ? message.color : '#FFFFFF';
+  const isVisible = checkContrast(nickColor);
+
+  if (!isVisible) {
+    nickColor = '#FFFFFF';
+  }
 
   const mode: {
     icon: string;
@@ -219,7 +227,7 @@ const ChatMessage = ({
           onClick={handleAuthorClick}
           className={styles.author}
           style={{
-            color: message.color ? message.color : '#fff',
+            color: nickColor,
             fontStyle: isAction ? 'italic' : 'normal',
           }}
         >
