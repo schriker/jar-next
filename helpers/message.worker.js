@@ -1,13 +1,11 @@
 let time;
 let timeInterval;
 let messageInterval;
-const intervalNumber = 100;
+const intervalNumber = 250;
 
 onmessage = ({ data }) => {
   const timeIntervalFunction = () => {
-    time = new Date(
-      new Date(time).getTime() + data.playbackRate * intervalNumber
-    );
+    time = time + data.playbackRate * intervalNumber;
     timeInterval = setTimeout(timeIntervalFunction, intervalNumber);
   };
 
@@ -19,8 +17,7 @@ onmessage = ({ data }) => {
       });
     } else {
       const messagesInView = data.fetched.filter((message) => {
-        const condition =
-          new Date(message.createdAt).getTime() < new Date(time).getTime();
+        const condition = new Date(message.createdAt).getTime() < time;
         return condition;
       });
       if (messagesInView.length) {
@@ -41,7 +38,8 @@ onmessage = ({ data }) => {
 
   switch (data.type) {
     case 'START':
-      time = data.startTime;
+      time =
+        new Date(data.video.started).getTime() + data.playerPosition * 1000;
       clearTimeout(timeInterval);
       clearTimeout(messageInterval);
       intervalFunction();
