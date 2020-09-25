@@ -14,7 +14,6 @@ const getRGB = (color: string) => {
       parseInt(c) & 255,
     ];
   }
-  throw new Error('Bad Hex');
 };
 
 export default getRGB;
