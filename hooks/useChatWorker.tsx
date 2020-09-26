@@ -80,6 +80,7 @@ const useChatWorker = <T extends unknown>({
                 : startTime,
             playbackRate: player.playbackRate,
             video: video,
+            chatAdjustment: chatAdjustment,
             playerPosition: player.playerPosition
           });
           workerRef.current.onmessage = ({ data }) => {
