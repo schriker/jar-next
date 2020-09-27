@@ -38,7 +38,6 @@ onmessage = ({ data }) => {
 
   switch (data.type) {
     case 'START':
-      console.log(data)
       time =
         new Date(data.video.started).getTime() + (data.playerPosition * 1000) + (data.chatAdjustment * 1000);
       clearTimeout(timeInterval);
