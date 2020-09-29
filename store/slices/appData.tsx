@@ -124,7 +124,9 @@ export const addStreamer = (streamer: string[]): AppThunk => async (dispatch) =>
     if (streamer.length && streamer.length < 100) {
       const response = await fetchStreamersData(streamer);
       dispatch(setClientStreamers(response));
-      dispatch(addClientStreamer(streamer));
+      dispatch(addClientStreamer(streamer.filter(streamer => {
+        return response.some(value => value.login === streamer)
+      })));
       dispatch(setIsFetching(false));
     }
   } catch (error) {
