@@ -13,7 +13,6 @@ const SingleVideoPage: NextPage = () => {
   const handle = useFullScreenHandle();
   const router = useRouter();
   const video: Video = JSON.parse(router.query.video as string);
-  
   return Object.keys(video).length ? (
     <Layout
       title={`Archiwum - ${trimString(video.title, 35)}`}

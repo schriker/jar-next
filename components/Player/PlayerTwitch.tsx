@@ -119,12 +119,18 @@ const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
       loadVideo();
     }
     return () => {
+      const iframes = document.querySelectorAll('iframe');
+      if (iframes) {
+        iframes.forEach((iframe) => {
+          iframe.parentNode?.removeChild(iframe);
+        });
+      }
       dispatch(end());
       dispatch(startPlayer(false));
       dispatch(setReady(false));
       dispatch(setPlayerPosition(0));
     };
-  }, []);
+  }, [source[0].id]);
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -8,6 +8,7 @@ import FormSubmitButton from 'components/Form/FormSubmitButton';
 import checkVideoURL from 'helpers/checkVideoURL';
 import { fetchTwitchVideos, fetchYouTubeVideo } from 'helpers/api';
 import { useRouter } from 'next/router';
+import { setSource } from 'store/slices/appPlayer';
 
 type AddVideoFormPropsType = {
   isOpen: boolean;
@@ -36,6 +37,9 @@ const AddVideoForm = ({ isOpen, close }: AddVideoFormPropsType) => {
         } else {
           const response = await fetchYouTubeVideo(videoType.id);
           video = response;
+        }
+        if (videoType.name === 'youtube') {
+          dispatch(setSource('YOUTUBE'));
         }
         closeModal();
         setLoading(false);

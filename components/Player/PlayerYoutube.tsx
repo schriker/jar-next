@@ -103,6 +103,17 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
     });
   };
 
+  // useEffect(() => {
+  //   dispatch(end());
+  //   dispatch(startPlayer(false));
+  //   dispatch(setReady(false));
+  //   dispatch(setPlayerPosition(0));
+  //   dispatch(showHighlights(false));
+  //   if (player) {
+  //     player.destroy();
+  //   }
+  // }, [source])
+
   useEffect(() => {
     if (playerRef) {
       if (state.startPlayer) {
@@ -137,7 +148,7 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
         player.destroy();
       }
     };
-  }, []);
+  }, [source[0].id]);
 
   useEffect(() => {
     const interval = setInterval(() => {
