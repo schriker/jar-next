@@ -1,0 +1,25 @@
+.wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  border-radius: 3px;
+  background-color: #232323;
+  z-index: 999;
+  padding: 0 20px 40px 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.close {
+  top: 10px;
+  right: 10px;
+  color: #bbb;
+  width: 10px;
+  cursor: pointer;
+  transition: all ease 0.2s;
+  position: absolute;
+}
+
+.close:hover {
+  color: #f00;
+}

@@ -137,6 +137,19 @@ export const fetchServerVideos = (
   );
 };
 
+export const fetchYouTubeVideo = (id: string) => {
+  return new Promise<Video>(async(resolve, reject) => {
+    try {
+      const response = await API.get(`/video_youtube?id=${id}`);
+      resolve({
+        ...response.data
+      })
+    } catch (error) {
+      reject();
+    }
+  })
+}
+
 export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
   return new Promise<{ videos: Video[]; paginationCursor: string }>(
     async (resolve, reject) => {

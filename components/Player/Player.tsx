@@ -20,7 +20,7 @@ import { useTypedSelector } from 'store/rootReducer';
 
 type PlayerPropsType = {
   video: Video;
-  streamer: Streamer;
+  streamer?: Streamer;
   fullscreen: FullScreenHandle;
 };
 
@@ -32,7 +32,9 @@ const Player = ({ video, streamer, fullscreen }: PlayerPropsType) => {
   const twitch = video.source?.filter((source) => source.name === 'twitch');
 
   useEffect(() => {
-    updateViews(streamer.login, video.id);
+    if (streamer) {
+      updateViews(streamer.login, video.id);
+    }
     if (youtube?.length) {
       dispatch(setSource('YOUTUBE'));
     } else if (twitch?.length) {

@@ -1,15 +1,3 @@
-.wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  border-radius: 3px;
-  background-color: #232323;
-  z-index: 999;
-  padding: 0 20px 40px 20px;
-  width: 100%;
-  max-width: 500px;
-}
-
 .tabs {
   display: flex;
   width: 100%;
@@ -30,44 +18,4 @@
 .tabs li.active {
   color: #fff;
   border-bottom: 2px solid #f00;
-}
-
-.button {
-  position: relative;
-  width: 100%;
-  font-family: 'Ubuntu', sans-serif;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 500;
-  height: 37px;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 3px;
-  background-color: #f00;
-  transition: all ease 0.2s;
-  margin: 30px 0 0 0;
-}
-
-.button:hover {
-  background-color: rgb(189, 27, 27);
-}
-
-.button:disabled {
-  cursor: initial;
-  background-color: rgb(189, 27, 27);
-}
-
-.close {
-  top: 10px;
-  right: 10px;
-  color: #bbb;
-  width: 10px;
-  cursor: pointer;
-  transition: all ease 0.2s;
-  position: absolute;
-}
-
-.close:hover {
-  color: #f00;
 }

@@ -24,7 +24,7 @@ import { FullScreenHandle } from 'react-full-screen';
 
 type PlayerContentPropsType = {
   video: Video;
-  streamer: Streamer;
+  streamer?: Streamer;
   fullscreen: FullScreenHandle;
 };
 
@@ -87,8 +87,10 @@ const PlayerContent = ({
   return (
     <div ref={ref} className={styles.wrapper}>
       <div className={styles.profileImage}>
+      {streamer && 
         <img src={streamer.profileImage} alt="" />
-      </div>
+      }
+        </div>
       <div>
         <div className={styles.title}>
           <span title={video.title}>{trimString(video.title, 55)}</span>
@@ -140,7 +142,7 @@ const PlayerContent = ({
               <span>Momenty</span>
             </ControllButton>
           )}
-          {streamer.login === 'wonziu' && (
+          {streamer?.login === 'wonziu' && (
             <ControllButton
               tooltipContainer={ref.current}
               onClick={() => addToWatched()}
@@ -152,7 +154,7 @@ const PlayerContent = ({
               </div>
             </ControllButton>
           )}
-          {streamer.login === 'wonziu' && (
+          {streamer?.login === 'wonziu' && (
             <ControllButton
               tooltipContainer={ref.current}
               onClick={() => addToBookmark()}

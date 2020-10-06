@@ -1,6 +1,6 @@
 import { FieldError } from 'react-hook-form';
 import Tooltip from '@material-ui/core/Tooltip';
-import styles from 'components/Login/LoginFormInput.module.css';
+import styles from 'components/Form/FormInput.module.css';
 
 type RefReturn =
   | string
@@ -20,7 +20,7 @@ type FormInputPropsType = {
   type?: string;
 };
 
-const LoginFormInput = ({
+const FormInput = ({
   register,
   errors,
   tooltipContainer,
@@ -52,4 +52,4 @@ const LoginFormInput = ({
   );
 };
 
-export default LoginFormInput;
+export default FormInput;

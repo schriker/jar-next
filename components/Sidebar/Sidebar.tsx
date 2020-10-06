@@ -12,6 +12,7 @@ import {
   faAngleDoubleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from 'simplebar-react';
+import AddVideo from 'components/AddVideo/AddVideo';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,6 +73,7 @@ const Sidebar = () => {
           {client.isFetching && <SidebarItem isOpen={isOpen} />}
         </SimpleBar>
         <AddStreamer isOpen={isOpen} open={setIsOpen} />
+        <AddVideo />
         <a
           className={styles.faq}
           href="https://github.com/schriker/jar-next/blob/master/faq.md"

@@ -10,12 +10,13 @@
   height: 40px;
   display: block;
   border-radius: 50%;
-  margin: 0 10px;
+  margin: 0 0 0 10px;
 }
 
 .title {
   font-size: 18px;
   font-weight: 500;
+  margin: 0 0 0 10px;
 }
 
 .date {
@@ -85,10 +86,6 @@
     font-size: 16px;
   }
 
-  .title {
-    margin: 0 0 0 10px;
-  }
-
   .keyword {
     display: none;
   }
@@ -112,7 +109,7 @@
 @media (max-width: 530px) {
   .title {
     display: none;
-  } 
+  }
   .info {
     padding: 0 5px;
   }
