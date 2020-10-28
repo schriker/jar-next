@@ -22,9 +22,9 @@
   justify-content: center;
 }
 
-.addIcon div {
-  padding: 2px 0 0 0;
-  width: 10px;
+.addIcon svg {
+  padding: 2px 0 0 2px;
+  width: 10px !important;
 }
 
 .addIcon:hover {

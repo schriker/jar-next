@@ -145,8 +145,8 @@
 
 .check,
 .bookmark svg {
-  width: 14px;
-  height: 14px;
+  width: 14px !important;
+  height: 14px !important;
   transition: all ease 0.2s;
 }
 
