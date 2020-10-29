@@ -65,9 +65,9 @@ const Search = () => {
             return index - 1;
           }
         });
-      } else if (event.keyCode === 13 && focusIndex) {
+      } else if (event.keyCode === 13) {
         event.preventDefault();
-        if (focusIndex === searchResults.result.videos.length) {
+        if (focusIndex === searchResults.result.videos.length || focusIndex === null) {
           router.push(
             `/[streamer]?search=${inputText.trim()}`,
             `/wonziu?search=${inputText.trim()}`
