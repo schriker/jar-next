@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { updateViews } from 'helpers/api';
 import { useDispatch } from 'react-redux';
 import { setSource } from 'store/slices/appPlayer';
@@ -59,7 +59,9 @@ const Player = ({ video, streamer, fullscreen }: PlayerPropsType) => {
         )}
         <Notes video={video} />
         {player.source === 'YOUTUBE' && youtube?.length ? (
-          <PlayerYoutube source={youtube} />
+          <div style={{ height: '100%' }}>
+            <PlayerYoutube source={youtube} />
+          </div>
         ) : player.source === 'TWITCH' && twitch?.length ? (
           <PlayerTwitch source={twitch} />
         ) : (
