@@ -12,6 +12,7 @@ import { Video } from 'types/video';
 import styles from 'components/Videos/VideosItem.module.css';
 import trimString from 'helpers/trimString';
 import parseDuration from 'helpers/parseDuration';
+import Image from 'next/image';
 
 type VideosItemPropsType = {
   video: Video;
@@ -25,16 +26,11 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
   const isWonziu =
     router.query.streamer === 'wonziu' || router.pathname.includes('favourite');
   const isNew = Date.now() - new Date(video.started).getTime() < 86400000;
-  const image = useRef<HTMLImageElement>(null!);
   const [loaded, setLoaded] = useState<boolean>(false);
   const handleImageLoaded = () => {
     setLoaded(true);
   };
-  useEffect(() => {
-    if (image.current?.complete) {
-      handleImageLoaded();
-    }
-  }, [image]);
+
   return (
     <div className={styles.container}>
       <Link
@@ -47,20 +43,26 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
             <div className={styles.thumbnail}>
               <Spinner />
               <VideoImagePlaceholder />
-              <img
+
+              <div
+                className={styles.thumbnailImage}
                 style={{ opacity: loaded ? '1' : '0' }}
-                className={styles.image}
-                ref={image}
-                src={
-                  video.thumbnail.length
-                    ? video.thumbnail
-                        .replace('%{width}', '640')
-                        .replace('%{height}', '360')
-                    : '/img_placeholder.jpg'
-                }
-                onLoad={() => handleImageLoaded()}
-                alt=""
-              />
+              >
+                <Image
+                  layout="fill"
+                  quality={20}
+                  src={
+                    video.thumbnail.length
+                      ? video.thumbnail
+                          .replace('%{width}', '640')
+                          .replace('%{height}', '360')
+                      : '/img_placeholder.jpg'
+                  }
+                  onLoad={() => handleImageLoaded()}
+                  alt=""
+                />
+              </div>
+
               {isNew && <div className={styles.new}>New</div>}
               {isWonziu && (
                 <Tooltip title="Ulubiony" placement="top" arrow>

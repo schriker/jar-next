@@ -15,6 +15,9 @@ module.exports = {
     });
     return config;
   },
+  images: {
+    domains: ['i.ytimg.com', 'static-cdn.jtvnw.net'],
+  },
   async redirects() {
     return [
       {
@@ -33,7 +36,7 @@ module.exports = {
         permanent: true,
       },
       {
-        source: '/:streamer/:video',
+        source: '/:streamer((?!_next)[^/]+?)/:video',
         destination: '/:streamer/video/:video',
         permanent: true,
       },
