@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTypedSelector } from 'store/rootReducer';
 import { toggleOptions } from 'store/slices/appChat';
 import { useDispatch } from 'react-redux';
@@ -9,6 +9,7 @@ import Shadow from 'components/Shadow/Shadow';
 import ChatContent from 'components/Chat/ChatContent';
 import ChatOptions from 'components/Chat/ChatOptions';
 import useChatIconsData from 'hooks/useChatIconsData';
+import ChatLive from 'components/Chat/ChatLive';
 
 type ChatPropsType = {
   video: Video;
@@ -16,9 +17,10 @@ type ChatPropsType = {
 
 const Chat = ({ video }: ChatPropsType) => {
   const dispatch = useDispatch();
+  const [isLiveChat, setIsLiveChat] = useState<boolean>(false);
   const chat = useTypedSelector((state) => state.appChat);
   const iconsData = useChatIconsData();
-  
+
   return (
     <div className={styles.wrapper}>
       <Shadow
@@ -26,8 +28,8 @@ const Chat = ({ video }: ChatPropsType) => {
         onClick={() => dispatch(toggleOptions())}
         absolute
       />
-      <ChatContent video={video} {...iconsData} />
-      <ChatOptions />
+      {isLiveChat ? <ChatLive /> : <ChatContent video={video} {...iconsData} />}
+      <ChatOptions isLiveCaht={isLiveChat} setIsLiveChat={setIsLiveChat} />
       <ChatInput emoticons={iconsData.emoticons} video={video.id} />
     </div>
   );

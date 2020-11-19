@@ -9,7 +9,12 @@ import styles from 'components/Chat/ChatOptions.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const ChatOptions = () => {
+type ChatOptionsPropsType = {
+  setIsLiveChat: (isLiveChat: boolean) => void;
+  isLiveCaht: boolean;
+};
+
+const ChatOptions = ({ setIsLiveChat, isLiveCaht }: ChatOptionsPropsType) => {
   const state = useTypedSelector((state) => state);
   const dispatch = useDispatch();
   const transitions = useTransition(state.appChat.showOptions, null, {
@@ -49,6 +54,15 @@ const ChatOptions = () => {
                 <SwitchButton
                   checked={state.appChat.showImg}
                   onChange={() => dispatch(toggleImage())}
+                />
+              </div>
+              <div className={styles.row}>
+                <span onClick={() => dispatch(toggleImage())}>
+                  Czat na żywo
+                </span>
+                <SwitchButton
+                  checked={isLiveCaht}
+                  onChange={() => setIsLiveChat(!isLiveCaht)}
                 />
               </div>
               {state.appPoorchat.user && (
