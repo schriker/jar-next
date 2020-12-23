@@ -39,13 +39,13 @@ class MyApp extends App<AppInitialProps> {
       if (ctx.query.streamer) {
         if (
           !state.appData.server.streamers.includes(ctx.query.streamer as string)
-        ) {
-          ctx.store.dispatch(addServerStreamer(ctx.query.streamer as string));
-          serverStreamers.push(ctx.query.streamer as string);
+          ) {
+            ctx.store.dispatch(addServerStreamer(ctx.query.streamer as string));
+            serverStreamers.push(ctx.query.streamer as string);
+          }
         }
-      }
-      try {
-        const streamersData = await fetchStreamersData(serverStreamers);
+        try {
+          const streamersData = await fetchStreamersData(serverStreamers);
         ctx.store.dispatch(setServerStreamers(streamersData));
       } catch (error) {}
       try {

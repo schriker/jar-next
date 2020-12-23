@@ -75,6 +75,15 @@ export const fetchStreamersData = (streamers: string[]) => {
         serverStreams,
         serverGames
       );
+      // Remove this if unbaned
+      streamersData.push({
+        displayName: 'Wonziu',
+        id: '0',
+        isLive: false,
+        login: 'wonziu',
+        profileImage: '',
+      });
+      // Remove this if unbaned
       resolve(streamersData);
     } catch (err) {
       reject();
@@ -138,17 +147,17 @@ export const fetchServerVideos = (
 };
 
 export const fetchYouTubeVideo = (id: string) => {
-  return new Promise<Video>(async(resolve, reject) => {
+  return new Promise<Video>(async (resolve, reject) => {
     try {
       const response = await API.get(`/video_youtube?id=${id}`);
       resolve({
-        ...response.data
-      })
+        ...response.data,
+      });
     } catch (error) {
       reject();
     }
-  })
-}
+  });
+};
 
 export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
   return new Promise<{ videos: Video[]; paginationCursor: string }>(
