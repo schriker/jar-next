@@ -75,15 +75,6 @@ export const fetchStreamersData = (streamers: string[]) => {
         serverStreams,
         serverGames
       );
-      // Remove this if unbaned
-      streamersData.push({
-        displayName: 'Wonziu',
-        id: '0',
-        isLive: false,
-        login: 'wonziu',
-        profileImage: '',
-      });
-      // Remove this if unbaned
       resolve(streamersData);
     } catch (err) {
       reject();
