@@ -10,6 +10,7 @@ import {
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 import { VideoSource } from 'types/video';
+import { useRouter } from 'next/router';
 
 type PlayerType = {
   play: () => void;
@@ -37,6 +38,7 @@ declare global {
 }
 
 const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
+  const router = useRouter();
   const [playerRef, setPlayerRef] = useState<PlayerType | null>(null);
   const dispatch = useDispatch();
   const state = useTypedSelector((state) => state.appPlayer);
@@ -44,6 +46,9 @@ const PlayerTwitch = ({ source }: { source: VideoSource[] }) => {
   var player: PlayerType | null = null;
 
   const onPlayerReady = () => {
+    if (router.query.t) {
+      player?.seek(parseInt(router.query.t as string));
+    }
     dispatch(startPlayer(false));
     dispatch(setReady(true));
     setPlayerRef(player);

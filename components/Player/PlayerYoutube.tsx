@@ -10,11 +10,13 @@ import {
   startPlayer,
   setReady,
   setPlayerPosition,
-  showHighlights
+  showHighlights,
+  seekTo,
 } from 'store/slices/appPlayer';
 import { useTypedSelector } from 'store/rootReducer';
 import { useDispatch } from 'react-redux';
 import { VideoSource } from 'types/video';
+import { useRouter } from 'next/router';
 
 type PlayerType = {
   playVideo: () => void;
@@ -42,6 +44,7 @@ declare global {
 }
 
 const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
+  const router = useRouter();
   const [playerRef, setPlayerRef] = useState<PlayerType | null>(null);
   const dispatch = useDispatch();
   const state = useTypedSelector((state) => state.appPlayer);
@@ -49,6 +52,9 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
   var player: PlayerType | null = null;
 
   const onPlayerReady = (event: any) => {
+    if (router.query.t) {
+      event.target.seekTo(parseInt(router.query.t as string));
+    }
     dispatch(startPlayer(false));
     dispatch(setReady(true));
     setPlayerRef(event.target);
@@ -152,6 +158,5 @@ const PlayerYoutube = ({ source }: { source: VideoSource[] }) => {
 
   return <div id="player"></div>;
 };
-
 
 export default PlayerYoutube;

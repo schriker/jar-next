@@ -1,0 +1,28 @@
+.shareCopyButton {
+  width: 100%;
+  margin: 30px 0 0 0;
+  font-family: 'Ubuntu', sans-serif;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  background-color: #f00;
+  transition: all ease 0.2s;
+}
+
+.shareCopyButton:hover {
+  background-color: rgb(189, 27, 27);
+}
+
+.row {
+  margin: 10px 0;
+}
+
+.row label {
+  font-size: 14px;
+  display: inline-block;
+  margin: 10px 0;
+}

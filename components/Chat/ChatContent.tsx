@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import useChatWorker from 'hooks/useChatWorker';
 import { startPlayer } from 'store/slices/appPlayer';
 import { setSelectedAuthor } from 'store/slices/appChat';
@@ -15,13 +15,19 @@ import {
 } from 'types/message';
 import { fetchMessages } from 'helpers/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlay,
+  faPlus,
+  faMinus,
+  faShare,
+} from '@fortawesome/free-solid-svg-icons';
 import styles from 'components/Chat/ChatContent.module.css';
 import SimpleBar from 'simplebar-react';
 import ChatMessage from 'components/Chat/ChatMessage';
 import ChatCard from 'components/Chat/ChatCard';
 import ChatToBottom from 'components/Chat/ChatToBottom';
 import ControllButton from 'components/ControllButton/ControllButton';
+import ShareVideoForm from 'components/ShareVideo/ShareVideoForm';
 
 type ChatContentPropsType = {
   video: Video;
@@ -59,16 +65,23 @@ const ChatContent = ({
   };
 
   const dispatch = useDispatch();
-  const { chatAdjustment, messages, chatAdjustmentHandler } = useChatWorker<
-    ChatMessageType
-  >({ fetch, video, emptyMessage });
+  const {
+    chatAdjustment,
+    messages,
+    chatAdjustmentHandler,
+  } = useChatWorker<ChatMessageType>({ fetch, video, emptyMessage });
   const bottom = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
   const player = useTypedSelector((state) => state.appPlayer);
   const chat = useTypedSelector((state) => state.appChat);
 
   return (
     <>
+      <ShareVideoForm
+        isOpen={shareModalOpen}
+        close={() => setShareModalOpen(false)}
+      />
       <div ref={ref} className={styles.adjustment}>
         <ControllButton
           tooltipContainer={ref.current}
@@ -89,6 +102,17 @@ const ChatContent = ({
             <FontAwesomeIcon icon={faPlus} />
           </div>
         </ControllButton>
+        <div className={styles.shareButton}>
+          <ControllButton
+            tooltipContainer={ref.current}
+            onClick={() => setShareModalOpen(true)}
+            tooltip="Udostępnij"
+          >
+            <div>
+              <FontAwesomeIcon icon={faShare} />
+            </div>
+          </ControllButton>
+        </div>
       </div>
       {!player.isPlaying && !player.startPlayer && messages.length === 0 ? (
         <div className={styles.playWrapper}>

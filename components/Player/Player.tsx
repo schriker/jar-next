@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { updateViews } from 'helpers/api';
 import { useDispatch } from 'react-redux';
 import { setSource } from 'store/slices/appPlayer';
@@ -17,6 +17,7 @@ import Notes from 'components/Notes/Notes';
 import Highlights from 'components/Highlights/Highlights';
 import { FullScreenHandle } from 'react-full-screen';
 import { useTypedSelector } from 'store/rootReducer';
+import { useRouter } from 'next/router';
 
 type PlayerPropsType = {
   video: Video;

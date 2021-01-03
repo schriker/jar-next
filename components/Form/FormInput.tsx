@@ -18,6 +18,7 @@ type FormInputPropsType = {
   placeholder: string;
   title: string;
   type?: string;
+  value?: string;
 };
 
 const FormInput = ({
@@ -28,6 +29,7 @@ const FormInput = ({
   label,
   placeholder,
   title,
+  value,
   type = "text"
 }: FormInputPropsType) => {
   return (
@@ -45,6 +47,7 @@ const FormInput = ({
           type={type}
           name={name}
           id={name}
+          value={value}
           placeholder={placeholder}
         />
       </Tooltip>

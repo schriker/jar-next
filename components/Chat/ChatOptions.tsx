@@ -57,7 +57,7 @@ const ChatOptions = ({ setIsLiveChat, isLiveCaht }: ChatOptionsPropsType) => {
                 />
               </div>
               <div className={styles.row}>
-                <span onClick={() => dispatch(toggleImage())}>
+                <span onClick={() => setIsLiveChat(!isLiveCaht)}>
                   Czat na żywo
                 </span>
                 <SwitchButton
