@@ -9,10 +9,6 @@ type ShareVideoFormPropsType = {
   close: () => void;
 };
 
-type Inputs = {
-  url: string;
-};
-
 const ShareVideoForm = ({ isOpen, close }: ShareVideoFormPropsType) => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -31,10 +27,9 @@ const ShareVideoForm = ({ isOpen, close }: ShareVideoFormPropsType) => {
             <div className={styles.row}>
               <label htmlFor="">Udostępnij</label>
               <input
-                readOnly={true}
+                readOnly
                 ref={inputRef}
-                onChange={() => undefined}
-                defaultValue={`https://jarchiwum.pl${
+                value={`https://jarchiwum.pl${
                   router.asPath.split('?')[0]
                 }?t=${Math.round(state.appPlayer.playerPosition)}`}
               />

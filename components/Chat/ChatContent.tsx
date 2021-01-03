@@ -106,7 +106,7 @@ const ChatContent = ({
           <ControllButton
             tooltipContainer={ref.current}
             onClick={() => setShareModalOpen(true)}
-            tooltip="Udostępnij"
+            tooltip={'Udostępnij aktualny czas.'}
           >
             <div>
               <FontAwesomeIcon icon={faShare} />
