@@ -26,7 +26,7 @@
     "@types/uuid": "^8.3.0",
     "@zeit/next-workers": "^1.0.0",
     "awesome-debounce-promise": "^2.1.0",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "firebase": "^8.0.1",
     "irc-formatting": "^1.0.0-rc3",
     "js-cookie": "^2.2.1",
