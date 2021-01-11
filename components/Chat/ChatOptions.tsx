@@ -17,7 +17,7 @@ type ChatOptionsPropsType = {
 const ChatOptions = ({ setIsLiveChat, isLiveCaht }: ChatOptionsPropsType) => {
   const state = useTypedSelector((state) => state);
   const dispatch = useDispatch();
-  const transitions = useTransition(state.appChat.showOptions, null, {
+  const transitions = useTransition(state.appChat.showOptions, {
     from: { opacity: 0, transform: 'translate(0, -60%)' },
     enter: { opacity: 1, transform: 'translate(0, -50%)' },
     leave: { opacity: 0, transform: 'translate(0, -60%)' },
@@ -25,10 +25,10 @@ const ChatOptions = ({ setIsLiveChat, isLiveCaht }: ChatOptionsPropsType) => {
 
   return (
     <>
-      {transitions.map(
-        ({ item, key, props }) =>
+      {transitions(
+        (style, item) =>
           item && (
-            <animated.div key={key} style={props} className={styles.wrapper}>
+            <animated.div style={style as any} className={styles.wrapper}>
               <div className={styles.title}>
                 <span>Ustawienia czatu</span>
                 <div

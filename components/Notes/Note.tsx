@@ -15,9 +15,8 @@ const Note = ({ note, emoticons }: NotePropsType) => {
   const [refMap] = useState(() => new WeakMap());
   const tooltipContainer = useRef<HTMLDivElement | null>(null);
   const [items, setItems] = useState<NoteType[]>([note]);
-  const transition = useTransition(items, null, {
+  const transition = useTransition(items, {
     from: { opacity: 0, height: 0 },
-    //@ts-expect-error
     enter: (item) => async (next) =>
       await next({ opacity: 1, height: refMap.get(item).offsetHeight }),
     leave: { opacity: 0 },
@@ -31,14 +30,13 @@ const Note = ({ note, emoticons }: NotePropsType) => {
 
   return (
     <>
-      {transition.map(
-        ({ item, props }) =>
+      {transition(
+        (style, item) =>
           item && (
             <animated.div
               ref={tooltipContainer}
               className={styles.container}
-              style={props}
-              key={note.uuid}
+              style={style as any}
             >
               <div
                 className={styles.wrapper}

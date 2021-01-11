@@ -49,7 +49,7 @@ const AddStreamer = ({ isOpen, open }: AddStreamerPropsType) => {
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </button>
-      <animated.div style={slideIn} className={styles.inputWrapper}>
+      <animated.div style={slideIn as any} className={styles.inputWrapper}>
         <input
           ref={inputRef}
           disabled={state.client.isFetching}

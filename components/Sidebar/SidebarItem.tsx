@@ -84,7 +84,7 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
         className={styles.wrapper}
       >
         <div className={styles.sidebarItem}>
-          <animated.div style={fadeIn}>
+          <animated.div style={fadeIn as any}>
             <img
               onLoad={() => setLoaded(true)}
               width="32"
@@ -94,7 +94,7 @@ const SidebarItem = ({ streamer, isServerSide, isOpen }: SidebarItemProps) => {
             <StatusIcon centerVertical={false} isLive={streamer.isLive} />
           </animated.div>
         </div>
-        <animated.div style={slideIn} className={styles.content}>
+        <animated.div style={slideIn as any} className={styles.content}>
           <div className={styles.name}>
             <div>{trimString(streamer.displayName, 15)}</div>
             {streamer.game && (

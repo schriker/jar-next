@@ -12,25 +12,21 @@ type DropdownPropsType = {
 
 const Dropdown = ({ close, isOpen, children }: DropdownPropsType) => {
   const ref = useRef(null);
-  const transitions = useTransition(isOpen, null, {
+  const transitions = useTransition(isOpen, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
   });
+
   useOnClickOutside(ref, close);
 
   return (
     <>
       <Shadow isOpen={isOpen} />
-      {transitions.map(
-        ({ item, key, props }) =>
+      {transitions(
+        (style, item) =>
           item && (
-            <animated.div
-              ref={ref}
-              key={key}
-              style={props}
-              className={styles.wrapper}
-            >
+            <animated.div ref={ref} style={style as any} className={styles.wrapper}>
               {children}
             </animated.div>
           )

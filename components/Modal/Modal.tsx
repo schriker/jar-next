@@ -15,7 +15,7 @@ type ModalPropsType = {
 
 const Modal = ({ children, isOpen, close }: ModalPropsType) => {
   const tooltipContainer = useRef<HTMLDivElement | null>(null);
-  const transition = useTransition(isOpen, null, {
+  const transition = useTransition(isOpen, {
     from: { opacity: 0, transform: 'translate(-50%, -70%)' },
     enter: { opacity: 1, transform: 'translate(-50%, -50%)' },
     leave: { opacity: 0, transform: 'translate(-50%, -70%)' },
@@ -24,14 +24,13 @@ const Modal = ({ children, isOpen, close }: ModalPropsType) => {
   return (
     <>
       <Shadow isOpen={isOpen} onClick={close} />
-      {transition.map(
-        ({ item, key, props }) =>
+      {transition(
+        (style, item) =>
           item && (
             <animated.div
               ref={tooltipContainer}
               className={styles.wrapper}
-              key={key}
-              style={props}
+              style={style as any}
             >
               <div className={styles.close} onClick={close}>
                 <FontAwesomeIcon icon={faTimes} />

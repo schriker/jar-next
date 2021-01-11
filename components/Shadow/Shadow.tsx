@@ -15,9 +15,8 @@ const Shadow = ({
   onClick,
   absolute = false,
 }: ShadowProps) => {
-  const transitions = useTransition(isOpen, null, {
+  const transitions = useTransition(isOpen, {
     from: { opacity: 0 },
-    //@ts-expect-error
     enter: () => async (next) => {
       await new Promise((resolve) => setTimeout(resolve, delay));
       await next({ opacity: 0.5 });
@@ -33,14 +32,13 @@ const Shadow = ({
 
   return (
     <>
-      {transitions.map(
-        ({ item, key, props }) =>
+      {transitions(
+        (style, item) =>
           item && (
             <animated.div
               onClick={() => onClickHandler()}
               className={absolute ? styles.absolute : styles.shadow}
-              key={key}
-              style={props}
+              style={style as any}
             />
           )
       )}

@@ -96,7 +96,6 @@
   position: absolute;
   font-size: 12px;
   padding: 3px 10px;
-  background-color: #000;
   border-radius: 3px;
 }
 
@@ -110,11 +109,13 @@
 .duration {
   left: 6px;
   bottom: 5px;
+  background-color: black;
 }
 
 .views {
   right: 6px;
   bottom: 5px;
+  background-color: black;
 }
 
 .bookmark {
