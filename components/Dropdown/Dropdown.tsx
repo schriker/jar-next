@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useTransition, animated } from 'react-spring';
 import useOnClickOutside from 'use-onclickoutside';
 import Shadow from 'components/Shadow/Shadow';

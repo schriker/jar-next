@@ -51,7 +51,7 @@ export const appFirebaseSignIn = ({
   email,
   password,
 }: FirebaseUserCredentials) =>
-  new Promise(async (resolve, reject) => {
+  new Promise<void>(async (resolve, reject) => {
     try {
       await firebaseSignIn({ email, password });
       resolve();
@@ -65,7 +65,7 @@ export const appFirebaseCreateUser = ({
   email,
   password,
 }: FirebaseUserCredentials) =>
-  new Promise(async (resolve, reject) => {
+  new Promise<void>(async (resolve, reject) => {
     try {
       await firebaseCreateUser({ email, password });
       resolve();

@@ -16,7 +16,7 @@ const Notification = () => {
   });
 
   useEffect(() => {
-    let timeOut: number;
+    let timeOut: NodeJS.Timeout;
     if (notification.isOpen) {
       timeOut = setTimeout(() => {
         dispatch(clearNotification());
