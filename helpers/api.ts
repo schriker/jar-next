@@ -75,6 +75,15 @@ export const fetchStreamersData = (streamers: string[]) => {
         serverStreams,
         serverGames
       );
+      if (!streamersData.some((streamer) => streamer.login === 'wonziu')) {
+        streamersData.push({
+          displayName: 'Wonziu',
+          id: '0',
+          isLive: false,
+          login: 'wonziu',
+          profileImage: '',
+        });
+      }
       resolve(streamersData);
     } catch (err) {
       reject();
