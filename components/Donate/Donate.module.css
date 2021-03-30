@@ -1,0 +1,38 @@
+.wrapper {
+  font-size: 14px;
+  line-height: 22px;
+  color: #bbbbbb;
+  padding-top: 30px;
+}
+
+.wrapper a {
+  display: block;
+  color: #fff;
+  margin: 15px 0;
+  font-size: 18px;
+  text-align: center;
+  transition: all ease 0.2s;
+}
+
+.wrapper a:hover {
+  color: #f00;
+}
+
+.button {
+  margin-top: 20px;
+  width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  background-color: #f00;
+  transition: all ease 0.2s;
+}
+
+.button:hover {
+  background-color: rgb(189, 27, 27);
+}

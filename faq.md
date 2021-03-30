@@ -18,6 +18,6 @@ Konto wymagane jest jeśli chcesz aby stan aplikacji tj. lista streamerów, zapi
 
 Aktualnie wiem, ze nie dziala opcja zmiany prędkości odtwarzania dla playera Twitcha. Jeśli znalazłeś inne błędy daj znac na czacie lub: https://github.com/schriker/jar-next/issues/new
 
-## Chcesz pomóc?
+## Link do zrzutki:
 
-Aktualnie planuje opisać w słowa kluczowe video z w/w playlist by dodać je do bazy z w miarę łatwą możliwością wyszukania. Wiec jesli jestes na tyle zdesperowany to daj znać :)
+* [https://zrzutka.pl/gesz5f](https://zrzutka.pl/gesz5f)
