@@ -17,7 +17,7 @@ const Donate = () => {
 
   const handleClose = () => {
     setIsOpen(false);
-    Cookies.set(COOKIE_NAME, '1');
+    Cookies.set(COOKIE_NAME, '1', { expires: 365 });
   };
 
   return (
