@@ -2,16 +2,8 @@ import { FieldError } from 'react-hook-form';
 import Tooltip from '@material-ui/core/Tooltip';
 import styles from 'components/Form/FormInput.module.css';
 
-type RefReturn =
-  | string
-  | ((instance: HTMLInputElement | null) => void)
-  | React.RefObject<HTMLInputElement>
-  | null
-  | undefined
-  | void;
-
 type FormInputPropsType = {
-  register: () => RefReturn;
+  register: () => void;
   errors: FieldError | undefined;
   tooltipContainer: HTMLDivElement | null;
   name: string;
