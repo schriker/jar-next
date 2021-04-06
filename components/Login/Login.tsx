@@ -25,7 +25,11 @@ const Login = ({ isOpen, close }: LoginPropsType) => {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(true);
-  const { register, handleSubmit, errors } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
 
   const onSubmit = handleSubmit(async ({ email, password }) => {
     try {
@@ -75,7 +79,7 @@ const Login = ({ isOpen, close }: LoginPropsType) => {
                 tooltipContainer={tooltipContainer.current}
                 errors={errors.email}
                 register={() =>
-                  register({
+                  register('email', {
                     required: true,
                     pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                   })
@@ -89,7 +93,9 @@ const Login = ({ isOpen, close }: LoginPropsType) => {
                 type="password"
                 tooltipContainer={tooltipContainer.current}
                 errors={errors.password}
-                register={() => register({ required: true, minLength: 6 })}
+                register={() =>
+                  register('password', { required: true, minLength: 6 })
+                }
               />
               <div>
                 <FormSubmitButton disabled={isLoading} />

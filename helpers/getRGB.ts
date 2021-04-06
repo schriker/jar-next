@@ -1,5 +1,3 @@
-import { get } from 'react-hook-form';
-
 const getRGB = (color: string) => {
   let c: string[] | string;
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(color)) {

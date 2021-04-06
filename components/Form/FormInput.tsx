@@ -7,7 +7,8 @@ type RefReturn =
   | ((instance: HTMLInputElement | null) => void)
   | React.RefObject<HTMLInputElement>
   | null
-  | undefined;
+  | undefined
+  | void;
 
 type FormInputPropsType = {
   register: () => RefReturn;
@@ -30,7 +31,7 @@ const FormInput = ({
   placeholder,
   title,
   value,
-  type = "text"
+  type = 'text',
 }: FormInputPropsType) => {
   return (
     <div className={styles.row}>
@@ -43,12 +44,13 @@ const FormInput = ({
         arrow
       >
         <input
-          ref={register()}
+          // ref={register()}
           type={type}
           name={name}
           id={name}
           value={value}
           placeholder={placeholder}
+          {...register()}
         />
       </Tooltip>
     </div>

@@ -23,7 +23,7 @@ const AddVideoForm = ({ isOpen, close }: AddVideoFormPropsType) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit, errors } = useForm<Inputs>();
+  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
 
   const onSubmit = handleSubmit(async ({ url }) => {
     try {
@@ -80,7 +80,7 @@ const AddVideoForm = ({ isOpen, close }: AddVideoFormPropsType) => {
               tooltipContainer={tooltipContainer.current}
               errors={errors.url}
               register={() =>
-                register({
+                register('url', {
                   required: true,
                   pattern: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
                 })
