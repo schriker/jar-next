@@ -10,6 +10,7 @@ import ChatContent from 'components/Chat/ChatContent';
 import ChatOptions from 'components/Chat/ChatOptions';
 import useChatIconsData from 'hooks/useChatIconsData';
 import ChatLive from 'components/Chat/ChatLive';
+import ChatUserDetails from 'components/ChatUserDetails/ChatUserDetails';
 
 type ChatPropsType = {
   video: Video;
@@ -23,6 +24,7 @@ const Chat = ({ video }: ChatPropsType) => {
 
   return (
     <div className={styles.wrapper}>
+      <ChatUserDetails />
       <Shadow
         isOpen={chat.showOptions}
         onClick={() => dispatch(toggleOptions())}

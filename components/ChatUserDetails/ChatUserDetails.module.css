@@ -1,0 +1,36 @@
+.wrapper {
+  position: absolute;
+  z-index: 995;
+  top: 45px;
+  width: calc(100% - 30px);
+  background-color: #2b2b2b;
+  border-radius: 3px;
+  font-size: 14px;
+  padding: 7px 12px;
+}
+
+.wrapper p {
+  font-size: 12px;
+  color: #bbb;
+  line-height: 20px;
+}
+
+.loading {
+  height: 15px;
+  border-radius: 3px;
+  background-color: blue;
+  animation: fade 2s ease infinite;
+  background-color: rgb(27, 27, 27);
+}
+
+@keyframes fade {
+  0% {
+    background-color: rgb(27, 27, 27);
+  }
+  50% {
+    background-color: rgba(71, 71, 71, 0.5);
+  }
+  100% {
+    background-color: rgb(27, 27, 27);
+  }
+}
