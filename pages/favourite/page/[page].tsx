@@ -27,7 +27,7 @@ const FavourtiePage: NextPage = () => {
         ...router.query,
         streamer: 'wonziu',
         page: router.query.page ? parseInt(router.query.page as string) : 1,
-        per_page: 24,
+        per_page: parseInt(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE!),
       };
       const response = await fetchServerVideos(serverQuery, {
         watched: appData.server.hideWatched ? watched : [],

@@ -74,7 +74,7 @@ Page.getInitialProps = async ({ store, query }) => {
         ...query,
         streamer: query.streamer,
         page: query.page ? parseInt(query.page as string) : 1,
-        per_page: 24,
+        per_page: parseInt(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE!),
       };
       const response = await fetchServerVideos(serverQuery, {
         watched: watched,
@@ -86,7 +86,7 @@ Page.getInitialProps = async ({ store, query }) => {
       if (streamer) {
         const twitchQuery: TwitchVideoQuery = {
           user_id: streamer.id,
-          first: 24,
+          first: parseInt(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE!),
           ...query,
         };
         const response = await fetchTwitchVideos(twitchQuery);
