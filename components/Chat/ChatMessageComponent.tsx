@@ -8,7 +8,7 @@ import styles from 'components/Chat/ChatMessageComponent.module.css';
 type ChatMessageComponentPropsType = {
   part: ChatMessageComponentType;
   tooltipContainer: HTMLDivElement | null;
-  handleAuthorClick: (e: React.MouseEvent, author: string) => void;
+  handleAuthorClick?: (e: React.MouseEvent, author: string) => void;
 };
 
 const ChatMessageComponent = ({
@@ -24,7 +24,7 @@ const ChatMessageComponent = ({
             dangerouslySetInnerHTML={{ __html: ircf.renderHtml(part.body) }}
           ></span>
         </>
-      ) : part.type === 'chatUser' ? (
+      ) : part.type === 'chatUser' && handleAuthorClick ? (
         <span
           onClick={(e) => handleAuthorClick(e, part.body.trim())}
           className={styles.chatUser}

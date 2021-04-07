@@ -13,7 +13,7 @@ declare global {
 export const messageParser = (
   messageToParse: string,
   emoticons: ChatEmoticon[],
-  chatUsers: string[]
+  chatUsers?: string[]
 ) => {
   let messageComponents: ChatMessageComponentType[] = [];
   let message = linkifyHtml(messageToParse.replace(/[&<>]/g, replaceTag), {
@@ -46,7 +46,7 @@ export const messageParser = (
 const messagePartsParser = (
   part: string,
   emoticons: ChatEmoticon[],
-  chatUsers: string[]
+  chatUsers?: string[]
 ) => {
   const emojiRegex = new RegExp(/:(\D\d|\w*?):/, 'g');
 
@@ -89,7 +89,7 @@ const messagePartsParser = (
     }
   }
 
-  if (chatUsers.includes(part.split(',')[0])) {
+  if (chatUsers?.includes(part.split(',')[0])) {
     return [
       {
         type: 'chatUser',
