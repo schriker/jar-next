@@ -8,3 +8,16 @@
   height: 28px;
   vertical-align: middle;
 }
+
+.chatUser {
+  cursor: pointer;
+  color: #fff;
+  background-color: #444;
+  border-radius: 3px;
+  padding: 3px 7px;
+  margin: 0 3px;
+}
+
+.chatUser:hover {
+  background-color: #595959;
+}

@@ -8,6 +8,7 @@ type AppChatStateType = {
   showTime: boolean;
   showOptions: boolean;
   selectedAuthor: string;
+  chatUsers: string[];
 };
 
 const appChatInitialState: AppChatStateType = {
@@ -16,6 +17,7 @@ const appChatInitialState: AppChatStateType = {
   showTime: true,
   showOptions: false,
   selectedAuthor: '',
+  chatUsers: [],
 };
 
 const appChatSlice = createSlice({
@@ -41,6 +43,9 @@ const appChatSlice = createSlice({
     toggleImage(state) {
       state.showImg = !state.showImg;
     },
+    addChatUser(state, { payload }: PayloadAction<string>) {
+      state.chatUsers = [...new Set([...state.chatUsers, payload])];
+    },
     setUserNote(state, { payload }: PayloadAction<NoteType | null>) {
       state.userNote = payload;
     },
@@ -59,6 +64,7 @@ export const {
   toggleTime,
   toggleOptions,
   setUserNote,
+  addChatUser,
 } = appChatSlice.actions;
 
 export default appChatSlice.reducer;

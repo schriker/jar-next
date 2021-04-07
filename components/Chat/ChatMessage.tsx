@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSelectedAuthor } from 'store/slices/appChat';
+import appChat, { addChatUser, setSelectedAuthor } from 'store/slices/appChat';
 import { useTypedSelector } from 'store/rootReducer';
 import moment from 'moment';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -61,6 +61,10 @@ const ChatMessage = ({
   const dispatch = useDispatch();
   const chat = useTypedSelector((state) => state.appChat);
   const isAction = message.body.split(' ')[0] === '\u0001ACTION';
+
+  useEffect(() => {
+    dispatch(addChatUser(message.author));
+  }, []);
 
   let nickColor = message.color ? message.color : '#FFFFFF';
   const isVisible = checkContrast(nickColor);
@@ -166,12 +170,12 @@ const ChatMessage = ({
     isAuhorSelected = false;
   }
 
-  const handleAuthorClick = (e: React.MouseEvent) => {
+  const handleAuthorClick = (e: React.MouseEvent, author: string) => {
     e.stopPropagation();
-    if (chat.selectedAuthor === message.author) {
+    if (chat.selectedAuthor === author) {
       dispatch(setSelectedAuthor(''));
     } else {
-      dispatch(setSelectedAuthor(message.author));
+      dispatch(setSelectedAuthor(author));
     }
   };
 
@@ -224,7 +228,7 @@ const ChatMessage = ({
           </span>
         )}
         <span
-          onClick={handleAuthorClick}
+          onClick={(e) => handleAuthorClick(e, message.author)}
           className={styles.author}
           style={{
             color: nickColor,
@@ -236,13 +240,16 @@ const ChatMessage = ({
         :{' '}
         {!isAction && (
           <span className={styles.message}>
-            {messageParser(message.body, emoticons).map((part, index) => (
-              <ChatMessageComponent
-                tooltipContainer={tooltipContainer}
-                key={`${message.uuid}-${index}`}
-                part={part}
-              />
-            ))}
+            {messageParser(message.body, emoticons, chat.chatUsers).map(
+              (part, index) => (
+                <ChatMessageComponent
+                  handleAuthorClick={handleAuthorClick}
+                  tooltipContainer={tooltipContainer}
+                  key={`${message.uuid}-${index}`}
+                  part={part}
+                />
+              )
+            )}
           </span>
         )}
         {isAction && <span className={styles.action}>{message.body}</span>}
