@@ -14,7 +14,7 @@ const ChatUserDetails = () => {
 
   return !!selectedAuthor.length ? (
     <div className={styles.wrapper}>
-      {isLoading ? (
+      {isLoading || !author ? (
         <div className={styles.loading}></div>
       ) : !author?.length ? (
         <div>{selectedAuthor}</div>
