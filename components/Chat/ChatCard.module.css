@@ -6,7 +6,7 @@
   margin: 10px 15px 10px 0;
   padding: 10px 15px;
   font-size: 14px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .wrapper img,
