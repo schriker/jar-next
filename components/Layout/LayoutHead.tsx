@@ -9,6 +9,7 @@ const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {
     <>
       <Head>
         <title>{title}</title>
+        <meta name="theme-color" content="#FF0000" />
         <meta property="og:title" content={title} />
         <meta property="og:type" content="website" />
         <meta
