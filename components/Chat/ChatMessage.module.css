@@ -27,6 +27,7 @@
 
 .message {
   color: rgb(219, 219, 219);
+  word-wrap: break-word;
 }
 
 .action {
