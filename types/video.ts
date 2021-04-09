@@ -1,7 +1,7 @@
 export type VideoSource = {
   name: string;
-  id: string
-}
+  id: string;
+};
 
 export type VideoHighLight = {
   time: string;
@@ -19,6 +19,7 @@ export type Video = {
   thumbnail: string;
   started: string;
   createdAt?: string;
+  created_at?: string;
   screenshots?: string[];
   source?: VideoSource[];
   score?: number;

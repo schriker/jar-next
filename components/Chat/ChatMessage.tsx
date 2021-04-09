@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import appChat, { addChatUser, setSelectedAuthor } from 'store/slices/appChat';
+import appChat, { setSelectedAuthor } from 'store/slices/appChat';
 import { useTypedSelector } from 'store/rootReducer';
 import moment from 'moment';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -61,10 +61,6 @@ const ChatMessage = ({
   const dispatch = useDispatch();
   const chat = useTypedSelector((state) => state.appChat);
   const isAction = message.body.split(' ')[0] === '\u0001ACTION';
-
-  useEffect(() => {
-    dispatch(addChatUser(message.author));
-  }, []);
 
   let nickColor = message.color ? message.color : '#FFFFFF';
   const isVisible = checkContrast(nickColor);

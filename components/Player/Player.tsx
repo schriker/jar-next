@@ -18,6 +18,7 @@ import Highlights from 'components/Highlights/Highlights';
 import { FullScreenHandle } from 'react-full-screen';
 import { useTypedSelector } from 'store/rootReducer';
 import { useRouter } from 'next/router';
+import { getMessagesAuthors } from 'store/slices/appChat';
 
 type PlayerPropsType = {
   video: Video;
@@ -35,6 +36,7 @@ const Player = ({ video, streamer, fullscreen }: PlayerPropsType) => {
   useEffect(() => {
     if (streamer) {
       updateViews(streamer.login, video.id);
+      dispatch(getMessagesAuthors(video));
     }
     if (youtube?.length) {
       dispatch(setSource('YOUTUBE'));

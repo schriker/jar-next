@@ -217,6 +217,21 @@ export const updateViews = (streamer: string, id: string) => {
   }
 };
 
+export const fetchMessagesAuthors = (body: {
+  lt: string;
+  gt: string;
+  streamer: string;
+}) => {
+  return new Promise<string[]>(async (resolve, reject) => {
+    try {
+      const response = await API.post(`/message/authors`, body);
+      resolve(response.data);
+    } catch (err) {
+      reject();
+    }
+  });
+};
+
 export const fetchMessages = (body: {
   lt: string;
   gt: string;

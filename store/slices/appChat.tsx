@@ -1,6 +1,10 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NoteType } from 'types/notes';
+import { Video } from 'types/video';
+import { AppThunk } from 'store/store';
+import { fetchMessagesAuthors } from 'helpers/api';
+import moment from 'moment';
 
 type AppChatStateType = {
   userNote: NoteType | null;
@@ -43,8 +47,8 @@ const appChatSlice = createSlice({
     toggleImage(state) {
       state.showImg = !state.showImg;
     },
-    addChatUser(state, { payload }: PayloadAction<string>) {
-      state.chatUsers = [...new Set([...state.chatUsers, payload])];
+    setChatUsers(state, { payload }: PayloadAction<string[]>) {
+      state.chatUsers = payload;
     },
     setUserNote(state, { payload }: PayloadAction<NoteType | null>) {
       state.userNote = payload;
@@ -64,7 +68,25 @@ export const {
   toggleTime,
   toggleOptions,
   setUserNote,
-  addChatUser,
+  setChatUsers,
 } = appChatSlice.actions;
 
 export default appChatSlice.reducer;
+
+export const getMessagesAuthors = (video: Video): AppThunk => async (
+  dispatch
+) => {
+  try {
+    const response = await fetchMessagesAuthors({
+      streamer: 'wonziu',
+      gt: video.started,
+      lt: video.createdAt
+        ? video.createdAt
+        : moment(video.started).add(48, 'hours').toISOString(),
+    });
+
+    dispatch(setChatUsers(response));
+  } catch (error) {
+    console.log(error);
+  }
+};
