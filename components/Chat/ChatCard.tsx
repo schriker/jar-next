@@ -5,6 +5,10 @@ import { ChatMessageType } from 'types/message';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { useInView } from 'react-intersection-observer';
+import { messageParser } from 'helpers/messageParser';
+import ChatMessageComponent from './ChatMessageComponent';
+import { useDispatch } from 'react-redux';
+import { setSelectedAuthor } from 'store/slices/appChat';
 
 type ChatCardType = {
   color: string;
@@ -30,10 +34,20 @@ type ChatCardPropsType = {
 
 const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
   let content = null;
+  const dispatch = useDispatch();
   let card: ChatCardType | null = null;
   const chat = useTypedSelector((state) => state.appChat);
   const [inViewRef, inView] = useInView();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const handleAuthorClick = (e: React.MouseEvent, author: string) => {
+    e.stopPropagation();
+    if (chat.selectedAuthor === author) {
+      dispatch(setSelectedAuthor(''));
+    } else {
+      dispatch(setSelectedAuthor(author));
+    }
+  };
 
   if (videoRef.current) {
     if (!inView) {
@@ -120,7 +134,18 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
         className={styles.wrapper}
       >
         {message.type === 'NOTICE'
-          ? message.body
+          ? messageParser(
+              message.body,
+              [],
+              chat.chatUsers
+            ).map((part, index) => (
+              <ChatMessageComponent
+                handleAuthorClick={handleAuthorClick}
+                tooltipContainer={null}
+                key={`${message.uuid}-${index}`}
+                part={part}
+              />
+            ))
           : message.type === 'EMBED'
           ? content
           : null}

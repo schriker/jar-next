@@ -3,6 +3,6 @@ import axios from 'axios';
 export const API = axios.create({
   baseURL:
     process.env.NODE_ENV === 'development'
-      ? 'http://192.168.1.108:3003'
+      ? 'http://localhost:3003'
       : 'https://api.jarchiwum.pl',
 });
