@@ -28,13 +28,13 @@ const useChatWorker = <T extends unknown>({
 
   useEffect(() => {
     if (isNote) {
-      workerRef.current = new Worker('../helpers/note.worker.js', {
-        type: 'module',
-      });
+      workerRef.current = new Worker(
+        new URL('../helpers/note.worker.js', import.meta.url)
+      );
     } else {
-      workerRef.current = new Worker('../helpers/message.worker.js', {
-        type: 'module',
-      });
+      workerRef.current = new Worker(
+        new URL('../helpers/message.worker.js', import.meta.url)
+      );
     }
     return () => {
       setMessages([]);
@@ -81,7 +81,7 @@ const useChatWorker = <T extends unknown>({
             playbackRate: player.playbackRate,
             video: video,
             chatAdjustment: chatAdjustment,
-            playerPosition: player.playerPosition
+            playerPosition: player.playerPosition,
           });
           workerRef.current.onmessage = ({ data }) => {
             switch (data.type) {

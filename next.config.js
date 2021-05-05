@@ -1,14 +1,10 @@
-const WorkerPlugin = require('worker-plugin');
+// const WorkerPlugin = require('worker-plugin');
 
 module.exports = {
+  future: {
+    webpack5: true,
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    if (!isServer) {
-      config.plugins.push(
-        new WorkerPlugin({
-          globalObject: 'self',
-        })
-      );
-    }
     config.module.rules.push({
       test: /react-spring/,
       sideEffects: true,
