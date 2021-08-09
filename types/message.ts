@@ -6,6 +6,7 @@ export type ChatMessageType = {
   body: string;
   color: string;
   subscription: number;
+  subscriptionBadge: number | null;
   subscriptiongifter: number;
   week_position?: number | null;
   createdAt: string;

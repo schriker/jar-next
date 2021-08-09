@@ -60,16 +60,14 @@ const ChatContent = ({
     body: 'Nie posiadamy zapisu wiadomości dla tego vod.',
     color: '',
     subscription: 0,
+    subscriptionBadge: null,
     subscriptiongifter: 0,
     createdAt: video.started,
   };
 
   const dispatch = useDispatch();
-  const {
-    chatAdjustment,
-    messages,
-    chatAdjustmentHandler,
-  } = useChatWorker<ChatMessageType>({ fetch, video, emptyMessage });
+  const { chatAdjustment, messages, chatAdjustmentHandler } =
+    useChatWorker<ChatMessageType>({ fetch, video, emptyMessage });
   const bottom = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
   const [shareModalOpen, setShareModalOpen] = useState(false);

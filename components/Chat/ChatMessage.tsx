@@ -100,21 +100,31 @@ const ChatMessage = ({
 
   const sub: { icon: string; srcset: string } | null = useMemo(() => {
     if (message.subscription > 0 && badges) {
-      const badge = badges.subscriber.filter(
-        (badge) => badge.months <= message.subscription
-      );
-      return {
-        icon: `https://static.poorchat.net/badges/${
-          badge[badge.length - 1].file
-        }/1x`,
-        srcset: `https://static.poorchat.net/badges/${
-          badge[badge.length - 1].file
-        }/1x, https://static.poorchat.net/badges/${
-          badge[badge.length - 1].file
-        }/2x 1.25x, https://static.poorchat.net/badges/${
-          badge[badge.length - 1].file
-        }/4x 2.25x`,
-      };
+      if (message.subscriptionBadge) {
+        const [badge] = badges.subscriber.filter(
+          (badge) => badge.months === message.subscriptionBadge
+        );
+        return {
+          icon: `https://static.poorchat.net/badges/${badge.file}/1x`,
+          srcset: `https://static.poorchat.net/badges/${badge.file}/1x, https://static.poorchat.net/badges/${badge.file}/2x 1.25x, https://static.poorchat.net/badges/${badge.file}/4x 2.25x`,
+        };
+      } else {
+        const badge = badges.subscriber.filter(
+          (badge) => badge.months <= message.subscription
+        );
+        return {
+          icon: `https://static.poorchat.net/badges/${
+            badge[badge.length - 1].file
+          }/1x`,
+          srcset: `https://static.poorchat.net/badges/${
+            badge[badge.length - 1].file
+          }/1x, https://static.poorchat.net/badges/${
+            badge[badge.length - 1].file
+          }/2x 1.25x, https://static.poorchat.net/badges/${
+            badge[badge.length - 1].file
+          }/4x 2.25x`,
+        };
+      }
     }
     return null;
   }, []);
