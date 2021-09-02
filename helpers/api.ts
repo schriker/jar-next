@@ -256,6 +256,7 @@ export const authCallback = (code: string) => {
   return new Promise<{
     user: PoorchatUser;
     subscription: PoorchatSubscription;
+    blockedUsers: PoorchatBlockedUser[];
     cookies: string[];
   }>(async (resolve, reject) => {
     try {

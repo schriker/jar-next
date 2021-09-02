@@ -37,8 +37,10 @@ const Callback: NextPage = () => {
 Callback.getInitialProps = async ({ store, query, res }) => {
   try {
     const { code } = query;
-    const { user, subscription, cookies } = await authCallback(code as string);
-    store.dispatch(setPoorchatUser({ user, subscription }));
+    const { user, subscription, cookies, blockedUsers } = await authCallback(
+      code as string
+    );
+    store.dispatch(setPoorchatUser({ user, subscription, blockedUsers }));
     store.dispatch(setNotification(`Zalogowano jako: ${user.name}`));
     if (res) {
       res.setHeader('set-cookie', [...cookies]);
