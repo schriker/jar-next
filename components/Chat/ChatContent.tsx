@@ -73,6 +73,7 @@ const ChatContent = ({
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const player = useTypedSelector((state) => state.appPlayer);
   const chat = useTypedSelector((state) => state.appChat);
+  const poorchat = useTypedSelector((state) => state.appPoorchat);
 
   return (
     <>
@@ -142,7 +143,10 @@ const ChatContent = ({
                     key={message.uuid}
                     message={message}
                   />
-                ) : message.author !== 'irc.poorchat.net' ? (
+                ) : message.author !== 'irc.poorchat.net' &&
+                  !poorchat.blockedUsers?.some(
+                    (user) => user.name === message.author
+                  ) ? (
                   <ChatMessage
                     key={message.uuid}
                     badges={badges}
