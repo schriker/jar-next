@@ -39,19 +39,23 @@ class MyApp extends App<AppInitialProps> {
       if (ctx.query.streamer) {
         if (
           !state.appData.server.streamers.includes(ctx.query.streamer as string)
-          ) {
-            ctx.store.dispatch(addServerStreamer(ctx.query.streamer as string));
-            serverStreamers.push(ctx.query.streamer as string);
-          }
+        ) {
+          ctx.store.dispatch(addServerStreamer(ctx.query.streamer as string));
+          serverStreamers.push(ctx.query.streamer as string);
         }
-        try {
-          const streamersData = await fetchStreamersData(serverStreamers);
+      }
+      try {
+        const streamersData = await fetchStreamersData(serverStreamers);
         ctx.store.dispatch(setServerStreamers(streamersData));
       } catch (error) {}
       try {
         if (ctx.req && ctx.req.headers.cookie?.includes('payload_cookie')) {
-          const { user, subscription } = await auth(ctx.req.headers.cookie);
-          ctx.store.dispatch(setPoorchatUser({ user, subscription }));
+          const { user, subscription, blockedUsers } = await auth(
+            ctx.req.headers.cookie
+          );
+          ctx.store.dispatch(
+            setPoorchatUser({ user, subscription, blockedUsers })
+          );
         }
       } catch (error) {}
     }

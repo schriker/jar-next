@@ -3,7 +3,11 @@ import qs from 'qs';
 import mergeStreamersData from 'helpers/mergeStreamersData';
 import { Streamer } from 'types/streamer';
 import { Video } from 'types/video';
-import { PoorchatUser, PoorchatSubscription } from 'types/poorchat';
+import {
+  PoorchatUser,
+  PoorchatSubscription,
+  PoorchatBlockedUser,
+} from 'types/poorchat';
 import { ChatMessageType } from 'types/message';
 import { ServerVideoQuery, TwitchVideoQuery } from 'types/api';
 import { TwitchGame, TwitchStreamer, TwitchStream } from 'types/twitch';
@@ -124,19 +128,17 @@ export const fetchServerVideos = (
           favourite: body?.favourite,
         });
         resolve({
-          videos: response.data.videos.map(
-            (video: any): Video => {
-              return {
-                id: video.videoId,
-                duration: video.duration,
-                started: video.started,
-                thumbnail: video.thumbnail,
-                title: video.title,
-                views: video.views,
-                screenshots: video.screenshots ? video.screenshots : [],
-              };
-            }
-          ),
+          videos: response.data.videos.map((video: any): Video => {
+            return {
+              id: video.videoId,
+              duration: video.duration,
+              started: video.started,
+              thumbnail: video.thumbnail,
+              title: video.title,
+              views: video.views,
+              screenshots: video.screenshots ? video.screenshots : [],
+            };
+          }),
           count: response.data.count,
         });
       } catch (err) {
@@ -169,18 +171,16 @@ export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
           throw new Error('Videos array is empty.');
         }
         resolve({
-          videos: response.data.data.map(
-            (video: any): Video => {
-              return {
-                id: video.id,
-                duration: video.duration,
-                started: video.created_at,
-                thumbnail: video.thumbnail_url,
-                title: video.title,
-                views: video.view_count,
-              };
-            }
-          ),
+          videos: response.data.data.map((video: any): Video => {
+            return {
+              id: video.id,
+              duration: video.duration,
+              started: video.created_at,
+              thumbnail: video.thumbnail_url,
+              title: video.title,
+              views: video.view_count,
+            };
+          }),
           paginationCursor: response.data.pagination.cursor,
         });
       } catch (err) {
@@ -279,6 +279,7 @@ export const auth = (cookies: string | undefined) => {
   return new Promise<{
     user: PoorchatUser;
     subscription: PoorchatSubscription;
+    blockedUsers: PoorchatBlockedUser[];
   }>(async (resolve, reject) => {
     try {
       const response = await API.get('/auth', {

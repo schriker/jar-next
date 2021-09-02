@@ -1,17 +1,23 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PoorchatUser, PoorchatSubscription } from 'types/poorchat';
+import {
+  PoorchatUser,
+  PoorchatSubscription,
+  PoorchatBlockedUser,
+} from 'types/poorchat';
 import { AppThunk } from 'store/store';
 import Cookies from 'js-cookie';
 
 type AppPoorchatStateType = {
   user: PoorchatUser | null;
   subscription: PoorchatSubscription | null;
+  blockedUsers: PoorchatBlockedUser[] | null;
 };
 
 const appPoorchatInitialState: AppPoorchatStateType = {
   user: null,
   subscription: null,
+  blockedUsers: null,
 };
 
 const appPoorchatSlice = createSlice({
@@ -25,6 +31,7 @@ const appPoorchatSlice = createSlice({
       }: PayloadAction<{
         user: PoorchatUser;
         subscription: PoorchatSubscription;
+        blockedUsers: PoorchatBlockedUser[];
       }>
     ) {
       state.user = payload.user;
@@ -39,6 +46,7 @@ const appPoorchatSlice = createSlice({
     [HYDRATE]: (state, action) => {
       state.user = action.payload.appPoorchat.user;
       state.subscription = action.payload.appPoorchat.subscription;
+      state.blockedUsers = action.payload.appPoorchat.blockedUsers;
     },
   },
 });
@@ -49,7 +57,7 @@ export default appPoorchatSlice.reducer;
 
 export const logoutPoorchatUser = (): AppThunk => async (dispatch) => {
   Cookies.remove('payload_cookie', {
-    domain: '.jarchiwum.pl'
+    domain: '.jarchiwum.pl',
   });
   dispatch(removePoorchatUser());
 };
