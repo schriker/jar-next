@@ -36,6 +36,7 @@ const appPoorchatSlice = createSlice({
     ) {
       state.user = payload.user;
       state.subscription = payload.subscription;
+      state.blockedUsers = payload.blockedUsers;
     },
     removePoorchatUser(state) {
       state.user = null;
