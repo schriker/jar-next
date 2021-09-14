@@ -85,7 +85,7 @@ export const fetchStreamersData = (streamers: string[]) => {
           id: '0',
           isLive: false,
           login: 'wonziu',
-          profileImage: '',
+          profileImage: '/thumbnail.png',
         });
       }
       resolve(streamersData);
