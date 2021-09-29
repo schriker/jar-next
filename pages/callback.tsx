@@ -8,7 +8,7 @@ import { authCallback } from 'helpers/api';
 import Layout from 'components/Layout/Layout';
 import Toolbar from 'components/Toolbar/Toolbar';
 import Spinner from 'components/Spinner/Spinner';
-import { MyNextPageContext } from 'types/app';
+import { wrapper } from 'store/store';
 
 const Callback: NextPage = () => {
   const router = useRouter();
@@ -35,20 +35,22 @@ const Callback: NextPage = () => {
   );
 };
 
-Callback.getInitialProps = async ({ store, query, res }: MyNextPageContext) => {
-  try {
-    const { code } = query;
-    const { user, subscription, cookies, blockedUsers } = await authCallback(
-      code as string
-    );
-    store.dispatch(setPoorchatUser({ user, subscription, blockedUsers }));
-    store.dispatch(setNotification(`Zalogowano jako: ${user.name}`));
-    if (res) {
-      res.setHeader('set-cookie', [...cookies]);
+Callback.getInitialProps = wrapper.getInitialPageProps(
+  (store) =>
+    async ({ query, res }) => {
+      try {
+        const { code } = query;
+        const { user, subscription, cookies, blockedUsers } =
+          await authCallback(code as string);
+        store.dispatch(setPoorchatUser({ user, subscription, blockedUsers }));
+        store.dispatch(setNotification(`Zalogowano jako: ${user.name}`));
+        if (res) {
+          res.setHeader('set-cookie', [...cookies]);
+        }
+      } catch (err) {
+        store.dispatch(setNotification('Błąd autoryzacji.'));
+      }
     }
-  } catch (err) {
-    store.dispatch(setNotification('Błąd autoryzacji.'));
-  }
-};
+);
 
 export default Callback;

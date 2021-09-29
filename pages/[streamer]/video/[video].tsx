@@ -12,7 +12,7 @@ import { RootState } from 'store/rootReducer';
 import { TwitchVideoQuery } from 'types/api';
 import CustomError404 from 'pages/404';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import { MyNextPageContext } from 'types/app';
+import { wrapper } from 'store/store';
 
 type PageProps = {
   video: Video | null;
@@ -47,51 +47,54 @@ const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
   );
 };
 
-VideoPage.getInitialProps = async ({ store, query }: MyNextPageContext) => {
-  const state: RootState = store.getState();
-  let video: Video | null = null;
-  let allStreamersData = [...state.appData.server.streamersData];
-  if (state.appData.client.streamersData) {
-    allStreamersData = [
-      ...allStreamersData,
-      ...state.appData.client.streamersData,
-    ];
-  }
-  const streamer = allStreamersData.find(
-    (streamer) => streamer.login === query.streamer
-  );
-
-  try {
-    if (query.streamer === 'wonziu') {
-      const serverQuery = {
-        streamer: query.streamer,
-        id: query.video as string,
-      };
-      const response = await fetchServerVideoById(serverQuery);
-      if (!Object.keys(response.video).length) {
-        throw new Error();
+VideoPage.getInitialProps = wrapper.getInitialPageProps(
+  (store) =>
+    async ({ query }) => {
+      const state: RootState = store.getState();
+      let video: Video | null = null;
+      let allStreamersData = [...state.appData.server.streamersData];
+      if (state.appData.client.streamersData) {
+        allStreamersData = [
+          ...allStreamersData,
+          ...state.appData.client.streamersData,
+        ];
       }
-      video = response.video;
-    } else {
-      if (streamer) {
-        const twitchQuery: TwitchVideoQuery = {
-          id: query.video as string,
-        };
-        const response = await fetchTwitchVideos(twitchQuery);
-        video = response.videos[0];
+      const streamer = allStreamersData.find(
+        (streamer) => streamer.login === query.streamer
+      );
+
+      try {
+        if (query.streamer === 'wonziu') {
+          const serverQuery = {
+            streamer: query.streamer,
+            id: query.video as string,
+          };
+          const response = await fetchServerVideoById(serverQuery);
+          if (!Object.keys(response.video).length) {
+            throw new Error();
+          }
+          video = response.video;
+        } else {
+          if (streamer) {
+            const twitchQuery: TwitchVideoQuery = {
+              id: query.video as string,
+            };
+            const response = await fetchTwitchVideos(twitchQuery);
+            video = response.videos[0];
+          }
+        }
+        return {
+          streamer: streamer,
+          video: video,
+        } as PageProps;
+      } catch (err) {
+        store.dispatch(setNotification('Takie video nie istnieje.'));
+        return {
+          streamer: streamer,
+          video: null,
+        } as PageProps;
       }
     }
-    return {
-      streamer: streamer,
-      video: video,
-    } as PageProps;
-  } catch (err) {
-    store.dispatch(setNotification('Takie video nie istnieje.'));
-    return {
-      streamer: streamer,
-      video: null,
-    } as PageProps;
-  }
-};
+);
 
 export default VideoPage;
