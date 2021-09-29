@@ -42,7 +42,7 @@ const Login = ({ isOpen, close }: LoginPropsType) => {
       closeModal();
       setLoading(false);
     } catch (error) {
-      dispatch(setNotification(error));
+      dispatch(setNotification(error as string));
       setLoading(false);
     }
   });

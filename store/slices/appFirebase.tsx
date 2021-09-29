@@ -55,7 +55,7 @@ export const appFirebaseSignIn = ({
     try {
       await firebaseSignIn({ email, password });
       resolve();
-    } catch (error) {
+    } catch (error: any) {
       const message = firebaseErrorHandler(error.code);
       reject(message);
     }
@@ -69,7 +69,7 @@ export const appFirebaseCreateUser = ({
     try {
       await firebaseCreateUser({ email, password });
       resolve();
-    } catch (error) {
+    } catch (error: any) {
       const message = firebaseErrorHandler(error.code);
       reject(message);
     }

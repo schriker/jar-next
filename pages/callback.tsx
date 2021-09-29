@@ -8,6 +8,7 @@ import { authCallback } from 'helpers/api';
 import Layout from 'components/Layout/Layout';
 import Toolbar from 'components/Toolbar/Toolbar';
 import Spinner from 'components/Spinner/Spinner';
+import { MyNextPageContext } from 'types/app';
 
 const Callback: NextPage = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const Callback: NextPage = () => {
   );
 };
 
-Callback.getInitialProps = async ({ store, query, res }) => {
+Callback.getInitialProps = async ({ store, query, res }: MyNextPageContext) => {
   try {
     const { code } = query;
     const { user, subscription, cookies, blockedUsers } = await authCallback(

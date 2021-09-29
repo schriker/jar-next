@@ -11,6 +11,7 @@ import { RootState } from 'store/rootReducer';
 import { Streamer } from 'types/streamer';
 import Videos from 'components/Videos/Videos';
 import Toolbar from 'components/Toolbar/Toolbar';
+import { MyNextPageContext } from 'types/app';
 
 type PageProps = {
   streamer: Streamer | undefined;
@@ -47,7 +48,7 @@ const Page: NextPage<PageProps> = ({
   );
 };
 
-Page.getInitialProps = async ({ store, query }) => {
+Page.getInitialProps = async ({ store, query }: MyNextPageContext) => {
   const state: RootState = store.getState();
   let videos: Video[] = [];
   let paginationCursor = '';

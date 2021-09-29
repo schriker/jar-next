@@ -47,7 +47,7 @@ const ChatInput = ({ video, emoticons }: ChatInputPropsType) => {
       });
       setValue('');
       dispatch(setUserNote(response));
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 429) {
         dispatch(setNotification('Musisz odczekać 10s'));
       } else {

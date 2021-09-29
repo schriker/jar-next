@@ -12,7 +12,6 @@ import { Video } from 'types/video';
 import styles from 'components/Videos/VideosItem.module.css';
 import trimString from 'helpers/trimString';
 import parseDuration from 'helpers/parseDuration';
-import Image from 'next/image';
 
 type VideosItemPropsType = {
   video: Video;
@@ -27,9 +26,16 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
     router.query.streamer === 'wonziu' || router.pathname.includes('favourite');
   const isNew = Date.now() - new Date(video.started).getTime() < 86400000;
   const [loaded, setLoaded] = useState<boolean>(false);
+  const image = useRef<HTMLImageElement>(null!);
   const handleImageLoaded = () => {
     setLoaded(true);
   };
+
+  useEffect(() => {
+    if (image.current?.complete) {
+      handleImageLoaded();
+    }
+  }, [image]);
 
   return (
     <div className={styles.container}>
@@ -48,9 +54,9 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                 className={styles.thumbnailImage}
                 style={{ opacity: loaded ? '1' : '0' }}
               >
-                <Image
-                  layout="fill"
-                  quality={20}
+                <img
+                  className={styles.image}
+                  ref={image}
                   src={
                     video.thumbnail.length
                       ? video.thumbnail
@@ -59,7 +65,7 @@ const VideosItem = ({ video }: VideosItemPropsType) => {
                       : '/img_placeholder.jpg'
                   }
                   onLoad={() => handleImageLoaded()}
-                  alt=""
+                  alt={video.title}
                 />
               </div>
 

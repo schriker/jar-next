@@ -19,6 +19,7 @@ import App, { AppInitialProps, AppContext } from 'next/app';
 
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import { MyAppContext } from 'types/app';
 
 Router.events.on('routeChangeStart', () => {
   NProgress.start();
@@ -32,28 +33,28 @@ Router.events.on('routeChangeError', () => {
 });
 
 class MyApp extends App<AppInitialProps> {
-  public static getInitialProps = async ({ Component, ctx }: AppContext) => {
-    const state: RootState = ctx.store.getState();
+  public static getInitialProps = async ({ Component, ctx }: MyAppContext) => {
+    const state: RootState = ctx.store?.getState();
     if (typeof window === 'undefined') {
       const serverStreamers = [...state.appData.server.streamers];
       if (ctx.query.streamer) {
         if (
           !state.appData.server.streamers.includes(ctx.query.streamer as string)
         ) {
-          ctx.store.dispatch(addServerStreamer(ctx.query.streamer as string));
+          ctx.store?.dispatch(addServerStreamer(ctx.query.streamer as string));
           serverStreamers.push(ctx.query.streamer as string);
         }
       }
       try {
         const streamersData = await fetchStreamersData(serverStreamers);
-        ctx.store.dispatch(setServerStreamers(streamersData));
+        ctx.store?.dispatch(setServerStreamers(streamersData));
       } catch (error) {}
       try {
         if (ctx.req && ctx.req.headers.cookie?.includes('payload_cookie')) {
           const { user, subscription, blockedUsers } = await auth(
             ctx.req.headers.cookie
           );
-          ctx.store.dispatch(
+          ctx.store?.dispatch(
             setPoorchatUser({ user, subscription, blockedUsers })
           );
         }

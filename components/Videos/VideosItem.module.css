@@ -16,6 +16,12 @@
   transition: all ease 0.1s;
 }
 
+.image {
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
 .thumbnailImage {
   display: block;
   overflow: hidden;
@@ -82,6 +88,7 @@
   display: block;
   width: 100%;
   height: auto;
+  max-height: 100%;
 }
 
 .thumbnail svg {

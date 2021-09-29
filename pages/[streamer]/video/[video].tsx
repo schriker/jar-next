@@ -12,6 +12,7 @@ import { RootState } from 'store/rootReducer';
 import { TwitchVideoQuery } from 'types/api';
 import CustomError404 from 'pages/404';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import { MyNextPageContext } from 'types/app';
 
 type PageProps = {
   video: Video | null;
@@ -46,7 +47,7 @@ const VideoPage: NextPage<PageProps> = ({ video, streamer }) => {
   );
 };
 
-VideoPage.getInitialProps = async ({ store, query }) => {
+VideoPage.getInitialProps = async ({ store, query }: MyNextPageContext) => {
   const state: RootState = store.getState();
   let video: Video | null = null;
   let allStreamersData = [...state.appData.server.streamersData];

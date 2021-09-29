@@ -1,7 +1,5 @@
 module.exports = {
-  future: {
-    webpack5: true,
-  },
+  webpack5: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.output.chunkFilename = isServer
       ? `${dev ? '[name]' : '[name].[fullhash]'}.js`
@@ -15,9 +13,6 @@ module.exports = {
       use: ['@svgr/webpack'],
     });
     return config;
-  },
-  images: {
-    domains: ['i.ytimg.com', 'static-cdn.jtvnw.net'],
   },
   async redirects() {
     return [
