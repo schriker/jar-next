@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
-    "start": "next start -p 3004"
+    "start": "next start -p 3004",
+    "lint": "next lint"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
@@ -65,6 +66,8 @@
     "@types/react-custom-scrollbars": "^4.0.8",
     "@types/react-dates": "^21.8.3",
     "babel-plugin-styled-components": "^1.13.2",
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.2",
     "typescript": "^4.4.3"
   }
 }

@@ -99,7 +99,10 @@ const LayoutHead = ({ title, ogImage, ogDescription }: LayoutHeadProps) => {
         />
         <link rel="manifest" href="/manifest.json"></link>
 
-        <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+        <script
+          async
+          src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"
+        ></script>
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=UA-131295801-1"

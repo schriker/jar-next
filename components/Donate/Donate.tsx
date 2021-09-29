@@ -28,7 +28,7 @@ const Donate = () => {
             Jeśli chcesz pomóc w utrzymaniu strony stworzyłem zrzutkę na koszt
             utrzymania domeny oraz serwera:
           </p>
-          <a target="_blank" href="https://zrzutka.pl/gesz5f">
+          <a target="_blank" href="https://zrzutka.pl/gesz5f" rel="noreferrer">
             &laquo; link do zrzutki &raquo;
           </a>
           <p>

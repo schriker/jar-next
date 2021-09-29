@@ -70,7 +70,7 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
       content = (
         <div ref={inViewRef}>
           <div className={styles.provider}>{card.provider}</div>
-          <a href={card.url} target="_blank">
+          <a href={card.url} target="_blank" rel="noreferrer">
             {card.title && <div className={styles.title}>{card.title}</div>}
             <div className={styles.content}>
               <div className={styles.open}>
@@ -113,7 +113,7 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
       content = (
         <div>
           <div className={styles.provider}>{card.provider}</div>
-          <a href={card.url} target="_blank">
+          <a href={card.url} target="_blank" rel="noreferrer">
             {card.title && <div className={styles.title}>{card.title}</div>}
             {card.description && (
               <div className={styles.description}>{card.description}</div>
@@ -134,18 +134,16 @@ const ChatCard = ({ message, refElement }: ChatCardPropsType) => {
         className={styles.wrapper}
       >
         {message.type === 'NOTICE'
-          ? messageParser(
-              message.body,
-              [],
-              chat.chatUsers
-            ).map((part, index) => (
-              <ChatMessageComponent
-                handleAuthorClick={handleAuthorClick}
-                tooltipContainer={null}
-                key={`${message.uuid}-${index}`}
-                part={part}
-              />
-            ))
+          ? messageParser(message.body, [], chat.chatUsers).map(
+              (part, index) => (
+                <ChatMessageComponent
+                  handleAuthorClick={handleAuthorClick}
+                  tooltipContainer={null}
+                  key={`${message.uuid}-${index}`}
+                  part={part}
+                />
+              )
+            )
           : message.type === 'EMBED'
           ? content
           : null}

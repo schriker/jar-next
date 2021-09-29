@@ -75,6 +75,7 @@ const Sidebar = () => {
         <AddStreamer isOpen={isOpen} open={setIsOpen} />
         <AddVideo />
         <a
+          rel="noreferrer"
           className={styles.faq}
           href="https://github.com/schriker/jar-next/blob/master/faq.md"
           target="_blank"
