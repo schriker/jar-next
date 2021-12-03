@@ -6,6 +6,7 @@ import styles from 'components/Calendar/Calendar.module.css';
 import useViewWidth from 'hooks/useViewWidth';
 import { DayPickerSingleDateController } from 'react-dates';
 import moment from 'moment';
+import 'moment/locale/pl';
 
 type CalenderPropsType = {
   isOpen: boolean;

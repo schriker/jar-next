@@ -30,8 +30,8 @@
   color: #fff;
   font-size: 15px;
   background-color: #232323;
-  border: 1px solid transparent;
-  border-radius: 3px;
+  border: 0;
+  border-radius: 5px;
 }
 
 .CalendarDay__default:hover div span:nth-child(2) {
@@ -41,7 +41,7 @@
 .CalendarDay__default:hover {
   color: #fff;
   background-color: #f00;
-  border: 1px solid transparent;
+  border: 0;
 }
 
 .CalendarMonth_caption {
