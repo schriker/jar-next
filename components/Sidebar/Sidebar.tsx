@@ -75,7 +75,8 @@ const Sidebar = () => {
           {client.isFetching && <SidebarItem isOpen={isOpen} />}
         </SimpleBar>
         <AddStreamer isOpen={isOpen} open={setIsOpen} />
-        {user?.isAdmin && <NewVideo />}
+        {/* {user?.isAdmin && <NewVideo />} */}
+        <NewVideo />
         <AddVideo />
         <a
           rel="noreferrer"

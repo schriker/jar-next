@@ -199,10 +199,16 @@ export const newVideo = ({
 }) => {
   return new Promise<Video>(async (resolve, reject) => {
     try {
-      const response = await API.post('/new_video', {
-        id: id,
-        streamer: streamer,
-      });
+      const response = await API.post(
+        '/new_video',
+        {
+          id: id,
+          streamer: streamer,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       resolve({
         id: response.data.videoId,
         ...response.data,
@@ -222,10 +228,16 @@ export const editVideo = ({
 }) => {
   return new Promise<void>(async (resolve, reject) => {
     try {
-      await API.post('/edit_video', {
-        video: video,
-        streamer: streamer,
-      });
+      await API.post(
+        '/edit_video',
+        {
+          video: video,
+          streamer: streamer,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       resolve();
     } catch (err) {
       reject();
