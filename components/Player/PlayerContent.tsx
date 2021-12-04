@@ -21,6 +21,7 @@ import {
   faExchangeAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FullScreenHandle } from 'react-full-screen';
+import EditVideo from 'components/EditVideo/EditVideo';
 
 type PlayerContentPropsType = {
   video: Video;
@@ -64,6 +65,7 @@ const PlayerContent = ({
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement | null>(null);
   const player = useTypedSelector((state) => state.appPlayer);
+  const { user } = useTypedSelector((state) => state.appPoorchat);
   const { isWatched, isBookmarked, addToWatched, addToBookmark } = useWatched(
     video.id
   );
@@ -71,10 +73,10 @@ const PlayerContent = ({
   const handleSourceChange = () => {
     if (player.source === 'TWITCH') {
       dispatch(setSource('YOUTUBE'));
-    } else  {
+    } else {
       dispatch(setSource('TWITCH'));
     }
-  }
+  };
 
   const handleFullscreen = () => {
     if (fullscreen.active) {
@@ -87,10 +89,8 @@ const PlayerContent = ({
   return (
     <div ref={ref} className={styles.wrapper}>
       <div className={styles.profileImage}>
-      {streamer && 
-        <img src={streamer.profileImage} alt="" />
-      }
-        </div>
+        {streamer && <img src={streamer.profileImage} alt="" />}
+      </div>
       <div>
         <div className={styles.title}>
           <span title={video.title}>{trimString(video.title, 55)}</span>
@@ -166,6 +166,7 @@ const PlayerContent = ({
               </div>
             </ControllButton>
           )}
+          {user?.isAdmin && <EditVideo video={video} />}
           <ControllButton
             tooltipContainer={ref.current}
             red={fullscreen.active}

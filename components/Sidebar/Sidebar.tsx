@@ -13,6 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from 'simplebar-react';
 import AddVideo from 'components/AddVideo/AddVideo';
+import NewVideo from 'components/NewVideo/NewVideo';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,7 @@ const Sidebar = () => {
   });
 
   const { server, client } = useTypedSelector((state) => state.appData);
+  const { user } = useTypedSelector((state) => state.appPoorchat);
 
   return (
     <>
@@ -73,6 +75,7 @@ const Sidebar = () => {
           {client.isFetching && <SidebarItem isOpen={isOpen} />}
         </SimpleBar>
         <AddStreamer isOpen={isOpen} open={setIsOpen} />
+        {user?.isAdmin && <NewVideo />}
         <AddVideo />
         <a
           rel="noreferrer"

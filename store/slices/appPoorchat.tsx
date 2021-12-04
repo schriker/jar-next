@@ -35,6 +35,7 @@ const appPoorchatSlice = createSlice({
       }>
     ) {
       state.user = payload.user;
+      state.user.isAdmin = payload.user.name === 'schriker';
       state.subscription = payload.subscription;
       state.blockedUsers = payload.blockedUsers;
     },

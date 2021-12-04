@@ -1,9 +1,8 @@
-import { type } from 'os';
-
 export type PoorchatUser = {
   id: number;
   name: string;
   email: string;
+  isAdmin: boolean;
   created_at: string;
 };
 

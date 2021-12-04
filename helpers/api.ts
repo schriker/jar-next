@@ -190,6 +190,49 @@ export const fetchTwitchVideos = (query: TwitchVideoQuery) => {
   );
 };
 
+export const newVideo = ({
+  id,
+  streamer,
+}: {
+  id: string;
+  streamer: string;
+}) => {
+  return new Promise<Video>(async (resolve, reject) => {
+    try {
+      const response = await API.post('/new_video', {
+        id: id,
+        streamer: streamer,
+      });
+      resolve({
+        id: response.data.videoId,
+        ...response.data,
+      });
+    } catch (err) {
+      reject();
+    }
+  });
+};
+
+export const editVideo = ({
+  video,
+  streamer,
+}: {
+  video: Video;
+  streamer: string;
+}) => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      await API.post('/edit_video', {
+        video: video,
+        streamer: streamer,
+      });
+      resolve();
+    } catch (err) {
+      reject();
+    }
+  });
+};
+
 export const fetchDates = (streamer: string) => {
   return new Promise<{ [key: string]: number }>(async (resolve, reject) => {
     try {
