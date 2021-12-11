@@ -14,6 +14,7 @@ import {
 import SimpleBar from 'simplebar-react';
 import AddVideo from 'components/AddVideo/AddVideo';
 import NewVideo from 'components/NewVideo/NewVideo';
+import WykopNotification from 'components/WykopNotification/WykopNotification';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,6 +77,7 @@ const Sidebar = () => {
         </SimpleBar>
         <AddStreamer isOpen={isOpen} open={setIsOpen} />
         {user?.isAdmin && <NewVideo />}
+        {user?.isAdmin && <WykopNotification />}
         <AddVideo />
         <a
           rel="noreferrer"

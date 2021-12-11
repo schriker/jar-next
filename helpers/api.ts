@@ -245,6 +245,25 @@ export const editVideo = ({
   });
 };
 
+export const sendWykopNotification = (streamer: string) => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      await API.post(
+        '/edit_video',
+        {
+          streamer: streamer,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      resolve();
+    } catch (err) {
+      reject();
+    }
+  });
+};
+
 export const fetchDates = (streamer: string) => {
   return new Promise<{ [key: string]: number }>(async (resolve, reject) => {
     try {

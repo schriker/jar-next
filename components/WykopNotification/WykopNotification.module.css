@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 50px;
+  padding: 0 0 8px 5px;
+}
+
+.addIcon {
+  flex: 0 0 32px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  margin: 0 0 0 3px;
+  border-radius: 50%;
+  background-color: #2c2c2c;
+  transition: all ease 0.2s;
+  color: #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addIcon svg {
+  padding: 2px 0 0 2px;
+  width: 10px !important;
+}
+
+.addIcon:hover {
+  background-color: #f00;
+  color: #fff;
+}
