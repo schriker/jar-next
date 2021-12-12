@@ -249,7 +249,7 @@ export const sendWykopNotification = (streamer: string) => {
   return new Promise<void>(async (resolve, reject) => {
     try {
       await API.post(
-        '/edit_video',
+        '/wykop',
         {
           streamer: streamer,
         },
