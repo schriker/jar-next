@@ -350,7 +350,7 @@ export const authCallback = (code: string) => {
   });
 };
 
-export const auth = (cookies: string | undefined) => {
+export const auth = (cookies: string | number | boolean) => {
   return new Promise<{
     user: PoorchatUser;
     subscription: PoorchatSubscription;
