@@ -105,8 +105,8 @@ const ChatMessage = ({
           (badge) => badge.months === message.subscriptionBadge
         );
         return {
-          icon: `https://static.poorchat.net/badges/${badge.file}/1x`,
-          srcset: `https://static.poorchat.net/badges/${badge.file}/1x, https://static.poorchat.net/badges/${badge.file}/2x 1.25x, https://static.poorchat.net/badges/${badge.file}/4x 2.25x`,
+          icon: `https://static.poorchat.net/badges/${badge?.file}/1x`,
+          srcset: `https://static.poorchat.net/badges/${badge?.file}/1x, https://static.poorchat.net/badges/${badge?.file}/2x 1.25x, https://static.poorchat.net/badges/${badge?.file}/4x 2.25x`,
         };
       } else {
         const badge = badges.subscriber.filter(
